@@ -1,0 +1,29 @@
+.tags-view-item{
+    font-size: 14px;
+    margin-left:5px;
+    border-width:1px;
+    padding-left:10px;
+    padding-right:10px;
+    height: 30px;
+    color: black;
+    border-style: solid;
+    border-color: #D3D3D3;
+    vertical-align:middle;
+    line-height: 30px;
+    float: left;
+    
+}
+.active{
+    font-size: 14px;
+    margin-left:5px;
+    border-width:1px;
+    padding-left:10px;
+    padding-right:10px;
+    height: 30px;
+    color: white;
+    background-color: #0099CC;
+    vertical-align:middle;
+    line-height: 30px;
+    float: left;
+    font-weight: bold;
+}

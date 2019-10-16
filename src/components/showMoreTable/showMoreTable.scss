@@ -1,0 +1,19 @@
+.showMoreCol{
+    height: 40px;
+    line-height: 40px;
+    font-size: 16px;
+    
+    .name{
+        background-color: rgb(202, 222, 232);
+        border: 1px solid white;
+        padding-left: 5px;
+    }
+    .value{
+        background-color: rgb(233, 242, 247);
+        border: 1px solid white;
+        padding-left: 5px;
+        // white-space: nowrap;
+        // overflow: hidden;
+        // text-overflow: ellipsis;
+    }
+}

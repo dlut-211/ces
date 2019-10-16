@@ -1,0 +1,26 @@
+.selectModule{
+    width: 100%;
+    border: 1px solid #dddee1;
+    box-sizing: border-box;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    .topTitle{
+        height: 37px;
+        border-bottom: 1px solid #dddee1;
+        font-size: 14px;
+        color: #838c9f;
+        line-height: 37px;
+        background: -webkit-linear-gradient(white, #eaf3fd); /* Safari 5.1 - 6.0 */
+        background: -o-linear-gradient(white, #eaf3fd); /* Opera 11.1 - 12.0 */
+        background: -moz-linear-gradient(white, #eaf3fd); /* Firefox 3.6 - 15 */
+        background: linear-gradient(white, #eaf3fd); /* 标准的语法 */
+        padding-left: 10px;
+    }
+    .content{
+        overflow: hidden;
+        .inputs{
+            float: left;
+            margin: 10px 15px;
+        }
+    }
+}

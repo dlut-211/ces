@@ -1,0 +1,29 @@
+
+.forms{
+    padding: 0 10px;
+}
+.paperCardDefault{
+    width:100px;
+    // background-color:#F6CECE;
+    font-weight:bold;
+    text-align:center;
+    float:left;
+    border:1px dashed #F00;
+    cursor:pointer;
+}
+.paperCardA{
+    width:100px;
+    background-color:#E0F8E0;
+    font-weight:bold;
+    text-align:center;
+    float:left;
+    cursor:pointer;
+}
+.paperCardB{
+    width:100px;
+    background-color:#E0ECF8;
+    font-weight:bold;
+    text-align:center;
+    float:left;
+    cursor:pointer;
+}

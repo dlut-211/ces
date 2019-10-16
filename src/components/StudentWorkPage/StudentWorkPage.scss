@@ -1,0 +1,31 @@
+
+.forms{
+    padding: 0 10px;
+}
+.summary {
+    width: 10px;
+    overflow: hidden;    /* 隐藏溢出内容 */
+    text-overflow: clip;    /* 修剪文本 */
+    display: -webkit-box;    /* 弹性布局 */
+    -webkit-box-orient: vertical;    /* 从上向下垂直排列子元素 */
+    -webkit-line-clamp: 3;    /* 限制文本仅显示前三行 */
+    color: red
+}
+.showBg {
+    width: 500px;
+    background-color: #e9ecef;
+    margin: 1.5rem;
+    padding: 1.5rem;
+}
+.showBtn {
+    width: 100%;    /* 与背景宽度一致 */
+    height: 3rem;
+    position: absolute;    /* 相对父元素定位 */
+    top: 3rem;    /* 刚好遮挡在最后两行 */
+    left: 0;
+    z-index: 0;    /* 正序堆叠，覆盖在p元素上方 */
+    text-align: center;
+    background: linear-gradient(rgba(233,236,239,.5), white);    /* 背景色半透明到白色的渐变层 */
+    padding-top: 3rem;
+    color: red
+}

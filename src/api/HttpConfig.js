@@ -1,0 +1,246 @@
+﻿//测试环境为true 开发环境为false
+var IS_DEBUG = true;
+var apiHost = IS_DEBUG ? '/api' : 'http://127.0.0.1:2834/api';
+
+var API = {
+    // 后台用户登陆
+    login: apiHost + '/user/login',
+    // 修改密码
+    updatePassword: apiHost + '/user/editpassword',
+    // 返回用户拥有的权限的接口
+    getPermission: apiHost + '/user/getpermission',
+    // 校验Token是否失效
+    verifyToken: apiHost + '/user/verifytoken',
+    // 图片上传
+    uploadImg: apiHost + '/upload/image',
+    // 文件上传
+    uploadFile: apiHost + '/upload/file',
+
+
+    // 获取教师列表
+    getTeacherList: apiHost + '/teacher/list',
+    // 删除教师
+    deleteTeacher: apiHost + '/teacher/remove',
+    // 添加教师
+    postTeacher: apiHost + '/teacher/add',
+    // 编辑教师
+    putTeacher: apiHost + '/teacher/edit',
+    // 启用教师
+    enableTeacher: apiHost + '/teacher/enable',
+    // 禁用教师
+    disableTeacher: apiHost + '/teacher/disable',
+
+
+    // 获取课程列表
+    getCourseList: apiHost + '/course/list',
+    // 删除课程
+    deleteCourse: apiHost + '/course/remove',
+    // 添加课程
+    postCourse: apiHost + '/course/add',
+    // 编辑课程
+    putCourse: apiHost + '/course/edit',
+
+
+    // 获取章节树
+    getChapterTree: apiHost + '/chapter/tree',
+    // 获取主章节
+    getChapterMain: apiHost + '/chapter/main',
+    // 获取课程章节
+    getChapterCourse: apiHost + '/chapter/courselist',
+    // 获取章节列表
+    getChapterList: apiHost + '/chapter/list',
+    // 删除章节
+    deleteChapter: apiHost + '/chapter/remove',
+    // 添加章节
+    postChapter: apiHost + '/chapter/add',
+    // 编辑章节
+    putChapter: apiHost + '/chapter/edit',
+
+
+    // 获取课程所有知识点
+    getKnowledgeAllList: apiHost + '/knowledge/alllist',
+    // 获取知识点列表
+    getKnowledgeList: apiHost + '/knowledge/list',
+    // 删除知识点
+    deleteKnowledge: apiHost + '/knowledge/remove',
+    // 添加知识点
+    postKnowledge: apiHost + '/knowledge/add',
+    // 编辑知识点
+    putKnowledge: apiHost + '/knowledge/edit',
+
+
+    // 获取能力点列表
+    getAbilityList: apiHost + '/ability/SubjectAbility',
+    // 删除能力点
+    deleteAbility: apiHost + '/ability/remove',
+    // 添加能力点
+    postAbility: apiHost + '/ability/add',
+    // 编辑能力点
+    putAbility: apiHost + '/ability/edit',
+  //获取学科列表
+    getAllSubjectList: apiHost + '/MySystem/getAllSubjectList',
+
+    // 获取章节作业
+    getWorkChapterList: apiHost + '/work/chapterlist',
+    // 获取作业列表
+    getWorkList: apiHost + '/work/list',
+    // 删除作业
+    deleteWork: apiHost + '/work/remove',
+    // 添加作业
+    postWork: apiHost + '/work/add',
+    // 编辑作业
+    putWork: apiHost + '/work/edit',
+
+    // 获取课堂列表
+    getClassRoomList: apiHost + '/classroom/list',
+    // 删除课堂
+    deleteClassRoom: apiHost + '/classroom/remove',
+    // 添加课堂
+    postClassRoom: apiHost + '/classroom/add',
+    // 编辑课堂
+    putClassRoom: apiHost + '/classroom/edit',
+    // 修改课堂状态
+    editClassRoomStatus: apiHost + '/classroom/editstatus',
+
+
+    // 获取课堂学员列表
+    getClassRoomStudentList: apiHost + '/classroomstudent/list',
+    // 删除课堂学员
+    deleteClassRoomStudent: apiHost + '/classroomstudent/remove',
+    // 添加课堂学员
+    postClassRoomStudent: apiHost + '/classroomstudent/add',
+    // 编辑课堂学员
+    putClassRoomStudent: apiHost + '/classroomstudent/edit',
+    // 导入学生
+    importClassRoomStudent: apiHost + '/classroomstudent/importstu',
+    // 获取学生导入模板
+    getClassRoomStudentTemplate: apiHost + '/classroomstudent/gettemplate',
+
+    // 获取课堂章节作业
+    getClassRoomWorkChapterList: apiHost + '/classroomwork/chapterlist',
+    // 布置课堂作业
+    layoutClassRoomWork: apiHost + '/classroomwork/layoutwork',
+    // 撤销布置作业
+    revokeLayoutClassRoomWork: apiHost + '/classroomwork/revokelayout',
+    // 获取作业情况
+    getClassRoomWorkDetail: apiHost + '/studentwork/worklist',
+
+    // 获取学生作业明细列表
+    getStudentWorkDetailList: apiHost + '/studentworkdetail/list',
+    // 删除学生作业明细
+    deleteStudentWorkDetail: apiHost + '/studentworkdetail/remove',
+    // 添加学生作业明细
+    postStudentWorkDetail: apiHost + '/studentworkdetail/add',
+    // 编辑学生作业明细
+    putStudentWorkDetail: apiHost + '/studentworkdetail/edit',
+
+    // 获取试卷列表
+    getTestPaperList: apiHost + '/testpaper/list',
+    // 删除试卷
+    deleteTestPaper: apiHost + '/testpaper/remove',
+    // 添加试卷
+    postTestPaper: apiHost + '/testpaper/add',
+    // 编辑试卷
+    putTestPaper: apiHost + '/testpaper/edit',
+    // 修改试卷状态
+    editTestPaperStatus: apiHost + '/testpaper/editstatus',
+    // 根据试卷获取试题
+    TestPaperDetailList: apiHost + '/testpaperdetail/testpaperlist',
+    // 学生考试成绩
+    studentTestPaperList: apiHost + '/studenttestpaper/testpaperlist',
+    // 获取成绩导入模板
+    getStudentTestPaperTemplate: apiHost + '/studenttestpaper/gettemplate',
+    // 导入试卷成绩
+    importStudentTestPaper: apiHost + '/studenttestpaper/importstp',
+
+    // 获取学生作业列表
+    getStudentWorkList: apiHost + '/studentwork/list',
+    // 获取章节作业数
+    getchapterWorkList: apiHost + '/studentwork/chapterWorkList',
+    // 获取环比图所需数据
+    getknowledgeScoreList: apiHost + '/studentWork/knowledgeScoreList',
+    // 获取雷达图所需数据
+    getabilityScoreList: apiHost + '/studentWork/abilityScoreList',
+    // 删除学生作业
+    deleteStudentWork: apiHost + '/studentwork/remove',
+    // 添加学生作业
+    postStudentWork: apiHost + '/studentwork/add',
+    // 编辑学生作业
+    putStudentWork: apiHost + '/studentwork/edit',
+
+    // 获取学科列表
+    getSubjectList: apiHost + '/MySystem/list',
+    // 删除学科
+    deleteSubject: apiHost + '/MySystem/remove',
+    // 添加学科
+    postSubject: apiHost + '/MySystem/add',
+    // 编辑学科
+    putSubject: apiHost + '/MySystem/edit',
+    //获取学科能力点列表
+    getSubjectAbility:apiHost + '/ability/SubjectAbility',
+
+    // 获取学生作业列表
+    getStu_StudentWorkList: apiHost + '/stu_studentwork/list',
+    // 删除学生作业
+    deleteStu_StudentWork: apiHost + '/stu_studentwork/remove',
+    // 添加学生作业
+    postStu_StudentWork: apiHost + '/stu_studentwork/add',
+    // 编辑学生作业
+    putStu_StudentWork: apiHost + '/stu_studentwork/edit',
+    
+    //获取学生完成的作业数量
+    getStudentCompletedWork: apiHost + '/studentwork/studentcompletedwork',
+    //获取某门课堂下所有的作业
+    getClassRoomWork: apiHost + '/classroomwork/list',
+    //获取章节作业
+    getWorkByChapter: apiHost + '/studentwork/studentworkbychapter',
+     // 获取作业列表
+     getStudentCharptWordList: apiHost + '/studentcharptword/list',
+     // 删除作业
+     deleteStudentCharptWord: apiHost + '/studentcharptword/remove',
+     // 添加作业
+     postStudentCharptWord: apiHost + '/studentcharptword/add',
+     // 编辑作业
+     putStudentCharptWord: apiHost + '/studentcharptword/edit',
+
+  //学生学科能力点雷达图
+    StudentAbilityScoreEcharts: apiHost + '/StudentAbility/StudentAbilityScoreEcharts',
+    //学生学科成绩总分
+    StudentSubjectScoreEcharts: apiHost + '/StudentAbility/StudentSubjectScoreEcharts',
+
+
+     // 获取监考信息列表
+     getInviGilateInfoList: apiHost + '/invigilateinfo/list',
+     // 删除监考信息
+     deleteInviGilateInfo: apiHost + '/invigilateinfo/remove',
+     // 添加监考信息
+     postInviGilateInfo: apiHost + '/invigilateinfo/add',
+     // 编辑监考信息
+     putInviGilateInfo: apiHost + '/invigilateinfo/edit',
+    //获取课程知识点名称
+    getCKname : apiHost + '/knowledge/Kname',
+    
+    //根据时间来选择学生未提交的作业
+    getStudentWorkByTime: apiHost+'/studentwork/studentworkbyTime',
+    //根据时间来选择教师未提交的监考
+    getTeacherInvigilateByTime:apiHost+'/invigilateinfo/teacherInvigilatebyTime',
+    //获取课堂平均分
+    getClassRoomAvgScore: apiHost+'/classroom/classRoomAvgScore',
+
+    //获取学生所选课堂的总数
+    getClassRoomListCount:apiHost+'/classroomstudent/listcount',
+
+    //获取学生未提交的课程数
+    getNoSubmitWork:apiHost+'/studentwork/studentnosubmitwork',
+
+    //学生作业完成进度
+    getStudentWorkInfoWithStudent:apiHost+'/studenthome/workinfo',
+
+    //学生能力点获得情况
+    getStudentAbilityInfo:apiHost+'/studenthome/abilityinfo'
+
+}
+
+export {
+    API
+}

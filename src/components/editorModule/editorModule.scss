@@ -1,0 +1,27 @@
+.editorModule{
+    width: 100%;
+    height: 100%;
+    background-color: rgba($color: #000000, $alpha: 0.5);
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 999;
+    padding:30px;
+    .content{
+        width: 1200px;
+        margin: 0 auto;
+        background-color: white;
+        border-radius: 10px;
+        box-sizing: border-box;
+        padding: 15px;
+        .title{
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        .buttons{
+            margin-top: 15px;
+            text-align: right;
+        }
+    }
+}
