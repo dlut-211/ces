@@ -19,6 +19,11 @@ import SubjectManagePage from "@/childPage/SubjectManagePage/SubjectManagePage.v
 import AdminHomePage from "@/childPage/AdminHomePage/AdminHomePage.vue";
 import TeacherHomePage from "@/childPage/TeacherHomePage/TeacherHomePage.vue";
 import StudentHomePage from "@/childPage/StudentHomePage/StudentHomePage.vue";
+import TestPage from "@/childPage/TestPage/TestPage.vue"
+import AdminLoginPage from "@/childPage/AdminLoginPage/AdminLoginPage.vue"
+import StudentLoginPage from "@/childPage/StudentLoginPage/StudentLoginPage.vue"
+import TeacherLoginPage from "@/childPage/TeacherLoginPage/TeacherLoginPage.vue"
+
 Vue.use(Router);
 
 export default new Router({
@@ -26,7 +31,23 @@ export default new Router({
         name: 'LoginPage',
         path: '/LoginPage',
         component: LoginPage
-    }, {
+    },
+    {
+        path: 'AdminLoginPage',
+        name: 'AdminLoginPage',
+        component: AdminLoginPage
+    },
+    {
+        path: 'StudentLoginPage',
+        name: 'StudentLoginPage',
+        component: StudentLoginPage
+    },
+    {
+        path: 'TeacherLoginPage',
+        name: 'TeacherLoginPage',
+        component: TeacherLoginPage
+    },
+     {
         name: 'DashboardPage',
         path: '/DashboardPage',
         component: DashboardPage,
@@ -133,6 +154,11 @@ export default new Router({
                 path: 'SubjectManagePage',
                 name: 'SubjectManagePage',
                 component: SubjectManagePage
+            },
+            {
+                path: 'TestPage',
+                name: 'TestPage',
+                component: TestPage
             }
         ]
     }, {

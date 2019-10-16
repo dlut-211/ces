@@ -1,6 +1,18 @@
 ﻿import { API } from './HttpConfig';
 import http from './http';
 
+
+
+// 学生登陆
+export const studentLogin = (param) => {
+    return GET(API.studentLogin, param);
+}
+export const teacherLogin = (param) => {
+    return GET(API.teacherLogin, param);
+}
+export const adminLogin = (param) => {
+    return GET(API.adminLogin, param);
+}
 // 后台用户登陆
 export const login = (param) => {
         return POST(API.login, param);
@@ -445,6 +457,11 @@ export const getStudentWorkInfoWithStudent = (param) =>{
 
 export const getStudentAbilityInfo = (param) =>{
     return GET(API.getStudentAbilityInfo,param);
+}
+
+//测试端口
+export const testPort=(param)=>{
+    return GET(API.testPort,param);
 }
 
 

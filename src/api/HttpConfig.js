@@ -1,10 +1,17 @@
 ﻿//测试环境为true 开发环境为false
 var IS_DEBUG = true;
-var apiHost = IS_DEBUG ? '/api' : 'http://127.0.0.1:2834/api';
+var apiHost = IS_DEBUG ? '/api' : 'localhost:8443/api';
+// var apiHost = IS_DEBUG ? '/api' : 'http://127.0.0.1:2834/api';
 
 var API = {
+    //学生登录
+    studentLogin: apiHost + '/studentcontroller/selectByAccountAndPassword',
+    //教师登录
+    teacherLogin: apiHost + '/teachercontroller/selectByAccountAndPassword',
+    //管理员登录
+    adminLogin: apiHost + '/usercontroller/selectByAccountAndPassword',
     // 后台用户登陆
-    login: apiHost + '/user/login',
+    login: apiHost + '/testmd/selectByAccountAndPassword',
     // 修改密码
     updatePassword: apiHost + '/user/editpassword',
     // 返回用户拥有的权限的接口
@@ -15,7 +22,8 @@ var API = {
     uploadImg: apiHost + '/upload/image',
     // 文件上传
     uploadFile: apiHost + '/upload/file',
-
+    //测试专用
+    testPort:apiHost+'/user/testView',
 
     // 获取教师列表
     getTeacherList: apiHost + '/teacher/list',
