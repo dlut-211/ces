@@ -19,7 +19,7 @@
         <ul>
           <li v-for="(item, index) in DoingWorkInfo" :key="index" style="margin:0.5cm 0.5cm 0.5cm 0.5cm"> 
            
-            课堂《{{item.ClassRoomName}}》{{item.ChapterName}}中作业："{{item.WorkName}}"待提交;截止日期：{{dateFormatFinal(item.EndTime)}}
+            课堂《{{item.ClassRoomName}}》{{item.ChapterName}}中作业："{{item.workname}}"待提交;截止日期：{{dateFormatFinal(item.EndTime)}}
           
           </li>
         </ul>
@@ -166,24 +166,24 @@
               <div style="text-align:center;background-color:#f8f8f9">
               <Row v-for="(item, index) in workinfo" :key="index" style="margin-top:10px">
                 <Col span="6">
-                    <div><p>{{item.ClassRoomName}}</p></div>
+                    <div><p>{{item.classroomname}}</p></div>
                 </Col>
                 <Col span="6">
-                    <div class="summary" @click="showWorkAllName(item.WorkName)"><p>{{item.WorkName}}</p></div>
+                    <div class="summary" @click="showWorkAllName(item.workname)"><p>{{item.workname}}</p></div>
                 </Col>
                 <Col span="6">
                     <Row>
                       <Col span="18">
-                      <div><p><Progress style="color:#b3e900" :percent=(item.SubmitCount/item.StudentTotalCount)*100 hide-info></Progress> </p></div>
+                      <div><p><Progress style="color:#b3e900" :percent=(item.submitcount/item.studenttotalcount)*100 hide-info></Progress> </p></div>
                       </Col >
                       <Col span="6">
-                      <p>{{item.SubmitCount}}/{{item.StudentTotalCount}}</p>
+                      <p>{{item.submitcount}}/{{item.studenttotalcount}}</p>
                       </Col>
                     </Row>
                 </Col>
                 <Col span="6">
-                    <div v-if="item.Rank!=0" style="text-align:center"><p>{{item.Rank}}</p></div>
-                    <div v-if="item.Rank==0" style="color:red;text-align:center"><p>未提交</p></div>
+                    <div v-if="item.rank!=0" style="text-align:center"><p>{{item.rank}}</p></div>
+                    <div v-if="item.rank==0" style="color:red;text-align:center"><p>未提交</p></div>
                 </Col>
               </Row>
               </div>
@@ -219,14 +219,14 @@
                 <div style="text-align:center;background-color:#f8f8f9">
               <Row v-for="(item, index) in abilityArray" :key="index" style="margin-top:10px">
                 <Col span="8">
-                    <div><p>{{item.ClassRoomName}}</p></div>
+                    <div><p>{{item.classroomname}}</p></div>
                 </Col>
                 <Col span="8">
-                    <div v-if="item.IsPass==null" style="color:#fe6323"><p>暂未获得能力点</p></div>
-                    <div v-if="item.IsPass!=null" class="Ispass" @click="showWorkAllName(item.IsPass)">{{item.IsPass}}</div>
+                    <div v-if="item.ispass==null" style="color:#fe6323"><p>暂未获得能力点</p></div>
+                    <div v-if="item.ispass!=null" class="Ispass" @click="showWorkAllName(item.ispass)">{{item.ispass}}</div>
                 </Col>
                 <Col span="8">
-                    <div class="Notpass" @click="showWorkAllName(item.NotPass)"><p>{{item.NotPass}}</p></div>
+                    <div class="notpass" @click="showWorkAllName(item.notpass)"><p>{{item.notpass}}</p></div>
                 </Col>
               </Row>
               </div>
@@ -312,6 +312,11 @@ export default {
         pages:null,
         count:null
       },
+      pages:{
+        nowPage:1,
+        pageSize:5,
+        startSize:0
+      },
       //作业全称
       workAllName:"",
       //控制作业模态框的显示
@@ -333,8 +338,9 @@ export default {
     this.getNoSubmitWork();
  this.getAbilityScore();
  this.DrawStudentClassRoomAvgScoreEcharts();
- this.getStudentWorkInfoWithStudent()
- this.getStudentAbilityInfo() 
+ this.getStudentWorkInfoWithStudent();
+ this.getStudentAbilityInfo();
+//  this.getAllWorkInfoData();
    
    
    //this.autodivheight();
@@ -372,29 +378,46 @@ export default {
     //获取学生能力点掌握情况
     getStudentAbilityInfo:function(){
       var params={
-        page:this.abilityPageLimit.page,
-        limit:this.abilityPageLimit.limit
+        studentId:this.$store.state.id,
+        nowPage:this.abilityPageLimit.page,
+        pageSize:this.abilityPageLimit.limit
       };
       Http.getStudentAbilityInfo(params).then(res=>{
-        if(res.StatusCode==1){
-          this.abilityArray=res.Data.List;
-          this.abilityPageLimit.count=res.Data.Total;
+        if(res.statusCode==1){
+          this.abilityArray=res.data.content;
+          this.abilityPageLimit.count=res.data.totalElements;
           this.abilityPageLimit.pages=Math.ceil(this.abilityPageLimit.count/this.abilityPageLimit.limit);
         }
       })
     },
+    //获取总数据
+    getAllWorkInfoData:function(){
+        var params=
+        {studentId:this.$store.state.id}
+        Http.getAllWorkInfoData(params).then(res=>{
+          if(res.statusCode==1){
+          this.workInfoPageLimit.count=res.data;
+          this.workInfoPageLimit.pages=Math.ceil(res.data/this.workInfoPageLimit.limit)
+          }
+        })
+    },
     //获取学生作业完成情况
     getStudentWorkInfoWithStudent:function(){
       var params={
-        page:this.workInfoPageLimit.page,
-        limit:this.workInfoPageLimit.limit
-      }
+        "studentId":this.$store.state.id,
+        "nowPage":this.workInfoPageLimit.page,
+        "pageSize":this.workInfoPageLimit.limit,
+        "startSize":0
+      };
+     
+     // console.log("nowPage"+params.pages.nowPage)
       Http.getStudentWorkInfoWithStudent(params).then(res=>{
-        if(res.StatusCode==1){
-          this.workinfo=res.Data.List;
-          this.workInfoPageLimit.count=res.Data.Total;
-          this.workInfoPageLimit.pages=Math.ceil(res.Data.Total/this.workInfoPageLimit.limit)
-          console.log("---------------------"+this.workinfo[0].ClassRoomName)
+        if(res.statusCode==1){
+          this.workinfo=res.data;
+          this.getAllWorkInfoData();
+          //this.workInfoPageLimit.count=res.Data.Total;
+          //this.workInfoPageLimit.pages=Math.ceil(res.Data.Total/this.workInfoPageLimit.limit)
+          //console.log("---------------------"+this.workinfo[0].ClassRoomName)
         }
       })
     },
@@ -662,7 +685,7 @@ window.onresize=barSubjectAbility.resize;
     cursor: pointer;
     
 }
-.Notpass{
+.notpass{
   overflow: hidden;    /* 隐藏溢出内容 */
     text-overflow: clip;    /* 修剪文本 */
     display: -webkit-box;    /* 弹性布局 */
