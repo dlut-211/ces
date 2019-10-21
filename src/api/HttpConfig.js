@@ -14,7 +14,7 @@ var API = {
     login: apiHost + '/testmd/selectByAccountAndPassword',
     // 修改密码
     updatePassword: apiHost + '/user/editpassword',
-    // 返回用户拥有的权限的接口
+    // 返回用户拥有的权限的接口selectByAccountAndPassword
     getPermission: apiHost + '/user/getpermission',
     // 校验Token是否失效
     verifyToken: apiHost + '/user/verifytoken',

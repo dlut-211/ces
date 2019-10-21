@@ -92,13 +92,13 @@
       >
         <Row>
           <Col span="12">
-            <FormItem label="学科代码‎" class="forms" prop="OptionCode">
-              <Input v-model="addSubjectForm.OptionCode"></Input>
+            <FormItem label="学科代码‎" class="forms" prop="optionCode">
+              <Input v-model="addSubjectForm.optionCode"></Input>
             </FormItem>
           </Col>
           <Col span="12">
-            <FormItem label="学科名称" class="forms" prop="OptionValue">
-              <Input v-model="addSubjectForm.OptionValue"></Input>
+            <FormItem label="学科名称" class="forms" prop="optionValue">
+              <Input v-model="addSubjectForm.optionValue"></Input>
             </FormItem>
           </Col>
         </Row>
@@ -118,13 +118,13 @@
       >
         <Row>
           <Col span="12">
-            <FormItem label="学科代码‎" class="forms" prop="OptionCode">
-              <Input v-model="editSubjectForm.OptionCode"></Input>
+            <FormItem label="学科代码‎" class="forms" prop="optionCode">
+              <Input v-model="editSubjectForm.optionCode"></Input>
             </FormItem>
           </Col>
           <Col span="12">
-            <FormItem label="学科名称" class="forms" prop="OptionValue">
-              <Input v-model="editSubjectForm.OptionValue"></Input>
+            <FormItem label="学科名称" class="forms" prop="optionValue">
+              <Input v-model="editSubjectForm.optionValue"></Input>
             </FormItem>
           </Col>
         </Row>
@@ -154,10 +154,10 @@ export default {
       tableModule: SubjectTableModuleJS.bind(this)(),
       addSubject: false,
       addSubjectForm: {
-        OptionCode: "",
-        OptionValue: "",
-        OptionType: "Subject",
-        OptionTypeName: "学科"
+        optionCode: "",
+        optionValue: "",
+        optionType: "Subject",
+        optionTypeName: "学科"
       },
       editSubject: false,
       showAbilityList: false,
@@ -169,7 +169,7 @@ export default {
         Name: "",
         SubjectId: "",
         Describe: "",
-        Subject_OptionValue: ""
+        Subject_optionValue: ""
       },
       addAbility: false,
       addAbilityForm: {
@@ -186,24 +186,24 @@ export default {
         VersionNumber: null
       },
       editSubjectForm: {
-        Id: null,
-        OptionCode: "",
-        OptionValue: "",
-        OptionType: "Subject",
-        OptionTypeName: "学科",
-        VersionNumber: null
+        id: null,
+        optionCode: "",
+        optionValue: "",
+        optionType: "Subject",
+        optionTypeName: "学科",
+        versionnumber: null
       },
       nowPage: 1,
       pageSize: 10,
       findSubjectForm: {
-        OptionCode: "",
-        OptionValue: ""
+        optionCode: "",
+        optionValue: ""
       },
       rules: {
-        OptionCode: [
+        optionCode: [
           { required: true, message: "学科代码‎不能为空", trigger: "blur" }
         ],
-        OptionValue: [
+        optionValue: [
           { required: true, message: "学科名称不能为空", trigger: "blur" }
         ],
         Name: [
@@ -214,7 +214,7 @@ export default {
         ]
       },
       workColumn: [
-        { title: "学科名称", key: "Subject_OptionValue", align: "center" },
+        { title: "学科名称", key: "Subject_optionValue", align: "center" },
         { title: "能力点名称‎", key: "Name", align: "center" },
         { title: "能力点描述", key: "Describe", align: "center" },
         {
@@ -281,6 +281,7 @@ export default {
     this.$store.commit("changeBreadCrumb", ["首页", "学科管理", "学科"]);
     this.$store.commit("changeOpenName", [""]);
     this.$store.commit("changeActiveName", "NetGraphPage");
+    
     this.getSubjectList();
     
   },
@@ -314,6 +315,7 @@ export default {
     // 修改货源表单验证方法
     editSubjectHandleSubmit: async function(name) {
       var result = await this.$refs.editSubjectForm.validate(valid => {});
+      console.log(result)
       if (result) {
         console.log(this);
         this.editSubjectAction();
@@ -334,12 +336,12 @@ export default {
     // 查询方法
     find: function(a) {
       console.log(a);
-      (this.findSubjectForm.OptionCode = a.OptionCode ? a.OptionCode : ""),
-        (this.findSubjectForm.OptionValue = a.OptionValue ? a.OptionValue : ""),
-        (this.findAbilityForm.Subject_OptionValue = a.Subject_OptionValue
-          ? a.Subject_OptionValue
+      (this.findSubjectForm.optionCode = a.optionCode ? a.optionCode : ""),
+        (this.findSubjectForm.optionValue = a.optionValue ? a.optionValue : ""),
+        (this.findAbilityForm.Subject_optionValue = a.Subject_optionValue
+          ? a.Subject_optionValue
           : ""),
-        (this.findAbilityForm.Name = a.Name ? a.Name : "");
+        (this.findAbilityForm.Name = a.name ? a.name : "");
       this.findAbilityForm.SubjectId = a.SubjectId ? a.SubjectId : "";
       (this.findAbilityForm.Describe = a.Describe ? a.Describe : ""),
         this.getSubjectList();
@@ -361,26 +363,30 @@ export default {
     addSubjectAction: function() {
       var params = this.addSubjectForm;
       var params1 = {
-        OptionCode: this.addSubjectForm.OptionCode,
-        OptionValue: "",
-        OptionType: "Subject",
-        OptionTypeName: "学科"
+        optionCode: this.addSubjectForm.optionCode,
+        optionValue: "",
       };
+      console.log(params1)
       Http.getSubjectList(params1).then(res => {
-        if (res.StatusCode == 1) {
-          if (res.Data.Total == 0) {
+        console.log(res)
+        if (res.statusCode == 1) {
+          if (res.data.totalElements == 0) {
             Http.postSubject(params).then(res => {
-              if (res.StatusCode == 1) {
-                this.$Message.success(res.Message);
+              console.log(res)
+              if (res.statusCode == 1) {
+                this.$Message.success(res.message);
                 this.addSubjectForm = {
-                  OptionCode: "",
-                  OptionValue: ""
+                  optionCode: "",
+                  optionValue: "",
+                  optionType: "Subject",
+                  optionTypeName: "学科"
+
                 };
                 this.addSubject = false;
                 this.$refs["addSubjectForm"].resetFields();
                 this.getSubjectList();
               } else {
-                this.$Message.error(res.Message);
+                this.$Message.error(res.message);
               }
             });
           } else {
@@ -421,30 +427,55 @@ export default {
     editSubjectAction: function() {
       var params = this.editSubjectForm;
       var params1 = {
-        OptionCode: this.addSubjectForm.OptionCode,
-        OptionValue: "",
-        OptionType: "Subject",
-        OptionTypeName: "学科"
+        optionCode: this.editSubjectForm.optionCode,
+        optionValue: "",
       };
       Http.getSubjectList(params1).then(res => {
-        if (res.StatusCode == 1) {
-          if (res.Data.Total == 0) {
-            Http.putSubject(params).then(res => {
-              if (res.StatusCode == 1) {
-                this.$Message.success(res.Message);
+        if (res.statusCode == 1) {
+          if(res.data.totalElements != 0){
+            if(res.data.content[0].id == this.editSubjectForm.id){
+              Http.putSubject(params).then(res => {
+              console.log(res)
+              if (res.statusCode == 1) {
+                this.$Message.success(res.message);
                 this.editSubjectForm = {
-                  Id: null,
-                  OptionCode: "",
-                  OptionValue: "",
-                  OptionType: "Subject",
-                  OptionTypeName: "学科",
-                  VersionNumber: null
+                  id: null,
+                  optionCode: "",
+                  optionValue: "",
+                  optionType: "Subject",
+                  optionTypeName: "学科",
+                  versionnumber: null
                 };
                 this.editSubject = false;
                 this.$refs["editSubjectForm"].resetFields();
                 this.getSubjectList();
               } else {
-                this.$Message.error(res.Message);
+                this.$Message.error(res.message);
+              }
+            })}
+            else{
+              this.$Message.error("学科代码已存在！");
+            }
+          }
+
+          else if (res.data.totalElements == 0) {
+            Http.putSubject(params).then(res => {
+              console.log(res)
+              if (res.statusCode == 1) {
+                this.$Message.success(res.message);
+                this.editSubjectForm = {
+                  id: null,
+                  optionCode: "",
+                  optionValue: "",
+                  optionType: "Subject",
+                  optionTypeName: "学科",
+                  versionnumber: null
+                };
+                this.editSubject = false;
+                this.$refs["editSubjectForm"].resetFields();
+                this.getSubjectList();
+              } else {
+                this.$Message.error(res.message);
               }
             });
           } else {
@@ -474,18 +505,19 @@ export default {
         }
       });
     },
-    // 查询学科
+    // 查询学科---------------------
     getSubjectList: function() {
       var params = {
         page: this.nowPage,
         limit: this.pageSize,
-        OptionCode: this.findSubjectForm.OptionCode,
-        OptionValue: this.findSubjectForm.OptionValue
+        optionCode: this.findSubjectForm.optionCode,
+        optionValue: this.findSubjectForm.optionValue
       };
       Http.getSubjectList(params).then(res => {
-        if (res.StatusCode == 1) {
-          this.tableModule.tableContent = res.Data.List;
-          this.tableModule.count = res.Data.Total;
+        console.log(res)
+        if (res.statusCode == 1) {
+          this.tableModule.tableContent = res.data.content;
+          this.tableModule.count = res.data.totalElements;
         }
       });
     },
@@ -496,11 +528,20 @@ export default {
         id: id
       };
       Http.deleteSubject(params).then(res => {
-        if (res.StatusCode == 1) {
+        if(res == null){
+          this.$Message.error("无法删除已使用的学科");
+        }
+        if (res.statusCode == 1) {
           this.$Message.success("删除成功");
-          this.getSubjectList();
+          if(this.tableModule.count%this.pageSize == 1){
+            console.log(this.nowPage)
+            this.nowPage = 1;
+            this.getSubjectList();
+          }else{
+            this.getSubjectList();
+          }
         } else {
-          this.$Message.error(res.Message);
+          this.$Message.error(res.message);
         }
       });
     },

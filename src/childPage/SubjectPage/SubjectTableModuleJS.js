@@ -8,10 +8,10 @@ function SubjectTableModuleJS() {
                 this.$emit("addSubject");
             }
         },
-        count: 50,
+        count: 30,
         tableHead: [
-            { title: "学科代码", key: "OptionCode", align: "center" },
-            { title: "学科名称", key: "OptionValue", align: "center" },
+            { title: "学科代码", key: "optionCode", align: "center" },
+            { title: "学科名称", key: "optionValue", align: "center" },
             {
                 title: "操作",
                 key: "action",
@@ -29,15 +29,14 @@ function SubjectTableModuleJS() {
                                 on: {
                                     click: () => {
                                         this.editSubjectForm = {
-                                            Id:params.row.Id,
-                                            OptionCode: params.row.OptionCode,
-                                            OptionValue: params.row.OptionValue,
-                                            OptionType:'Subject',
-                                            OptionTypeName:"学科",
-											VersionNumber: this.stringToByte(params.row.VersionNumber)
+                                            id:params.row.id,
+                                            optionCode: params.row.optionCode,
+                                            optionValue: params.row.optionValue,
+                                            optionType:'Subject',
+                                            optionTypeName:"学科",
+											//versionnumber: this.stringToByte(params.row.versionnumber)
                                         };
                                         this.editSubject = true;
-
                                     }
                                 }
                             },
@@ -57,7 +56,7 @@ function SubjectTableModuleJS() {
                                             title: "<span style='color:red'><b>提示</b></span>",
                                             content: "确定要删除信息吗？",
                                             onOk: () => {
-                                                this.deleteSubjectAction(params.row.Id)
+                                                this.deleteSubjectAction(params.row.id)
                                             },
                                             onCancel: () => {
                                             }
