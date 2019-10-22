@@ -11,9 +11,9 @@ function AbilityTableModuleJS() {
         },
         count: 50,
         tableHead: [
-            { title: "学科名称", key: "Subject_OptionValue", align: "center" },
-            { title: "能力点名称‎", key: "Name", align: "center" },
-            { title: "能力点描述", key: "Describe", align: "center" },
+            { title: "学科名称", key: "subject_optionValue", align: "center" },
+            { title: "能力点名称‎", key: "name", align: "center" },
+            { title: "能力点描述", key: "description", align: "center" },
             {
                 title: "操作",
                 key: "action",

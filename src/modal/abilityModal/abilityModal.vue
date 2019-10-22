@@ -19,13 +19,13 @@
         <Form :model="addAbilityForm" label-position="left" :label-width="100" :rules="rules" ref="addAbilityForm">
 		  <Row>
           <Col span="24">
-				<FormItem label="能力点名称‎" class="forms" prop="Name">
+				<FormItem label="‎能力点名称" class="forms" prop="name">
 					<Input v-model="addAbilityForm.Name"></Input> <!--给能力点form Model 赋值--->
           <!-- <Input v-model="addAbilityForm.SubjectId"></Input> 给能力点form Model 赋值- -->
 				</FormItem>
           </Col>
            <Col span="24">
-					<FormItem label="能力点描述" class="forms" prop="Describe">
+					<FormItem label="能力点描述" class="forms" prop="description">
             <Input type="textarea" v-model="addAbilityForm.Describe" :autosize="{minRows: 5,maxRows: 5}"></Input>
 					</FormItem>
           </Col>
@@ -44,7 +44,7 @@
 		  <Form :model="editAbilityForm" label-position="left" :label-width="100" :rules="rules" ref="editAbilityForm">
 		  <Row>
           <Col span="24">
-				<FormItem label="能力点名称‎" class="forms" prop="Name">
+				<FormItem label="‎" class="forms" prop="Name">
 					<Input v-model="editAbilityForm.Name"></Input>
 				</FormItem>
           </Col>
@@ -95,7 +95,7 @@ export default {
       },
 	  rules: {
         Name: [
-          { required: true, message: "能力点名称‎不能为空", trigger: "blur" }
+          { required: true, message: "‎不能为空", trigger: "blur" }
         ]
 	  },
       choose: null,

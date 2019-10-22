@@ -23,15 +23,15 @@
       >
         <Row>
           <Col span="12">
-            <FormItem label="能力点名称‎" class="forms" prop="Name">
-              <Input v-model="addAbilityForm.Name"></Input>
+            <FormItem label="能力点名称‎" class="forms" prop="name">
+              <Input v-model="addAbilityForm.name"></Input>
             </FormItem>
           </Col>
           <Col span="24">
-            <FormItem label="能力点描述" class="forms" prop="Describe">
+            <FormItem label="能力点描述" class="forms" prop="description">
               <Input
                 type="textarea"
-                v-model="addAbilityForm.Describe"
+                v-model="addAbilityForm.description"
                 :autosize="{minRows: 5,maxRows: 5}"
               ></Input>
             </FormItem>
@@ -54,15 +54,15 @@
       >
         <Row>
           <Col span="12">
-            <FormItem label="能力点名称‎" class="forms" prop="Name">
-              <Input v-model="editAbilityForm.Name"></Input>
+            <FormItem label="能力点名称‎" class="forms" prop="name">
+              <Input v-model="editAbilityForm.name"></Input>
             </FormItem>
           </Col>
           <Col span="24">
-            <FormItem label="能力点描述" class="forms" prop="Describe">
+            <FormItem label="能力点描述" class="forms" prop="description">
               <Input
                 type="textarea"
-                v-model="editAbilityForm.Describe"
+                v-model="editAbilityForm.description"
                 :autosize="{minRows: 5,maxRows: 5}"
               ></Input>
             </FormItem>
@@ -163,27 +163,27 @@ export default {
       showAbilityList: false,
       AbilityList: [],
       findAbilityList: {
-        SubjectId: ""
+        subjectId: ""
       },
       findAbilityForm: {
-        Name: "",
-        SubjectId: "",
-        Describe: "",
-        Subject_optionValue: ""
+        name: "",
+        subjectId: "",
+        description: "",
+        subject_optionValue: ""
       },
       addAbility: false,
       addAbilityForm: {
-        Name: "",
-        Describe: "",
-        SubjectId: null
+        name: "",
+        description: "",
+        subjectId: null
       },
       editAbility: false,
       editAbilityForm: {
-        Id: null,
-        Name: "",
-        Describe: "",
-        SubjectId: this.$route.params.SubjectId,
-        VersionNumber: null
+        id: null,
+        name: "",
+        description: "",
+        subjectId: this.$route.params.subjectId,
+        versionNumber: null
       },
       editSubjectForm: {
         id: null,
@@ -206,17 +206,17 @@ export default {
         optionValue: [
           { required: true, message: "学科名称不能为空", trigger: "blur" }
         ],
-        Name: [
-          { required: true, message: "能力点名称‎不能为空", trigger: "blur" }
+        name: [
+          { required: true, message: "‎不能为空", trigger: "blur" }
         ],
-        SubjectId: [
+        subjectId: [
           { required: true, message: "学科编号不能为空", trigger: "blur" }
         ]
       },
       workColumn: [
-        { title: "学科名称", key: "Subject_optionValue", align: "center" },
-        { title: "能力点名称‎", key: "Name", align: "center" },
-        { title: "能力点描述", key: "Describe", align: "center" },
+        { title: "学科名称", key: "subject_optionValue", align: "center" },
+        { title: "能力点名称‎", key: "name", align: "center" },
+        { title: "能力点描述", key: "description", align: "center" },
         {
           title: "操作",
           key: "action",
@@ -234,13 +234,13 @@ export default {
                   on: {
                     click: () => {
                       this.editAbilityForm = {
-                        Id: params.row.Id,
-                        Name: params.row.Name,
-                        Describe: params.row.Describe,
-                        SubjectId: params.row.SubjectId,
-                        VersionNumber: this.stringToByte(
-                          params.row.VersionNumber
-                        )
+                        id: params.row.id,
+                        name: params.row.name,
+                        description: params.row.description,
+                        subjectId: params.row.subjectId,
+                        // versionNumber: this.stringToByte(
+                        //   params.row.versionNumber
+                        // )
                       };
                       this.editAbility = true;
                     }
@@ -262,7 +262,7 @@ export default {
                         title: "<span style='color:red'><b>提示</b></span>",
                         content: "确定要删除信息吗？",
                         onOk: () => {
-                          this.deleteAbilityAction(params.row.Id);
+                          this.deleteAbilityAction(params.row.id);
                         },
                         onCancel: () => {}
                       });
@@ -338,12 +338,12 @@ export default {
       console.log(a);
       (this.findSubjectForm.optionCode = a.optionCode ? a.optionCode : ""),
         (this.findSubjectForm.optionValue = a.optionValue ? a.optionValue : ""),
-        (this.findAbilityForm.Subject_optionValue = a.Subject_optionValue
-          ? a.Subject_optionValue
+        (this.findAbilityForm.subject_optionValue = a.subject_optionValue
+          ? a.subject_optionValue
           : ""),
-        (this.findAbilityForm.Name = a.name ? a.name : "");
-      this.findAbilityForm.SubjectId = a.SubjectId ? a.SubjectId : "";
-      (this.findAbilityForm.Describe = a.Describe ? a.Describe : ""),
+        (this.findAbilityForm.name = a.name ? a.name : "");
+      this.findAbilityForm.subjectId = a.subjectId ? a.subjectId : "";
+      (this.findAbilityForm.description = a.description ? a.description : ""),
         this.getSubjectList();
       this.getSubjectAbility();
     },
@@ -397,24 +397,24 @@ export default {
     },
     // 添加能力点
     addAbilityAction: function() {
-      this.addAbilityForm.SubjectId = this.findAbilityList.SubjectId;
+      this.addAbilityForm.subjectId = this.findAbilityList.subjectId;
       var params = this.addAbilityForm;
       Http.getSubjectAbility(params).then(res => {
-        if (res.StatusCode == 1) {
-          if (res.Data.Total == 0) {
+        if (res.statusCode == 1) {
+          if (res.data.totalElements == 0) {
             Http.postAbility(params).then(res => {
-              if (res.StatusCode == 1) {
-                this.$Message.success(res.Message);
+              if (res.statusCode == 1) {
+                this.$Message.success(res.message);
                 this.addAbilityForm = {
-                  Name: "",
-                  Describe: "",
-                  SubjectId: this.findAbilityList.SubjectId
+                  name: "",
+                  description: "",
+                  subjectId: this.findAbilityList.subjectId
                 };
                 this.addAbility = false;
                 this.$refs["addAbilityForm"].resetFields();
                 this.getSubjectAbility1();
               } else {
-                this.$Message.error(res.Message);
+                this.$Message.error(res.message);
               }
             });
           } else {
@@ -488,20 +488,21 @@ export default {
     editAbilityAction: function() {
       var params = this.editAbilityForm;
       Http.putAbility(params).then(res => {
-        if (res.StatusCode == 1) {
-          this.$Message.success(res.Message);
+        if (res.statusCode == 1) {
+          console.log(res)
+          this.$Message.success(res.message);
           this.editAbilityForm = {
-            Id: null,
-            Name: "",
-            Describe: "",
-            SubjectId: this.findAbilityList.SubjectId,
-            VersionNumber: null
+            id: null,
+            name: "",
+            description: "",
+            subjectId: this.findAbilityList.subjectId,
+            versionNumber: null
           };
           this.editAbility = false;
           this.$refs["editAbilityForm"].resetFields();
           this.getSubjectAbility1();
         } else {
-          this.$Message.error(res.Message);
+          this.$Message.error(res.message);
         }
       });
     },
@@ -551,11 +552,11 @@ export default {
         id: id
       };
       Http.deleteAbility(params).then(res => {
-        if (res.StatusCode == 1) {
+        if (res.statusCode == 1) {
           this.$Message.success("删除成功");
           this.getSubjectAbility1();
         } else {
-          this.$Message.error(res.Message);
+          this.$Message.error(res.message);
         }
       });
     },
@@ -563,8 +564,14 @@ export default {
     getSubjectAbility1: function() {
       var params = this.findAbilityList;
       Http.getSubjectAbility(params).then(res => {
-        if (res.StatusCode == 1) {
-          this.AbilityList = res.Data.List;
+        console.log(res)
+        if (res.statusCode == 1) {
+          console.log(res)
+          this.AbilityList = res.data.content;
+          for(let i=0;i<this.AbilityList.length;i++){
+            this.AbilityList[i].subject_optionValue = this.subject_optionValue
+          }
+          console.log(this.AbilityList)
         }
       });
     }

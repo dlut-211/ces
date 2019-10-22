@@ -78,9 +78,9 @@ function SubjectTableModuleJS() {
                                     click: () => {
                                         this.showAbilityList = true ; 
                                         this.findAbilityList={
-                                            
-                                            SubjectId:params.row.Id,  
-                                          };
+                                            subjectId:params.row.id,  
+                                        };
+                                        this.subject_optionValue=params.row.optionValue;
                                         this.getSubjectAbility1();
                                        
 

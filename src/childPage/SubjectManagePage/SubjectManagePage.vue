@@ -92,7 +92,7 @@ export default {
       AbilityColumn: [
         {
           title: "能力点",
-          key: "Name",
+          key: "name",
           align: "center",
           render: (h, params) => {
             return h("div", [
@@ -119,7 +119,7 @@ export default {
         },
         {
           title: "能力点描述",
-          key: "Describe",
+          key: "description",
           align: "center",
           render: (h, params) => {
             return h("div", [
