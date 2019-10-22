@@ -11,8 +11,8 @@ function TeacherTableModuleJS() {
         },
         count: 0,
         tableHead: [
-            { title: "教师工号", key: "Number", align: "center" },
-            { title: "姓名", key: "Name", align: "center" },
+            { title: "教师工号", key: "number", align: "center" },
+            { title: "姓名", key: "name", align: "center" },
             // { title: "状态", key: "StatusName", align: "center" },
             {
                 title: "操作",
@@ -33,15 +33,15 @@ function TeacherTableModuleJS() {
                                 on: {
                                     click: () => {
                                         this.editTeacherForm = {
-                                            Id:params.row.Id,
-                                            Email: params.row.Email,
-                                            Name: params.row.Name,
-                                            Number: params.row.Number,
-                                            Password: params.row.Password,
-                                            School: params.row.School,
-                                            Status: params.row.Status,
-                                            Token: params.row.Token,
-											VersionNumber: this.stringToByte(params.row.VersionNumber)
+                                            id:params.row.id,
+                                            email: params.row.email,
+                                            name: params.row.name,
+                                            number: params.row.number,
+                                            password: params.row.password,
+                                            school: params.row.school,
+                                            status: params.row.status,
+                                            token: params.row.token,
+											//versionNumber: this.stringToByte(params.row.versionNumber)
                                         };
                                         this.editTeacher = true;
 
@@ -89,7 +89,7 @@ function TeacherTableModuleJS() {
                                 },
                                 on: {
                                     click: () => {
-										if(params.row.Status == 2){
+										if(params.row.status == 2){
                                             this.$Message.error('当前教师已为禁用状态！');
                                         }
                                         else{
@@ -97,7 +97,7 @@ function TeacherTableModuleJS() {
                                                 title: "<span style='color:red'><b>提示</b></span>",
                                                 content: "确定要删除吗？",
                                                 onOk: () => {
-                                                    this.disableTeacherAction(params.row.Id)
+                                                    this.disableTeacherAction(params.row.id)
                                                 },
                                                 onCancel: () => {
                                                 }

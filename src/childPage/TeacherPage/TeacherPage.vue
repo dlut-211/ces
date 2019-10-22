@@ -11,13 +11,13 @@
         <Form :model="addTeacherForm" label-position="left" :label-width="100" :rules="rules" ref="addTeacherForm">
 		  <Row>
           <Col span="12">
-					<FormItem label="工号" class="forms" prop="Number">
-						<Input v-model="addTeacherForm.Number"></Input>
+					<FormItem label="工号" class="forms" prop="number">
+						<Input v-model="addTeacherForm.number"></Input>
 					</FormItem>
           </Col>
           <Col span="12">
-					<FormItem label="姓名" class="forms" prop="Name">
-						<Input v-model="addTeacherForm.Name"></Input>
+					<FormItem label="姓名" class="forms" prop="name">
+						<Input v-model="addTeacherForm.name"></Input>
 					</FormItem>
           </Col>
 		  </Row>
@@ -35,13 +35,13 @@
 		  <Form :model="editTeacherForm" label-position="left" :label-width="100" :rules="rules" ref="editTeacherForm">
 		  <Row>
           <Col span="12">
-					<FormItem label="工号" class="forms" prop="Number">
-						<Input v-model="editTeacherForm.Number"></Input>
+					<FormItem label="工号" class="forms" prop="number">
+						<Input v-model="editTeacherForm.number"></Input>
 					</FormItem>
           </Col>
           <Col span="12">
-					<FormItem label="姓名" class="forms" prop="Name">
-						<Input v-model="editTeacherForm.Name"></Input>
+					<FormItem label="姓名" class="forms" prop="name">
+						<Input v-model="editTeacherForm.name"></Input>
 					</FormItem>
           </Col>
 		  </Row>
@@ -71,31 +71,31 @@ export default {
       tableModule: (TeacherTableModuleJS.bind(this))(),
       addTeacher:false,
       addTeacherForm:{
-        Name:"",
-        Number:"",
+        name:"",
+        number:"",
       },
 	  editTeacher:false,
       editTeacherForm:{
-			  Id:null,
-        Name:"",
-        Number:"",
-			  VersionNumber: null
+			  id:null,
+        name:"",
+        number:"",
+			  versionNumber: null
       },
 	  nowPage: 1,
       pageSize: 10,
 	  findTeacherForm:{
-        Name:"",
-        Number:"",
-        Status:1
+        name:"",
+        number:"",
+        status:1
       },
 	  rules: {
-        School: [
+        school: [
           { required: true, message: "学校不能为空", trigger: "blur" }
         ],
-        Name: [
+        name: [
           { required: true, message: "姓名不能为空", trigger: "blur" }
         ],
-        Number: [
+        number: [
           { required: true, message: "工号不能为空", trigger: "blur" }
         ],
 	  }
@@ -131,7 +131,9 @@ export default {
     editTeacherHandleSubmit: async function(name) {
       var result = await this.$refs.editTeacherForm.validate(valid => {});
       if (result) {
+        console.log("编辑")
         console.log(this);
+        
         this.editTeacherAction();
       } else {
         this.$Message.error("表单信息不正确!");
@@ -139,12 +141,12 @@ export default {
     },
     // 查询方法
     find: function(a) {
-      this.findTeacherForm.Name = a.Name ?
-        a.Name : "";
-      this.findTeacherForm.Number = a.Number ?
-        a.Number : "";
-      this.findTeacherForm.Status = a.Status ?
-        a.Status : null;
+      this.findTeacherForm.name = a.name ?
+        a.name : "";
+      this.findTeacherForm.number = a.number ?
+        a.number : "";
+      this.findTeacherForm.status = a.status ?
+        a.status : null;
 	  this.getTeacherList();
     },
 	// 改变页码
@@ -159,57 +161,117 @@ export default {
     },
     // 添加教师
     addTeacherAction: function() {
+      console.log("添加教师")
       var params = this.addTeacherForm;
-      Http.postTeacher(params).then(res => {
-        if (res.StatusCode == 1) {
-          this.$Message.success(res.Message);
-          this.addTeacherForm = {
-            Name:"",
-            Number:""
-          };
-		  this.addTeacher = false;
-		  this.$refs["addTeacherForm"].resetFields();
-          this.getTeacherList();
-        }
-        else{
-            this.$Message.error(res.Message);
-        }
-      });
+      var params1 = {
+        number: this.addTeacherForm.number,
+      };
+        Http.getTeacherList(params1).then(res => {
+          console.log(res)
+          if(res.statusCode==1){  
+            
+            if (res.data.totalElements == 0) {
+                Http.postTeacher(params).then(res => {
+                  if (res.statusCode == 1) {
+                    this.$Message.success(res.message);
+                    this.addTeacherForm = {
+                      name:"",
+                      number:""
+                    };
+                    this.addTeacher = false;
+                    this.$refs["addTeacherForm"].resetFields();
+                    this.getTeacherList();
+                  }
+                  else{
+                    this.$Message.error(res.message);
+                  }
+                });
+            }
+          else {
+            this.$Message.error("教师工号不能重复！");
+          }
+      }
+
+        })
     },
     // 编辑教师
     editTeacherAction: function() {
         var params = this.editTeacherForm;
-        Http.putTeacher(params).then(res=>{
-            if(res.StatusCode==1){
-                this.$Message.success(res.Message);
-				this.editTeacherForm = {
-					Id:null,
-            Name:"",
-            Number:"",
-					VersionNumber: null
-				};
-				this.editTeacher = false;
-				this.$refs["editTeacherForm"].resetFields();
-                this.getTeacherList();
+        var params1 = {
+          number: this.editTeacherForm.number,
+        };
+
+        Http.getTeacherList(params1).then(res => {
+          if (res.statusCode == 1) {
+            if(res.data.totalElements != 0){
+              console.log(res)
+              console.log(res.data.content[0].number)
+              console.log(this.editTeacherForm.number)
+              if(res.data.content[0].id == this.editTeacherForm.id){
+
+                      Http.putTeacher(params).then(res=>{
+                      if(res.statusCode==1){
+                          this.$Message.success(res.message);
+                  this.editTeacherForm = {
+                    Id:null,
+                      name:"",
+                      number:"",
+                    versionNumber: null
+                  };
+                  this.editTeacher = false;
+                  this.$refs["editTeacherForm"].resetFields();
+                          this.getTeacherList();
+                      }
+                      else{
+                          this.$Message.error(res.message);
+                      }
+                  })
+              }
+              else{
+                this.$Message.error("教师工号不能重复！");
+              }
+
+            }
+            else if (res.data.totalElements == 0) {
+                                   Http.putTeacher(params).then(res=>{
+                      if(res.statusCode==1){
+                          this.$Message.success(res.message);
+                  this.editTeacherForm = {
+                    Id:null,
+                      name:"",
+                      number:"",
+                    versionNumber: null
+                  };
+                  this.editTeacher = false;
+                  this.$refs["editTeacherForm"].resetFields();
+                          this.getTeacherList();
+                      }
+                      else{
+                          this.$Message.error(res.message);
+                      }
+                  })
             }
             else{
-                this.$Message.error(res.Message);
+              this.$Message.error("教师工号不能重复！");
             }
+          }
         })
+
+  
     },
     // 查询教师
     getTeacherList: function() {
       var params = {
         page: this.nowPage,
         limit: this.pageSize,
-        Name: this.findTeacherForm.Name,
-        Number: this.findTeacherForm.Number,
-        Status: this.findTeacherForm.Status
+        name: this.findTeacherForm.name,
+        number: this.findTeacherForm.number,
+        //Status: this.findTeacherForm.Status
       };
       Http.getTeacherList(params).then(res => {
-        if(res.StatusCode==1){   
-            this.tableModule.tableContent = res.Data.List;
-            this.tableModule.count = res.Data.Total;
+        if(res.statusCode==1){   
+            this.tableModule.tableContent = res.data.content;
+            this.tableModule.count = res.data.totalElements;
           
         }
       });
@@ -220,12 +282,12 @@ export default {
             id:id
         }
         Http.deleteTeacher(params).then(res=>{
-            if(res.StatusCode==1){
+            if(res.statusCode==1){
                 this.$Message.success("删除成功");
                 this.getTeacherList();
             }
             else{
-                this.$Message.error(res.Message);
+                this.$Message.error(res.message);
             }
         })
     },
@@ -235,12 +297,12 @@ export default {
             id:id
         }
         Http.enableTeacher(params).then(res=>{
-            if(res.StatusCode==1){
+            if(res.statusCode==1){
                 this.$Message.success("启用成功");
                 this.getTeacherList();
             }
             else{
-                this.$Message.error(res.Message);
+                this.$Message.error(res.message);
             }
         })
     },
@@ -250,12 +312,20 @@ export default {
             id:id
         }
         Http.disableTeacher(params).then(res=>{
-            if(res.StatusCode==1){
+            if(res.statusCode==1){
                 this.$Message.success("禁用成功");
+
+
+                if(this.tableModule.count%this.pageSize == 1){
+                console.log(this.nowPage)
+                this.nowPage = 1;
                 this.getTeacherList();
+                }else{
+                  this.getTeacherList();
+                }
             }
             else{
-                this.$Message.error(res.Message);
+                this.$Message.error(res.message);
             }
         })
     },
