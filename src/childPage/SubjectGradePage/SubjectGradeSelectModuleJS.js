@@ -5,7 +5,7 @@ function SubjectGradeSelectModuleJS(){
         icon: "person-stalker",
             input: [
                 {
-                    name:"CourseName",//数据库返回来的变量名
+                    name:"courseName",//数据库返回来的变量名
                     placeholder:"请选择学科",
                     type:"selectAjaxSubject",
                     selected:[],

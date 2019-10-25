@@ -1,8 +1,6 @@
 
 <template>
   <div class="SubjectGradePage">
-    
-  
     <Button type="info" @click="abilityModalVisible=true">学科能力点图</Button>
      <Modal
           v-model="abilityModalVisible"
@@ -32,42 +30,42 @@ import * as Http from "@/api/HttpService.js";
 export default {
   data: function() {
     return {
-      SubjectId: 1,
-      SubjectName:"",
+      subjectId: 1,
+      subjectName:"",
       selectModule: (SubjectGradeSelectModuleJS.bind(this))(),
       tableModule: (SubjectGradeTableModuleJS.bind(this))(),
       addSubjectGrade:false,
       addSubjectGradeForm:{
-        Describe:"",
-        ChapterId:"",
-        Name:""
+        describe:"",
+        chapterId:"",
+        name:""
       },
       abilityModalVisible:false,
 	  editSubjectGrade:false,
       editSubjectGradeForm:{
 			Id:null,
-        Describe:"",
-        ChapterId:"",
-        Name:"",
-			VersionNumber: null
+        describe:"",
+        chapterId:"",
+        name:"",
+			versionNumber: null
       },
-      StudentTestScoreModelList:[],
-      StudentAbility:[],
+      studentAbilityNameAndMaxDTOS:[],
+      studentAbility:[],
 	  nowPage: 1,
       pageSize: 10,
 	  findSubjectGradeForm:{
-        Describe:"",
-        ChapterId:"",
-        Name:""
+        describe:"",
+        chapterId:"",
+        name:""
       },
 	  rules: {
-        Describe: [
+        describe: [
           { required: true, message: "作业描述不能为空", trigger: "blur" }
         ],
-        ChapterId: [
+        chapterId: [
           { required: true, message: "章节Id不能为空", trigger: "blur" }
         ],
-        Name: [
+        name: [
           { required: true, message: "作业名称不能为空", trigger: "blur" }
         ]
 	  }
@@ -92,27 +90,30 @@ export default {
   methods: {
     getAbilityScore:function(){
      var params = {
-      SubjectId:this.SubjectId,
-      StudentId:this.$store.state.id 
+      subjectId:this.subjectId,
+      studentId:this.$store.state.id 
       };
   
       Http.StudentAbilityScoreEcharts(params).then(res => {
-        if(res.StatusCode==1){
+        console.log(res)
+        if(res.statusCode==1){
        
        //暂时没有能力点则提示
-          if(res.Data.StudentTestScoreModelList.length==0&&res.Data.StudentRealityScoreModelList.length==0){
+          if(res.data.studentAbilityNameAndMaxDTOS.length==0&&res.data.realStudentAbilityNameAndMaxDTOS.length==0){
             this.abilityModalVisible = false;
             //提示语
-          }else if(res.Data.StudentTestScoreModelList.length>0 || res.Data.StudentRealityScoreModelList.length>0){
-       this.StudentTestScoreModelList = res.Data.StudentTestScoreModelList;
-        //  this.StudentAbility = res.Data.StudentAbility;
-        for(var i = 0;i<res.Data.StudentRealityScoreModelList.length;i++){
-               this.StudentAbility.push(res.Data.StudentRealityScoreModelList[i].max);
+          }else if(res.data.studentAbilityNameAndMaxDTOS.length>0 || res.data.realStudentAbilityNameAndMaxDTOS.length>0){
+       this.studentAbilityNameAndMaxDTOS = res.data.studentAbilityNameAndMaxDTOS;
+        //  this.StudentAbility = res.data.StudentAbility;
+        for(var i = 0;i<res.data.realStudentAbilityNameAndMaxDTOS.length;i++){
+          console.log(res.data.realStudentAbilityNameAndMaxDTOS[i].max)
+               this.studentAbility.push(res.data.realStudentAbilityNameAndMaxDTOS[i].max);
+               console.log(this.studentAbility)
             }
           }
   
-           //        console.log(res.Data);
-          // console.log(StudentTestScoreModelList);
+           //        console.log(res.data);
+          // console.log(studentAbilityNameAndMaxDTOS);
            this.DrawStudentSubjectAbilityEcharts();
            // this.tableModule.count = valueList.length;
         }
@@ -141,7 +142,7 @@ let barSubjectAbility = this.$echarts.init(document.getElementById('EchartsSubje
                 padding: [3, 5]
            }
         },
-      indicator: this.StudentTestScoreModelList
+      indicator: this.studentAbilityNameAndMaxDTOS
      
         //    { name: '信息技术（Information Techology）', max: 30000},
         //    { name: '客服（Customer Support）', max: 38000},
@@ -156,7 +157,7 @@ let barSubjectAbility = this.$echarts.init(document.getElementById('EchartsSubje
         data : [
             {
               
-              value : this.StudentAbility,
+              value : this.studentAbility,
                 name : '能力点分数'
             },
              
@@ -168,32 +169,35 @@ let barSubjectAbility = this.$echarts.init(document.getElementById('EchartsSubje
 
     },
     getSubjectGradeList:function(){
-var params = {
+      var params = {
         page: this.nowPage,
         limit: this.pageSize,
-     SubjectId:this.SubjectId,
-      StudentId:this.$store.state.id
+        subjectId:this.subjectId,
+        studentId:this.$store.state.id
       };
    
       Http.StudentSubjectScoreEcharts(params).then(res => {
-        if(res.StatusCode==1){
-            let valueList = res.Data.list;
-          
-            if(res.Data.list.length>0){
-              this.SubjectName =  res.Data.list[0].OptionValue;
-              this.SubjectId = res.Data.list[0].SubjectId;
-               this.tableModule.tableContent = res.Data.list;
-            this.tableModule.count = res.Data.list.length;
-            }else if(res.Data.list.length==0){
+        if(res.statusCode==1){
+          console.log(res)
+            let valueList = res.data.content;         
+            if(res.data.content.length>0){
+              this.subjectName =  res.data.content[0].optionValue;
+              this.subjectId = res.data.content[0].subjectId;
+               this.tableModule.tableContent = res.data.content;
+               this.tableModule.count=res.data.total;
+            }else if(res.data.content.length==0){
               this.abilityModalVisible = false;
               this.tableModule.count = 0;
             }
            
+           console.log("总条数"+this.tableModule.count)
         }
       });
 
 
     },
+
+
 	//   添加货源表单验证方法
     addSubjectGradeHandleSubmit: function(name) {
       var result = this.$refs[name].validate(valid => {
@@ -218,12 +222,12 @@ var params = {
     // 查询方法
     find: function(a) {
       console.log(a);
-      this.findSubjectGradeForm.Describe = a.Describe ?
-        a.Describe : "";
-      this.findSubjectGradeForm.ChapterId = a.ChapterId ?
-        a.ChapterId : "";
-      this.findSubjectGradeForm.Name = a.Name ?
-        a.Name : "";
+      this.findSubjectGradeForm.describe = a.describe ?
+        a.describe : "";
+      this.findSubjectGradeForm.chapterId = a.chapterId ?
+        a.chapterId : "";
+      this.findSubjectGradeForm.name = a.name ?
+        a.name : "";
 	  this.getSubjectGradeList();
     },
 	// 改变页码
