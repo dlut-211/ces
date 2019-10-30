@@ -60,7 +60,7 @@
                         this.$store.state.username = res.data.username;
                         this.$store.state.token = res.data.token;
                         this.$store.state.id = res.data.id;
-                        this.$store.state.role = 3;
+                        this.$store.state.role = 1;
                         localStorage.setItem('username', this.$store.getters.username);
                         localStorage.setItem('token', this.$store.getters.token);
                         localStorage.setItem('id', this.$store.state.id);

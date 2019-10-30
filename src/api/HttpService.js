@@ -459,6 +459,11 @@ export const getStudentAbilityInfo = (param) =>{
     return GET(API.getStudentAbilityInfo,param);
 }
 
+//获取所有数据总和
+export const getAllWorkInfoData = (param)=>{
+    return GET(API.getAllWorkInfoData,param)
+}
+
 //测试端口
 export const testPort=(param)=>{
     return GET(API.testPort,param);

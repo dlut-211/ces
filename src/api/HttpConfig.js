@@ -242,10 +242,13 @@ var API = {
     getNoSubmitWork:apiHost+'/studentwork/studentnosubmitwork',
 
     //学生作业完成进度
-    getStudentWorkInfoWithStudent:apiHost+'/studenthome/workinfo',
+    getStudentWorkInfoWithStudent:apiHost+'/vstudentworkinfowithstudentcontroller/getStudentWorkInfoWithStudent',
 
     //学生能力点获得情况
-    getStudentAbilityInfo:apiHost+'/studenthome/abilityinfo'
+    getStudentAbilityInfo:apiHost+'/vstudentclroabilityrscontroller/pageresult',
+
+    //获取作业数据总和
+    getAllWorkInfoData: apiHost+'/vstudentworkinfowithstudentcontroller/getallworkinfodata'
 
 }
 
