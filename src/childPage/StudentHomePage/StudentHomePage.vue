@@ -19,7 +19,7 @@
         <ul>
           <li v-for="(item, index) in DoingWorkInfo" :key="index" style="margin:0.5cm 0.5cm 0.5cm 0.5cm"> 
            
-            课堂《{{item.ClassRoomName}}》{{item.ChapterName}}中作业："{{item.workname}}"待提交;截止日期：{{dateFormatFinal(item.EndTime)}}
+            课堂《{{item.classroomName}}》{{item.ChapterName}}中作业："{{item.workname}}"待提交;截止日期：{{dateFormatFinal(item.EndTime)}}
           
           </li>
         </ul>
@@ -115,7 +115,7 @@
                 <div style="text-align:center;background-color:#f8f8f9">
               <Row v-for="(item, index) in courseList" :key="index" style="margin-top:10px">
                 <Col span="6">
-                    <div><p>{{item.ClassRoomName}}</p></div>
+                    <div><p>{{item.classroomName}}</p></div>
                 </Col>
                 <Col span="6">
                 <div style="text-align:center"><p>{{item.TermTypeName}}</p></div>
@@ -166,7 +166,7 @@
               <div style="text-align:center;background-color:#f8f8f9">
               <Row v-for="(item, index) in workinfo" :key="index" style="margin-top:10px">
                 <Col span="6">
-                    <div><p>{{item.classroomname}}</p></div>
+                    <div><p>{{item.classroomName}}</p></div>
                 </Col>
                 <Col span="6">
                     <div class="summary" @click="showWorkAllName(item.workname)"><p>{{item.workname}}</p></div>
@@ -219,14 +219,14 @@
                 <div style="text-align:center;background-color:#f8f8f9">
               <Row v-for="(item, index) in abilityArray" :key="index" style="margin-top:10px">
                 <Col span="8">
-                    <div><p>{{item.classroomname}}</p></div>
+                    <div><p>{{item.classroomName}}</p></div>
                 </Col>
                 <Col span="8">
-                    <div v-if="item.ispass==null" style="color:#fe6323"><p>暂未获得能力点</p></div>
-                    <div v-if="item.ispass!=null" class="Ispass" @click="showWorkAllName(item.ispass)">{{item.ispass}}</div>
+                    <div v-if="item.nameExp5==null" style="color:#fe6323"><p>暂未获得能力点</p></div>
+                    <div v-if="item.nameExp5!=null" class="nameExp4" @click="showWorkAllName(item.nameExp5)">{{item.nameExp5}}</div>
                 </Col>
                 <Col span="8">
-                    <div class="notpass" @click="showWorkAllName(item.notpass)"><p>{{item.notpass}}</p></div>
+                    <div class="nameExp4" style="color:red" @click="showWorkAllName(item.nameExp4)"><p>{{item.nameExp4}}</p></div>
                 </Col>
               </Row>
               </div>
@@ -415,9 +415,9 @@ export default {
         if(res.statusCode==1){
           this.workinfo=res.data;
           this.getAllWorkInfoData();
-          //this.workInfoPageLimit.count=res.Data.Total;
-          //this.workInfoPageLimit.pages=Math.ceil(res.Data.Total/this.workInfoPageLimit.limit)
-          //console.log("---------------------"+this.workinfo[0].ClassRoomName)
+          //this.workInfoPageLimit.count=res.data.Total;
+          //this.workInfoPageLimit.pages=Math.ceil(res.data.Total/this.workInfoPageLimit.limit)
+          //console.log("---------------------"+this.workinfo[0].classroomName)
         }
       })
     },
@@ -429,8 +429,8 @@ export default {
         StudentId:this.$store.state.id
       }
       Http.getNoSubmitWork(params).then(res=>{
-        if(res.StatusCode==1){
-          this.noSubmitCount=res.Data.NoSubmitWork
+        if(res.statusCode==1){
+          this.noSubmitCount=res.data.NoSubmitWork
         }
         else{
           this.$Message.error;
@@ -473,12 +473,12 @@ export default {
         StudentId:parseInt(this.$store.state.id),
       };
       Http.getClassRoomStudentList(params).then(res => {
-        if(res.StatusCode==1){
-            this.courseList = res.Data.List;
-            this.TotalList=res.Data.Total;
-            this.courseListPages =Math.ceil(res.Data.Total/this.pageSize);
+        if(res.statusCode==1){
+            this.courseList = res.data.List;
+            this.TotalList=res.data.Total;
+            this.courseListPages =Math.ceil(res.data.Total/this.pageSize);
             if(this.maxPageSize==99999){
-               this.TotalList=res.Data.Total;
+               this.TotalList=res.data.Total;
             }
             this.maxPageSize=this.pageSize;
         }
@@ -516,9 +516,9 @@ export default {
         limit:10
       }
       Http.getStudentWorkByTime(params).then(res=>{
-        if(res.StatusCode==1){
-          this.DoingWorkInfo=res.Data.List;
-          this.TotalRecords=res.Data.Total;
+        if(res.statusCode==1){
+          this.DoingWorkInfo=res.data.List;
+          this.TotalRecords=res.data.Total;
         }
         else{
           this.$Message.error();
@@ -527,27 +527,27 @@ export default {
     },
      getAbilityScore:function(){
      var params = {
-      SubjectId:this.SubjectId,
-      StudentId:this.$store.state.id 
+      subjectId:this.SubjectId,
+      studentId:this.$store.state.id 
       };
   
       Http.StudentAbilityScoreEcharts(params).then(res => {
-        if(res.StatusCode==1){
+        if(res.statusCode==1){
        
        //暂时没有能力点则提示
-          if(res.Data.StudentTestScoreModelList.length==0&&res.Data.StudentRealityScoreModelList.length==0){
+          if(res.data.studentAbilityNameAndMaxDTOS.length==0&&res.data.realStudentAbilityNameAndMaxDTOS.length==0){
             this.abilityModalVisible = false;
             //提示语
-          }else if(res.Data.StudentTestScoreModelList.length>0 || res.Data.StudentRealityScoreModelList.length>0){
-       this.StudentTestScoreModelList = res.Data.StudentTestScoreModelList;
-        //  this.StudentAbility = res.Data.StudentAbility;
-        for(var i = 0;i<res.Data.StudentRealityScoreModelList.length;i++){
-               this.StudentAbility.push(res.Data.StudentRealityScoreModelList[i].max);
+          }else if(res.data.studentAbilityNameAndMaxDTOS.length>0 || res.data.realStudentAbilityNameAndMaxDTOS.length>0){
+       this.studentAbilityNameAndMaxDTOS = res.data.studentAbilityNameAndMaxDTOS;
+        //  this.StudentAbility = res.data.StudentAbility;
+        for(var i = 0;i<res.data.realStudentAbilityNameAndMaxDTOS.length;i++){
+               this.StudentAbility.push(res.data.realStudentAbilityNameAndMaxDTOS[i].max);
             }
           }
   
-           //        console.log(res.Data);
-          // console.log(StudentTestScoreModelList);
+           //        console.log(res.data);
+          // console.log(studentAbilityNameAndMaxDTOS);
            this.DrawStudentSubjectAbilityEcharts();
            // this.tableModule.count = valueList.length;
         }
@@ -559,15 +559,17 @@ export default {
     DrawStudentClassRoomAvgScoreEcharts:function(){
       var params=
       {
-        StudentId:this.$store.state.id
+        studentId:this.$store.state.id
       }
       this.legendInfo.push(this.$store.state.username);
       this.legendInfo.push("平均值");
       Http.getClassRoomAvgScore(params).then(res=>{
-        if(res.StatusCode==1){
-          this.ClassRoomNameList=res.Data.ClassRoomNameList;
-          this.AvgScoreList=res.Data.AvgScoreList;
-          this.MyAvgScoreList=res.Data.MyAvgScoreList;
+        if(res.statusCode==1){
+          for(var i=0;i<res.data.length;i++){
+            this.ClassRoomNameList.push(res.data[i].classroomName);
+            this.AvgScoreList.push(res.data[i].avgScore);
+            this.MyAvgScoreList.push(res.data[i].myAvgScore)
+          }
       let StudentClassRoomAvgScoreEcharts = this.$echarts.init(document.getElementById('StudentClassRoomAvgScoreEcharts'));
       StudentClassRoomAvgScoreEcharts.setOption({
             tooltip : {
@@ -640,7 +642,7 @@ let barSubjectAbility = this.$echarts.init(document.getElementById('EchartsSubje
                 padding: [3, 5]
            }
         },
-      indicator: this.StudentTestScoreModelList
+      indicator: this.studentAbilityNameAndMaxDTOS
      
       
          
@@ -676,7 +678,7 @@ window.onresize=barSubjectAbility.resize;
     color: forestgreen;
     cursor: pointer;
 }
-.Ispass{
+.nameExp4{
     overflow: hidden;    /* 隐藏溢出内容 */
     text-overflow: clip;    /* 修剪文本 */
     display: -webkit-box;    /* 弹性布局 */
@@ -685,7 +687,7 @@ window.onresize=barSubjectAbility.resize;
     cursor: pointer;
     
 }
-.notpass{
+.nameExp5{
   overflow: hidden;    /* 隐藏溢出内容 */
     text-overflow: clip;    /* 修剪文本 */
     display: -webkit-box;    /* 弹性布局 */

@@ -2,8 +2,8 @@
     <div>
         <div class="layout">
             <Sider :style="{position: 'fixed', height: '100vh', left: 0, overflow: 'auto'}">
-                <Menu :active-name="$store.getters.activeName" :open-names="openNames" theme="dark" width="auto"
-                    :style="{paddingTop:'10px'}" @on-select="changeRouter" ref="Menu">
+                <!-- <Menu :active-name="$store.getters.activeName" :open-names="openNames" theme="dark" width="auto"
+                    :style="{paddingTop:'10px'}"  ref="Menu">
                     <Submenu v-for="(value,key) in actionList" :name="value.MenuCode" :key="key">
                         <template slot="title">
                             <Icon :type="value.Icon"></Icon>
@@ -11,7 +11,47 @@
                         </template>
                         <MenuItem v-for="(value2,key2) in value.Childs" :name="value2.Route" :key="key2">{{value2.MenuName}}</MenuItem>
                     </Submenu>
-                </Menu>
+                </Menu> -->
+                <Menu v-if="userRole==1" :theme="theme2" :open-names="['1','2']" theme="dark" width="auto"
+                    :style="{paddingTop:'10px'}" @on-select="changeRouter">
+                <Submenu name="1">
+                    <template slot="title">
+                        <Icon type="ios-paper"></Icon>
+                        用户管理
+                    </template>
+                    <MenuItem name="TeacherPage">教师</MenuItem>
+                </Submenu>
+                <Submenu name="2">
+                    <template slot="title">
+                        <Icon type="ios-paper"></Icon>
+                        学科管理
+                    </template>
+                    <MenuItem name="SubjectPage">学科</MenuItem>
+                </Submenu>
+            </Menu>
+            <Menu v-if="userRole==2" :theme="theme2" :open-names="['1']" theme="dark" width="auto"
+                    :style="{paddingTop:'10px'}" @on-select="changeRouter">
+                <Submenu name="1">
+                    <template slot="title">
+                        <Icon type="ios-paper"></Icon>
+                        教学管理
+                    </template>
+                    <MenuItem name="CoursePage">课程管理</MenuItem>
+                    <MenuItem name="ClassRoomPage">我的课堂</MenuItem>
+                    <MenuItem name="SubjectManagePage">学科管理</MenuItem>
+                </Submenu>
+            </Menu>
+                <Menu v-if="userRole==3" :theme="theme2" :open-names="['1']" theme="dark" width="auto"
+                    :style="{paddingTop:'10px'}" @on-select="changeRouter">
+                <Submenu name="1">
+                    <template slot="title">
+                        <Icon type="ios-paper"></Icon>
+                        我的信息
+                    </template>
+                    <MenuItem name="ClassRoomStudentPage">我的课堂</MenuItem>
+                    <MenuItem name="SubjectGradePage">我的学科</MenuItem>
+                </Submenu>
+            </Menu>
                 </Sider>
             <Layout :style="{marginLeft: '200px',paddingTop:'50px'}">
                 <div class="title">
@@ -144,6 +184,7 @@
                 }
             };
             return {
+                userRole:this.$store.state.role,
                 actionList: [],
                 openNames:[],
                 aaa: true,

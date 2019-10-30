@@ -435,24 +435,25 @@
             layoutWorkAction:function(id){
                 
                 var params = {
-                    classRoomWorkId: id,
-                    EndTime:this.dateFormatFinal(this.EndTime)
+                    userId:this.$store.state.id,
+                    classroomWorkId: id,
+                    endTime:this.dateFormatFinal(this.EndTime)
                 };
                 Http.layoutClassRoomWork(params).then(res =>{
-                    if(res.StatusCode == 1){
-                        this.$Message.success(res.Message);
+                    if(res.statusCode == 1){
+                        this.$Message.success(res.message);
                         this.getWorkByChapter();
                         this.EndTime="";
                         this.ShowEndTime=false;
                     }else{
-                        this.$Message.error(res.Message);
+                        this.$Message.error(res.message);
                     }
                     
                 });
             },
             revokeLayoutWorkAction:function(id){
                 var params = {
-                    classRoomWorkId: id
+                    classroomWorkId: id
                 };
                 Http.revokeLayoutClassRoomWork(params).then(res =>{
                     if(res.StatusCode == 1){

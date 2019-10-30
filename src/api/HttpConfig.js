@@ -7,7 +7,7 @@ var API = {
     //学生登录
     studentLogin: apiHost + '/studentcontroller/selectByAccountAndPassword',
     //教师登录
-    teacherLogin: apiHost + '/teachercontroller/selectByAccountAndPassword',
+    teacherLogin: apiHost + '/teacher/selectByAccountAndPassword',
     //管理员登录
     adminLogin: apiHost + '/usercontroller/selectByAccountAndPassword',
     // 后台用户登陆
