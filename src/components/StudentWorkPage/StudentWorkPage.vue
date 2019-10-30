@@ -53,11 +53,11 @@
             <Button type="primary" size="large" @click="SubmitWorkAction()">确定</Button>
         </div>
       </Modal>
-    <div style="text-align:right">
+    <!-- <div style="text-align:right">
         <Button type="primary" style="height:30px;" size="large" @click="getEchartsTestPaper()">饼图</Button>
         <Button type="primary" style="height:30px;" size="large" @click="huanbiDia(FatherClassRoomId)">环比图</Button>
         <Button type="primary" style="height:30px;" size="large" @click="leidaDia(FatherClassRoomId)">雷达图</Button>
-    </div>
+    </div> -->
       <tableModule :object="tableModule" @changePage="changePage" @changeSize="changeSize" @addStudentWork="addStudentWork=true;$refs['addStudentWorkForm'].resetFields();"></tableModule>
    <Modal
           v-model="huanbi"
@@ -130,9 +130,9 @@ export default {
       ClassRoomWorkCount:"",
       workList:[],
       findWorkList:{
-        StudentId: null,
+        studentId: null,
         chapterId : null,
-        ClassRoomId:null     
+        classroomId:null,  
       },
       Describe:"",
       hided:false,
@@ -178,9 +178,9 @@ export default {
        workColumn:[
                     { 
                         title: "作业名称", 
-                        key: "WorkName",
+                        key: "workName",
                     },
-                    { title: "描述", key: "Description",
+                    { title: "描述", key: "description",
                       render:(h,params)=>{
                         if(this.isHide==true){
                           return h('div',[
@@ -202,22 +202,22 @@ export default {
                         }
                       }
                     },
-                    {title:"发布时间",key:"LayoutTime",
+                    {title:"发布时间",key:"layoutTime",
                       render:(h,params)=>{
-                        return h("div",this.dateFormatFinal(params.row.LayoutTime))
+                        return h("div",this.dateFormatFinal(params.row.layoutTime))
                       }},
-                    {title:"截止时间",key:"EndTime",
+                    {title:"截止时间",key:"endTime",
                       render:(h,params)=>{
-                        return h("div",this.dateFormatFinal(params.row.EndTime))
+                        return h("div",this.dateFormatFinal(params.row.endTime))
                       }},
 
-                    { title: "成绩", key: "Score" ,field:'right',width:100,
+                    { title: "成绩", key: "score" ,field:'right',width:100,
                      render: (h, params) => {
                        var mydate=new Date();
                        //console.log("mydate"+mydate)
                        
                    
-                       if(params.row.IsSubmit==0){
+                       if(params.row.isSubmit==0){
                          return h("div", [
                             h(
                                 "span",
@@ -235,7 +235,7 @@ export default {
                             )
                         ]);
                        }
-                      if(params.row.isScore==0){
+                      if(params.row.isScored==0){
                          return h("div", [
                             h(
                                 "span",
@@ -264,7 +264,7 @@ export default {
                                         }
                                     }
                                 },
-                                params.row.Score
+                                params.row.score
                             )
                         ]);
                        }
@@ -422,10 +422,10 @@ export default {
     getWorkByChapter:function(){
                 var params = this.findWorkList;
                 Http.getWorkByChapter(params).then(res => {
-                    if(res.StatusCode==1){
+                    if(res.statusCode==1){
                         
-                        this.TestScore=res.Data.List[0].Score;
-                        this.workList = res.Data.List;
+                        //this.TestScore=res.Data.List[0].Score;
+                        this.workList = res.data.content;
                         
                     }
                 });
@@ -512,16 +512,16 @@ export default {
     // 查询学生作业s
     getchapterWorkList: function(e) {
       var params = {
-        page: this.nowPage,
-        limit: this.pageSize,
-        ClassRoomId: e,
-        StudentId:this.$store.state.id
+        nowPage: this.nowPage,
+        pageSize: this.pageSize,
+        classroomId: e,
+        studentId:this.$store.state.id
       };
       Http.getchapterWorkList(params).then(res => {
         console.log(res)
-        if(res.StatusCode==1){
-          this.tableModule.tableContent = res.Data.List1;
-            this.tableModule.count = res.Data.Total;
+        if(res.statusCode==1){
+          this.tableModule.tableContent = res.data.content;
+            this.tableModule.count = res.data.numberOfElements;
         }
       });
     },

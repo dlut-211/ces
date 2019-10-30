@@ -21,7 +21,7 @@ var API = {
     // 图片上传
     uploadImg: apiHost + '/upload/image',
     // 文件上传
-    uploadFile: apiHost + '/upload/file',
+    uploadFile: apiHost + '/course/uploadFile',
     //测试专用
     testPort:apiHost+'/user/testView',
 
@@ -112,7 +112,7 @@ var API = {
 
 
     // 获取课堂学员列表
-    getClassRoomStudentList: apiHost + '/classroomstudent/list',
+    getClassRoomStudentList: apiHost + '/classroomstudent/selectClassRoomCountById',
     // 删除课堂学员
     deleteClassRoomStudent: apiHost + '/classroomstudent/remove',
     // 添加课堂学员
@@ -164,7 +164,7 @@ var API = {
     // 获取学生作业列表
     getStudentWorkList: apiHost + '/studentwork/list',
     // 获取章节作业数
-    getchapterWorkList: apiHost + '/studentwork/chapterWorkList',
+    getchapterWorkList: apiHost + '/classroomstudent/chapterWorkList',
     // 获取环比图所需数据
     getknowledgeScoreList: apiHost + '/studentWork/knowledgeScoreList',
     // 获取雷达图所需数据
@@ -201,7 +201,7 @@ var API = {
     //获取某门课堂下所有的作业
     getClassRoomWork: apiHost + '/classroomwork/list',
     //获取章节作业
-    getWorkByChapter: apiHost + '/studentwork/studentworkbychapter',
+    getWorkByChapter: apiHost + '/classroomstudent/studentworkbychapter',
      // 获取作业列表
      getStudentCharptWordList: apiHost + '/studentcharptword/list',
      // 删除作业

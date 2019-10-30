@@ -115,18 +115,25 @@
                 <div style="text-align:center;background-color:#f8f8f9">
               <Row v-for="(item, index) in courseList" :key="index" style="margin-top:10px">
                 <Col span="6">
-                    <div><p>{{item.classroomName}}</p></div>
+                    <div><p>{{item.name}}</p></div>
                 </Col>
                 <Col span="6">
-                <div style="text-align:center"><p>{{item.TermTypeName}}</p></div>
+                <div style="text-align:center">
+                  <p v-if="item.termType==1">春季学期</p>
+                  <p v-if="item.termType==2">夏季学期</p>
+                  <p v-if="item.termType==3">秋季学期</p>
+                </div>
                     
                 </Col>
                 <Col span="8">
-                    <div><p>{{dateFormatFirst(item.BeginDate)}}-{{dateFormatFirst(item.EndDate)}}</p></div>
+                    <div><p>{{dateFormatFirst(item.beginDate)}}-{{dateFormatFirst(item.endDate)}}</p></div>
                 </Col>
                 <Col span="4">
-                    <div v-if="item.StatusName=='未开课'" style="color:red"><p>{{item.StatusName}}</p></div>
-                    <div v-if="item.StatusName!='未开课'">{{item.StatusName}}</div>
+                    <div style="text-align:center">
+                      <p style="color:red" v-if="item.status==1">未开课</p>
+                      <p v-if="item.status==2">已开课</p>
+                      <p v-if="item.status==4">已结课</p>
+                   </div>
                 </Col>
               </Row>
               </div>
@@ -468,19 +475,16 @@ export default {
     //获取课程列表
      getClassRoomStudentList: function() {
       var params = {
-        page: this.nowPage,
-        limit: this.maxPageSize,
         StudentId:parseInt(this.$store.state.id),
+        nowPage: this.nowPage,
+        pageSize: this.pageSize,
+        startSize : 0
       };
       Http.getClassRoomStudentList(params).then(res => {
         if(res.statusCode==1){
-            this.courseList = res.data.List;
-            this.TotalList=res.data.Total;
-            this.courseListPages =Math.ceil(res.data.Total/this.pageSize);
-            if(this.maxPageSize==99999){
-               this.TotalList=res.data.Total;
-            }
-            this.maxPageSize=this.pageSize;
+            this.courseList = res.data.content;
+            this.TotalList=res.data.totalElements;
+            this.courseListPages=res.data.totalPages;
         }
       });
     },

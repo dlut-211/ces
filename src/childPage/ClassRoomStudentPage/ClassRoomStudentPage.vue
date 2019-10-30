@@ -47,32 +47,32 @@ export default {
         ClassRoomId:""
       },
             courseColumns:[
-            { title: "课程编号", key: "Code", align: "center",
-            render: (h, params) => {
-                return h("div", [
-                    h(
-                        "span",
-                        {
-                            style: {
-                                color: "#2d8cf0",
-                                cursor: "pointer",
-                                margin: "0 5px"
-                            },
-                            on: {
-                                click: () => {
-                                this.LocalClassRoomId=params.row.ClassRoomId;
-                                this.GetData()
-                                }
-                            }
-                        },
-                        params.row.Code
-                    ),
-                ]);
-            }
+            { title: "课程编号", key: "code", align: "center",
+            // render: (h, params) => {
+            //     return h("div", [
+            //         h(
+            //             "span",
+            //             {
+            //                 style: {
+            //                     color: "#2d8cf0",
+            //                     cursor: "pointer",
+            //                     margin: "0 5px"
+            //                 },
+            //                 on: {
+            //                     click: () => {
+            //                     this.LocalClassRoomId=params.row.classroomId;
+            //                     this.GetData()
+            //                     }
+            //                 }
+            //             },
+            //             params.row.code
+            //         ),
+            //     ]);
+            // }
             },
         {
           title:'课堂名称',
-          key:'ClassRoomName',
+          key:'name',
           align:"center",
           render:(h,params)=>{
              return h("div", [
@@ -86,34 +86,92 @@ export default {
                             },
                             on: {
                                 click: () => {
-                                this.LocalClassRoomId=params.row.ClassRoomId;
+                                this.LocalClassRoomId=params.row.classroomId;
                                 this.GetData()
                                 }
                             }
                         },
-                        params.row.ClassRoomName
+                        params.row.name
                     ),
                 ]);
           }
         },
         {
           title:'学期',
-          key:'TermTypeName',
-          align:"center"
+          key:'termType',
+          align:"center",
+          render:(h,params)=>{
+            if(params.row.termType==1){
+              return h("div",[
+                h(
+                  "span",
+                  {},
+                  "春季学期"
+                )
+              ])
+            }
+            else if(params.row.termType==2){
+              return h("div",[
+                h(
+                  "span",
+                  {},
+                  "夏季学期"
+                )
+              ])
+            }
+            else if(params.row.termType==3){
+              return h("div",[
+                h(
+                  "span",
+                  {},
+                  "秋季学期"
+                )
+              ])
+            }
+          }
         },
         {
           title:'上课日期',
           key:'Begin_End',
           align:"center",
           render: (h, params) => {
-                return h("div", [this.dateFormatFirst(params.row.BeginDate)]
-                +"-"+[this.dateFormatFirst(params.row.EndDate)])
+                return h("div", [this.dateFormatFirst(params.row.beginDate)]
+                +"-"+[this.dateFormatFirst(params.row.endDate)])
             }
         },
         {
           title:'课程状态',
-          key:'StatusName',
-          align:"center"
+          key:'status',
+          align:"center",
+          render:(h,params)=>{
+            if(params.row.status==1){
+              return h("div",[
+                h(
+                  "span",
+                  {},
+                  "未开课"
+                )
+              ])
+            }
+            else if(params.row.status==2){
+              return h("div",[
+                h(
+                  "span",
+                  {},
+                  "已开课"
+                )
+              ])
+            }
+            else if(params.row.status==4){
+              return h("div",[
+                h(
+                  "span",
+                  {},
+                  "已结课"
+                )
+              ])
+            }
+          }
         }
       ],
       TotalList:null,
@@ -194,8 +252,8 @@ export default {
     //this.getStudentWorkCount();
     this.ShowChapterWorkList=true
 this.$refs.ChildStudentWork.getchapterWorkList(this.LocalClassRoomId);
-this.$refs.ChildStudentWork.getClassRoomWork(this.LocalClassRoomId);
-this.$refs.ChildStudentWork.getStudentWorkCount(this.LocalClassRoomId);
+//this.$refs.ChildStudentWork.getClassRoomWork(this.LocalClassRoomId);
+//this.$refs.ChildStudentWork.getStudentWorkCount(this.LocalClassRoomId);
     },
 	// 改变页码
     changePage:function(page){
@@ -211,19 +269,16 @@ this.$refs.ChildStudentWork.getStudentWorkCount(this.LocalClassRoomId);
     // 查询课堂学员
     getClassRoomStudentList: function() {
       var params = {
-        page: this.nowPage,
-        limit: this.maxPageSize,
         StudentId:parseInt(this.$store.state.id),
+        nowPage: this.nowPage,
+        pageSize: this.pageSize,
+        startSize : 0
       };
       Http.getClassRoomStudentList(params).then(res => {
-        if(res.StatusCode==1){
-            this.courseList = res.Data.List;
-            this.courseListPages =Math.ceil(res.Data.Total/this.pageSize);
-            if(this.maxPageSize==99999){
-               this.TotalList=res.Data.Total;
-            }
-            this.maxPageSize=this.pageSize;
-            
+        if(res.statusCode==1){
+            this.courseList = res.data.content;
+            this.TotalList=res.data.totalElements;
+            this.courseListPages=res.data.totalPages;
         }
       });
     },
