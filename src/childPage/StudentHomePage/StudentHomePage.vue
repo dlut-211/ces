@@ -296,7 +296,7 @@ export default {
  this.DrawStudentClassRoomAvgScoreEcharts();
  this.getStudentWorkInfoWithStudent();
  this.getStudentAbilityInfo();
-   this.getClassRoomStudentList()
+   this.getClassRoomStudentList1()
   },
   components: {
     selectModule: selectModule,
@@ -410,22 +410,22 @@ export default {
     //上一页
     lastPage:function(){
       this.nowPage=this.nowPage-1; 
-      this.getClassRoomStudentList();
+      this.getClassRoomStudentList1();
     },
     //下一页
     nextPage:function(){
       this.nowPage=this.nowPage+1;
-      this.getClassRoomStudentList()
+      this.getClassRoomStudentList1()
     },
     //获取课程列表
-     getClassRoomStudentList: function() {
+     getClassRoomStudentList1: function() {
       var params = {
         StudentId:parseInt(this.$store.state.id),
         nowPage: this.nowPage,
         pageSize: this.pageSize,
         startSize : 0
       };
-      Http.getClassRoomStudentList(params).then(res => {
+      Http.getClassRoomStudentList1(params).then(res => {
         if(res.statusCode==1){
             this.courseList = res.data.content;
             this.TotalList=res.data.totalElements;

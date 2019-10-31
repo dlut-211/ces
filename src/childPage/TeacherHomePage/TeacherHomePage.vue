@@ -14,10 +14,10 @@
         <Table stripe height="200"  :columns="columns1" :data="InviGilateInfo"></Table> -->
     </div>
     
-    <div style="margin-top:20px">
+    <!-- <div style="margin-top:20px">
       <h3>课程回顾</h3>
       <Table stripe height="200" :columns="ClassClosedColumns" :data="ClassClosedData"></Table>
-    </div>
+    </div> -->
 
   </div>
 </template>

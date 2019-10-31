@@ -200,7 +200,7 @@ export default {
     ]);
     this.$store.commit("changeOpenName", [""]);
     this.$store.commit("changeActiveName", "NetGraphPage");
-    this.getClassRoomStudentList();
+    this.getClassRoomStudentList1();
    
   },
   components: {
@@ -212,12 +212,12 @@ export default {
     //上一页
     lastPage:function(){
       this.nowPage=this.nowPage-1; 
-      this.getClassRoomStudentList();
+      this.getClassRoomStudentList1();
     },
     //下一页
     nextPage:function(){
       this.nowPage=this.nowPage+1;
-      this.getClassRoomStudentList()
+      this.getClassRoomStudentList1()
     },
    
     //时间相加
@@ -258,23 +258,23 @@ this.$refs.ChildStudentWork.getchapterWorkList(this.LocalClassRoomId);
 	// 改变页码
     changePage:function(page){
       this.nowPage = page;
-      this.getClassRoomStudentList();
+      this.getClassRoomStudentList1();
     },
 	    // 改变每页显示的条数
     changeSize: function(size) {
       this.pageSize = size;
-      this.getClassRoomStudentList();
+      this.getClassRoomStudentList1();
     },
     
     // 查询课堂学员
-    getClassRoomStudentList: function() {
+    getClassRoomStudentList1: function() {
       var params = {
         StudentId:parseInt(this.$store.state.id),
         nowPage: this.nowPage,
         pageSize: this.pageSize,
         startSize : 0
       };
-      Http.getClassRoomStudentList(params).then(res => {
+      Http.getClassRoomStudentList1(params).then(res => {
         if(res.statusCode==1){
             this.courseList = res.data.content;
             this.TotalList=res.data.totalElements;

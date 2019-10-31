@@ -114,7 +114,9 @@ var API = {
 
 
     // 获取课堂学员列表
-    getClassRoomStudentList: apiHost + '/classroomstudent/selectClassRoomCountById',
+    getClassRoomStudentList: apiHost + '/classroomstudent/list',
+    // 学生首页
+    getClassRoomStudentList1:apiHost + '/classroomstudent/selectClassRoomCountById',
     // 删除课堂学员
     deleteClassRoomStudent: apiHost + '/classroomstudent/remove',
     // 添加课堂学员
@@ -145,15 +147,15 @@ var API = {
     putStudentWorkDetail: apiHost + '/studentworkdetail/edit',
 
     // 获取试卷列表
-    getTestPaperList: apiHost + '/testpaper/list',
+    getTestPaperList: apiHost + '/test_paper/list',
     // 删除试卷
-    deleteTestPaper: apiHost + '/testpaper/remove',
+    deleteTestPaper: apiHost + '/test_paper/remove',
     // 添加试卷
-    postTestPaper: apiHost + '/testpaper/add',
+    postTestPaper: apiHost + '/test_paper/add',
     // 编辑试卷
-    putTestPaper: apiHost + '/testpaper/edit',
+    putTestPaper: apiHost + '/test_paper/edit',
     // 修改试卷状态
-    editTestPaperStatus: apiHost + '/testpaper/editstatus',
+    editTestPaperStatus: apiHost + '/test_paper/examined',
     // 根据试卷获取试题
     TestPaperDetailList: apiHost + '/testpaperdetail/testpaperlist',
     // 学生考试成绩

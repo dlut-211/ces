@@ -66,7 +66,7 @@
                 </Row>
             </div>
         </TabPane>
-        <TabPane label="试卷"  v-if="classRoomData.Status != 1">
+        <TabPane label="试卷"  v-if="classRoomData.status != 1">
             <div>
                 <tableModule :object="testPaperTableModule" @changePage="testPaperChangePage" @changeSize="testPaperChangeSize" @addTestPaper="addTestPaperAction"></tableModule>
             </div>
@@ -483,13 +483,13 @@
             getTestPaperList: function() {
                 var params = {
                     page: this.testPaperNowPage,
-                    limit: this.testPaperPageSize,
-                    ClassRoomId: this.classRoomData.Id
+                    pageSize: this.testPaperPageSize,
+                    classroomId: this.classRoomData.Id
                 };
                 Http.getTestPaperList(params).then(res => {
-                    if(res.StatusCode==1){
-                        this.testPaperTableModule.tableContent = res.Data.List;
-                        this.testPaperTableModule.count = res.Data.Total;
+                    if(res.statusCode==1){
+                        this.testPaperTableModule.tableContent = res.data.content;
+                        this.testPaperTableModule.count = res.data.numberOfElements;
                     }
                 });
             },
@@ -499,10 +499,10 @@
             // 删除试卷
             deleteTestPaperAction:function(id){
                 var params = {
-                    id:id
+                    testPaperId:id
                 }
                 Http.deleteTestPaper(params).then(res=>{
-                    if(res.StatusCode==1){
+                    if(res.statusCode==1){
                         this.$Message.success("删除成功");
                         this.getTestPaperList();
                     }
@@ -514,11 +514,11 @@
             // 修改试卷状态
             editTestPaperStatusAction:function(id,status){
                 var params = {
-                    Id:id,
-                    Status:status
+                    id:id,
+                    status:status
                 }
                 Http.editTestPaperStatus(params).then(res=>{
-                    if(res.StatusCode==1){
+                    if(res.statusCode==1){
                         this.$Message.success(res.Message);
                         this.getTestPaperList();
                     }
