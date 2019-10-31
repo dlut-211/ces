@@ -3,15 +3,15 @@
     <Tabs v-model="tabIndex">
         <TabPane label="课程信息">
             <div class="courseInfo">
-                <div class="title">{{courseData.Name}} ({{courseData.Code}})</div>
-                <div class="info">课程学科： {{courseData.SubjectName}}</div>
-                <div class="info">建课老师： {{courseData.CreatedByName}}</div>
-                <div class="info" v-if="courseData.SyllabusPath">
-                    <a :href="courseData.SyllabusPath" :download="courseData.SyllabusPath" target="blank">查看教学大纲</a>
+                <div class="title">{{courseData.name}} ({{courseData.code}})</div>
+                <div class="info">课程学科： {{courseData.subjectName}}</div>
+                <div class="info">建课老师： {{courseData.createdByName}}</div>
+                <div class="info" v-if="courseData.syllabusPath">
+                    <a :href="courseData.syllabusPath" :download="courseData.syllabusPath" target="blank">查看教学大纲</a>
                 </div>
                 
                 <div style="font-size:14px;font-weight:bold;margin-top:10px;margin-left: 30px;">课程简介：</div>
-                <div class="describe"><p>{{courseData.Describe}}</p></div>
+                <div class="describe"><p>{{courseData.description}}</p></div>
             </div>
         </TabPane>
         <TabPane label="课程章节">
@@ -38,10 +38,10 @@
                                 <div class="content" style="position:absolute;">
                                     <div class="title">
                                         <Icon type="ios-book-outline" class="icon"></Icon>
-                                        <span class="span">{{value.Name}}</span>
+                                        <span class="span">{{value.name}}</span>
                                     </div>
                                     <div style="height:100%;position:absolute;bottom:-25px;left:130px;display:none;" :ref="`workRefList${key}`">
-                                        <Icon type="trash-b" size="15" style="float:right;cursor:pointer;" @click.native="deleteWork(value.Id)"></Icon>
+                                        <Icon type="trash-b" size="15" style="float:right;cursor:pointer;" @click.native="deleteWork(value.id)"></Icon>
                                         <Icon type="edit" size="15" style="float:right;margin-right:10px;cursor:pointer;" @click.native="editWork(value)"></Icon>
                                     </div>
                                 </div>
@@ -84,47 +84,45 @@
                     size: 'small',
                 },
                 addChapterForm:{
-                    ChapterLevel:null,
-                    CourseId:null,
-                    Name:"",
-                    ParentId:null,
-                    Describe:""
+                    chapterLevel:null,
+                    courseId:null,
+                    name:"",
+                    parentId:null,
+                    description:""
                 },
                 editChapterForm:{
-                    Id:null,
-                    ChapterLevel:null,
-                    CourseId:null,
-                    Name:"",
-                    ParentId:null,
-                    Sort:"",
-                    Number:"",
-                    Describe:"",
-                    VersionNumber: null
+                    id:null,
+                    chapterLevel:null,
+                    courseId:null,
+                    name:"",
+                    parentId:null,
+                    sort:"",
+                    number:"",
+                    description:"",
                 },
                 // 知识点
                 tableModule: (KnowledgeTableModuleJS.bind(this))(),
                 nowPage: 1,
                 pageSize: 5,
                 addKnowledgeForm:{
-                    Name:"",
-                    CourseId:null,
-                    AbilityId:null,
-                    AbilityName:""
+                    name:"",
+                    courseId:null,
+                    abilityId:null,
+                    abilityName:""
                 },
                 editKnowledgeForm:{
-                    Id:null,
-                    Name:"",
-                    CourseId:null,
-                    AbilityId:null,
-                    AbilityName:"",
-                    VersionNumber: null
+                    id:null,
+                    name:"",
+                    courseId:null,
+                    abilityId:null,
+                    abilityName:"",
                 },
                 // 课程作业
                 // 主章节
                 chapterColumn:[
                     { 
                         title: "主章节", 
-                        key: "Name",
+                        key: "name",
                         render: (h, params) => {
                             return h("div", [
                                 h(
@@ -132,11 +130,11 @@
                                     {
                                         style: {
                                             fontSize:'14px',
-                                            fontWeight: params.row.ChapterLevel == 1 ? 'bold': 'normal',
-                                            paddingLeft:this.paddingValue(params.row.ChapterLevel)
+                                            fontWeight: params.row.chapterLevel == 1 ? 'bold': 'normal',
+                                            paddingLeft:this.paddingValue(params.row.chapterLevel)
                                         }
                                     },
-                                    params.row.Name
+                                    params.row.name
                                 )
                             ]);
                         }
@@ -148,16 +146,15 @@
                 workList:[],
                 workRefList:[],
                 addWorkForm:{
-                    Describe:"",
-                    ChapterId:null,
-                    Name:""
+                    description:"",
+                    chapterId:null,
+                    name:"",
                 },
                 editWorkForm:{
-                    Id:null,
-                    Describe:"",
-                    ChapterId:null,
-                    Name:"",
-                    VersionNumber: null
+                    id:null,
+                    description:"",
+                    chapterId:null,
+                    name:"",
                 },
                 KnowledgeList:[],
             };
@@ -178,13 +175,13 @@
                     h('span', [
                         h('tooltip', {
                             props: { 
-                                content: data.title, placement: 'right' ,maxWidth: '200',theme: 'light'
+                                content: data.name, placement: 'right' ,maxWidth: '200',theme: 'light'
                             },
                             style: {
                                 fontSize:'14px',
                                 cursor: "pointer",
                             },
-                        }, data.title)
+                        }, data.name)
                     ]),
                     h('span', {
                         style: {
@@ -228,23 +225,22 @@
             },
             append (data) {
                 this.addChapterForm = {
-                    ChapterLevel: data.level + 1,
-                    CourseId:this.courseId,
-                    Name:"",
-                    ParentId:data.id,
-                    Describe:""
+                    chapterLevel: data.chapterLevel == null ? data.chapterLevel : data.chapterLevel + 1,
+                    courseId:this.courseId,
+                    name:"",
+                    parentId:data.id,
+                    description:""
                 };
                 this.$emit("addChapter", this.addChapterForm)
             },
             edit (data){
                 this.editChapterForm = {
-                    Id: data.id,
-                    ChapterLevel: data.level,
-                    CourseId:this.courseId,
-                    Name:data.title,
-                    ParentId:data.parentId,
-                    Describe:data.describe,
-                    VersionNumber: this.stringToByte(data.versionNumber)
+                    id: data.id,
+                    chapterLevel: data.chapterLevel,
+                    courseId:this.courseId,
+                    name:data.name,
+                    parentId:data.parentId,
+                    description:data.description,
                 };
                 this.$emit("editChapter", this.editChapterForm)
             },
@@ -318,8 +314,8 @@
             },
             infoInit :function(form){
                 this.tabIndex = 0;
-                this.courseId = form.Id;
-                this.courseName = form.Name;
+                this.courseId = form.id;
+                this.courseName = form.name;
                 this.chapters = [];
                 this.getChapters();
                 this.getKnowledgeList();
@@ -342,11 +338,12 @@
                 this.mainChapters = [];
                 this.workList = [];
                 var params = {
-                    courseId : this.courseId
+                    id : this.courseId
                 };
                 Http.getChapterMain(params).then(res => {
-                    if(res.StatusCode==1){
-                        this.mainChapters = res.Data.List;
+                    console.log(res)
+                    if(res.statusCode==1){
+                        this.mainChapters = res.data;
                     }
                 });
             },
@@ -356,8 +353,9 @@
                     courseId : this.courseId
                 };
                 Http.getChapterTree(params).then(res => {
-                    if(res.StatusCode==1){
-                        this.setChapters(res.Data.List);
+                    console.log("tree"+res)
+                    if(res.statusCode==1){
+                        this.setChapters(res.data);
                         this.getMainChaperts();
                     }
                 });
@@ -370,17 +368,18 @@
                     courseId : this.courseId
                 };
                 Http.getKnowledgeList(params).then(res => {
-                    if(res.StatusCode==1){
-                        this.tableModule.tableContent = res.Data.List;
-                        this.tableModule.count = res.Data.Total;
+                    console.log(res)
+                    if(res.statusCode==1){
+                        this.tableModule.tableContent = res.data.content;
+                        this.tableModule.count = res.data.totalElements;
                     }
                 });
             },
             addKnowledgeTo:function(){
                 this.addKnowledgeForm = {
-                    Name:"",
-                    CourseId:this.courseId,
-                    AbilityId:null
+                    name:"",
+                    courseId:this.courseId,
+                    abilityId:null
                 };
                 this.$emit("addKnowledge", this.addKnowledgeForm)
             },
@@ -394,7 +393,7 @@
             selectChapter:function(now,old){
                 if(now){
                     this.chooseChapter = true;
-                    this.chooseChapterId = now.Id;   
+                    this.chooseChapterId = now.id;   
                     this.getWorkByChapter();     
                 }
                         
@@ -404,30 +403,32 @@
                     chapterId : this.chooseChapterId
                 };
                 Http.getWorkChapterList(params).then(res => {
-                    if(res.StatusCode==1){
-                        this.workList = res.Data.List;
-                        this.workRefList = res.Data.IdList;
+                    console.log(res)
+                    if(res.statusCode==1){
+                        this.workList = res.data.workDTOList;
+                        this.workRefList = res.data.workIdList;
                     }
                 });
             },
             addWork:function(){
                 this.addWorkForm = {
-                    Name:"",
-                    ChapterId:this.chooseChapterId,
-                    Describe:"",
-                    Knowledges:""
+                    name:"",
+                    chapterId:this.chooseChapterId,
+                    description:"",
+                    knowledgeIdList:""
                 };
                 this.$emit("addWork", this.addWorkForm,this.KnowledgeList);
+                console.log(this.addWorkForm)
             },
             editWork:function(data){
                 this.editWorkForm = {
-                    Id: data.Id,
-                    Describe:data.Describe,
-                    ChapterId:data.ChapterId,
-                    Name:data.Name,
-                    Knowledges:data.Knowledges.split(','),
-                    VersionNumber: this.stringToByte(data.VersionNumber)
+                    id: data.id,
+                    description:data.description,
+                    chapterId:data.chapterId,
+                    name:data.name,
+                    knowledgeIdList:data.knowledgeIdList
                 };
+                console.log(this.editWorkForm)
                 this.$emit("editWork", this.editWorkForm,this.KnowledgeList);
             },
             deleteWork:function(id){
@@ -445,8 +446,10 @@
                     courseId : this.courseId
                 };
                 Http.getKnowledgeAllList(params).then(res => {
-                    if(res.StatusCode==1){
-                        this.KnowledgeList = res.Data.List;
+                    console.log("知识点列表")
+                    console.log(res)
+                    if(res.statusCode==1){
+                        this.KnowledgeList = res.data;
                     }
                 });
             }

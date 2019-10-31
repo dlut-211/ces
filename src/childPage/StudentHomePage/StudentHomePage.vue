@@ -150,63 +150,7 @@
             <Col span="1">
             &nbsp
             </Col>
-            <Col span="10">
-              <Card style="background-color:#f8f8f9"> 
-                <p slot="title">
-                  <Icon type="calendar"></Icon>
-                  作业完成情况
-                </p>
-                <Row style="background-color:#2c2d5b;color:white;height:40px;line-height:40px;text-align:center">
-                  <Col span="6">
-                    <div><p>课堂名称</p></div>
-                  </Col>
-                  <Col span="6">
-                    <div><p>作业名称</p></div>
-                  </Col>
-                  <Col span="6">
-                    <div><p>提交人数</p></div>
-                  </Col>
-                  <Col span="6">
-                    <div style="text-align:center"><p>提交名次</p></div>
-                  </Col>
-              </Row>
-              <div style="text-align:center;background-color:#f8f8f9">
-              <Row v-for="(item, index) in workinfo" :key="index" style="margin-top:10px">
-                <Col span="6">
-                    <div><p>{{item.classroomName}}</p></div>
-                </Col>
-                <Col span="6">
-                    <div class="summary" @click="showWorkAllName(item.workname)"><p>{{item.workname}}</p></div>
-                </Col>
-                <Col span="6">
-                    <Row>
-                      <Col span="18">
-                      <div><p><Progress style="color:#b3e900" :percent=(item.submitcount/item.studenttotalcount)*100 hide-info></Progress> </p></div>
-                      </Col >
-                      <Col span="6">
-                      <p>{{item.submitcount}}/{{item.studenttotalcount}}</p>
-                      </Col>
-                    </Row>
-                </Col>
-                <Col span="6">
-                    <div v-if="item.rank!=0" style="text-align:center"><p>{{item.rank}}</p></div>
-                    <div v-if="item.rank==0" style="color:red;text-align:center"><p>未提交</p></div>
-                </Col>
-              </Row>
-              </div>
-              <div style="text-align:right;margin-top:10px">
-                <Button v-if="workInfoPageLimit.page==1" disabled type="primary" @click="WorkInfoLastPage()">上一页</Button>
-                <Button v-if="workInfoPageLimit.page!=1"  style="background-color:#2c2d5b;color:white" @click="WorkInfoLastPage()">上一页</Button>
-                当前页:{{workInfoPageLimit.page}}/{{workInfoPageLimit.pages}};共{{workInfoPageLimit.count}}条
-                <Button v-if="workInfoPageLimit.page==workInfoPageLimit.pages" disabled type="primary" @click="WorkInfoNextPage()">下一页</Button>
-                <Button v-if="workInfoPageLimit.page!=workInfoPageLimit.pages"  style="background-color:#2c2d5b;color:white" @click="WorkInfoNextPage()">下一页</Button>
-                </div>
-              </Card>
-            </Col>
-          </Row>
-          <div style="margin-top:20px">
-          <Row>
-            <Col span="12">
+            <Col span="11">
               <Card style="background-color:#f8f8f9">
                 <p slot="title">
                   <Icon type="android-bulb" size="20"></Icon>
@@ -246,6 +190,18 @@
                 </div>
               </Card>
             </Col>
+          </Row>
+          <div style="margin-top:20px">
+          <Row>
+            <Col span="12">
+            <Card>
+              <p slot="title">
+                  <Icon type="ios-pulse-strong" size="20"></Icon>
+                  能力点雷达图
+                </p >
+            <div id="EchartsSubjectAbility" style="width:300px;height:300px;"> </div>
+            </Card>
+            </Col>  
             <Col span="1">
             &nbsp
             </Col>
@@ -253,16 +209,9 @@
               <Card>
                 <p slot="title">
                   <Icon type="ios-pulse-strong" size="20"></Icon>
-                  图表信息
+                  课堂平均分数图
                 </p >
-                <Row>
-                  <Col span="11">
-                    <div id="EchartsSubjectAbility" style="width:300px;height:300px;"> </div>
-                  </Col>
-                  <Col span="11">
                     <div id="StudentClassRoomAvgScoreEcharts" style="width:400px;height:300px;"></div>
-                  </Col>
-                </Row>
               </Card>
             </Col>
           </Row>
@@ -347,10 +296,6 @@ export default {
  this.DrawStudentClassRoomAvgScoreEcharts();
  this.getStudentWorkInfoWithStudent();
  this.getStudentAbilityInfo();
-//  this.getAllWorkInfoData();
-   
-   
-   //this.autodivheight();
    this.getClassRoomStudentList()
   },
   components: {
@@ -629,9 +574,6 @@ export default {
 
 let barSubjectAbility = this.$echarts.init(document.getElementById('EchartsSubjectAbility'));
       barSubjectAbility.setOption(  {
-    title: {
-        text: '学科能力点雷达图'
-    },
     tooltip: {},
     legend: {
         data: ['预算分配（Allocated Budget）', '实际开销（Actual Spending）']

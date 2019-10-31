@@ -36,7 +36,7 @@ function AbilityTableModuleJS() {
                     ]);
                 }
             },
-            { title: "能力点名称‎", key: "Name", align: "center" },
+            { title: "能力点名称‎", key: "name", align: "center" },
             {
                 title: "操作",
                 key: "action",
@@ -56,10 +56,9 @@ function AbilityTableModuleJS() {
                                 on: {
                                     click: () => {
                                         this.editAbilityForm = {
-                                            Id:params.row.Id,
-                                            Name: params.row.Name,
-                                            SubjectId:params.row.SubjectId,//添加学科
-											VersionNumber: this.stringToByte(params.row.VersionNumber)
+                                            id:params.row.id,
+                                            name: params.row.name,
+                                            subjectId:params.row.subjectId,//添加学科
                                         };
                                         this.editAbility = true;
 
@@ -82,7 +81,7 @@ function AbilityTableModuleJS() {
                                             title: "<span style='color:red'><b>提示</b></span>",
                                             content: "确定要删除信息吗？",
                                             onOk: () => {
-                                                this.deleteAbilityAction(params.row.Id)
+                                                this.deleteAbilityAction(params.row.id)
                                             },
                                              onCancel: () => {
                                             }

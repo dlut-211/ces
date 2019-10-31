@@ -39,42 +39,42 @@ var API = {
     disableTeacher: apiHost + '/teacher/disable',
 
 
-    // 获取课程列表
-    getCourseList: apiHost + '/course/list',
-    // 删除课程
-    deleteCourse: apiHost + '/course/remove',
-    // 添加课程
-    postCourse: apiHost + '/course/add',
-    // 编辑课程
-    putCourse: apiHost + '/course/edit',
+   // 获取课程列表
+   getCourseList: apiHost + '/course/getCourseList',
+   // 删除课程
+   deleteCourse: apiHost + '/course/deleteCourse',
+   // 添加课程
+   postCourse: apiHost + '/course/insertCourse',
+   // 编辑课程
+   putCourse: apiHost + '/course/updateCourse',
 
-
-    // 获取章节树
-    getChapterTree: apiHost + '/chapter/tree',
-    // 获取主章节
-    getChapterMain: apiHost + '/chapter/main',
-    // 获取课程章节
-    getChapterCourse: apiHost + '/chapter/courselist',
-    // 获取章节列表
-    getChapterList: apiHost + '/chapter/list',
-    // 删除章节
-    deleteChapter: apiHost + '/chapter/remove',
-    // 添加章节
-    postChapter: apiHost + '/chapter/add',
-    // 编辑章节
-    putChapter: apiHost + '/chapter/edit',
+  // 获取章节树
+  getChapterTree: apiHost + '/chapter/tree',
+  // 获取主章节
+  getChapterMain: apiHost + '/chapter/findChapterByCourseId',
+  // 获取课程章节
+  getChapterCourse: apiHost + '/chapter/courselist',
+  // 获取章节列表
+  getChapterList: apiHost + '/chapter/list',
+  // 删除章节
+  deleteChapter: apiHost + '/chapter/remove',
+  // 添加章节
+  postChapter: apiHost + '/chapter/add',
+  // 编辑章节
+  putChapter: apiHost + '/chapter/edit',
 
 
     // 获取课程所有知识点
-    getKnowledgeAllList: apiHost + '/knowledge/alllist',
+    getKnowledgeAllList: apiHost + '/knowledge/list',
     // 获取知识点列表
-    getKnowledgeList: apiHost + '/knowledge/list',
+    getKnowledgeList: apiHost + '/knowledge/page',
     // 删除知识点
     deleteKnowledge: apiHost + '/knowledge/remove',
     // 添加知识点
     postKnowledge: apiHost + '/knowledge/add',
     // 编辑知识点
     putKnowledge: apiHost + '/knowledge/edit',
+
 
 
     // 获取能力点列表
@@ -87,9 +87,11 @@ var API = {
     putAbility: apiHost + '/ability/edit',
   //获取学科列表
     getAllSubjectList: apiHost + '/MySystem/getAllSubjectList',
+     //获取学科列表
+     getAllSubjectList: apiHost + '/course/getAllSubjectList',
 
-    // 获取章节作业
-    getWorkChapterList: apiHost + '/work/chapterlist',
+     // 获取章节作业
+    getWorkChapterList: apiHost + '/work/list',
     // 获取作业列表
     getWorkList: apiHost + '/work/list',
     // 删除作业
@@ -112,7 +114,7 @@ var API = {
 
 
     // 获取课堂学员列表
-    getClassRoomStudentList: apiHost + '/classroomstudent/list',
+    getClassRoomStudentList: apiHost + '/classroomstudent/selectClassRoomCountById',
     // 删除课堂学员
     deleteClassRoomStudent: apiHost + '/classroomstudent/remove',
     // 添加课堂学员

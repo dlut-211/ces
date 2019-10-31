@@ -113,6 +113,7 @@ export default {
       },
   data: function() {
     return {
+      classroomId:null,
       selectModule: (StudentWorkSelectModuleJS.bind(this))(),
       tableModule: (StudentWorkTableModuleJS.bind(this))(),
       addStudentWork:false,
@@ -511,17 +512,22 @@ export default {
     },
     // 查询学生作业s
     getchapterWorkList: function(e) {
+      if(e!=null){
+        this.nowPage=1;
+        this.classroomId=e;
+      }
       var params = {
         nowPage: this.nowPage,
         pageSize: this.pageSize,
-        classroomId: e,
+        classroomId: this.classroomId,
         studentId:this.$store.state.id
       };
       Http.getchapterWorkList(params).then(res => {
         console.log(res)
         if(res.statusCode==1){
+          this.classroomId=params.classroomId;
           this.tableModule.tableContent = res.data.content;
-            this.tableModule.count = res.data.numberOfElements;
+            this.tableModule.count = res.data.totalRecode;
         }
       });
     },

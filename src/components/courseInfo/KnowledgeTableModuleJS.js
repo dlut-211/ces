@@ -11,8 +11,8 @@ function KnowledgeTableModuleJS() {
         },
         count: 0,
         tableHead: [
-            { title: "知识点名称", key: "Name", align: "center" },
-            { title: "能力点", key: "AbilityName", align: "center" },
+            { title: "知识点名称", key: "name", align: "center" },
+            { title: "能力点", key: "abilityName", align: "center" },
             {
                 title: "操作",
                 key: "action",
@@ -32,12 +32,11 @@ function KnowledgeTableModuleJS() {
                                 on: {
                                     click: () => {
                                         this.editKnowledgeForm = {
-                                            Id:params.row.Id,
-                                            Name: params.row.Name,
-                                            CourseId: params.row.CourseId,
-                                            AbilityId: params.row.AbilityId,
-                                            AbilityName: params.row.AbilityName,
-											VersionNumber: this.stringToByte(params.row.VersionNumber)
+                                            id:params.row.id,
+                                            name: params.row.name,
+                                            courseId: params.row.courseId,
+                                            abilityId: params.row.abilityId,
+                                            abilityName: params.row.abilityName,
                                         };
                                         this.editKnowledgeTo();
                                     }
@@ -59,7 +58,7 @@ function KnowledgeTableModuleJS() {
                                             title: "<span style='color:red'><b>提示</b></span>",
                                             content: "确定要删除信息吗？",
                                             onOk: () => {
-                                                this.deleteKnowledgeTo(params.row.Id)
+                                                this.deleteKnowledgeTo(params.row.id)
                                             },
                                             onCancel: () => {
                                             }

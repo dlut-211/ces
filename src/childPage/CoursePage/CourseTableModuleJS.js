@@ -13,7 +13,7 @@ function CourseTableModuleJS() {
         tableHead: [
             { 
                 title: "课程编号",
-                key: "Code",
+                key: "code",
                 align: "center",
                 render: (h, params) => {
                     return h("div", [
@@ -28,31 +28,31 @@ function CourseTableModuleJS() {
                                 on: {
                                     click: () => {
                                         this.showForm = {
-                                            Id: params.row.Id,
-                                            Code: params.row.Code,
-                                            Name: params.row.Name,
-                                            Describe: params.row.Describe,
-                                            Syllabus: params.row.Syllabus,
-                                            SyllabusPath: params.row.SyllabusPath,
-                                            CreatedByName: params.row.CreatedByName,
-                                            SubjectId:params.row.SubjectId,
-                                            SubjectName:params.row.SubjectName,
-                                            CreatedOn: this.dateFormatFirst(params.row.CreatedOn)
+                                            id: params.row.id,
+                                            code: params.row.code,
+                                            name: params.row.name,
+                                            description: params.row.description,
+                                            syllabus: params.row.syllabus,
+                                            syllabusPath: params.row.syllabusPath,
+                                            createdByName: params.row.createdByName,
+                                            subjectId:params.row.subjectId,
+                                            subjectName:params.row.subjectName,
+                                            createdOn: this.dateFormatFirst(params.row.createdOn)
                                         };
-                                        this.LocalSubjectId=params.row.SubjectId;
+                                        this.LocalSubjectId=params.row.subjectId;
                                         this.$refs.CourseDetail.infoInit(this.showForm);
                                         this.courseInfo = true;
                                     }
                                 }
                             },
-                            params.row.Code
+                            params.row.code
                         )
                     ]);
                 }
             },
             { 
                 title: "课程名称",
-                key: "Name",
+                key: "name",
                 align: "center",
                 render: (h, params) => {
                     return h("div", [
@@ -67,37 +67,37 @@ function CourseTableModuleJS() {
                                 on: {
                                     click: () => {
                                         this.showForm = {
-                                            Id: params.row.Id,
-                                            Code: params.row.Code,
-                                            Name: params.row.Name,
-                                            Describe: params.row.Describe,
-                                            Syllabus: params.row.Syllabus,
-                                            SyllabusPath: params.row.SyllabusPath,
-                                            CreatedByName: params.row.CreatedByName,
-                                            SubjectName:params.row.SubjectName,
-                                            CreatedOn: this.dateFormatFirst(params.row.CreatedOn)
+                                            id: params.row.id,
+                                            code: params.row.code,
+                                            name: params.row.name,
+                                            description: params.row.description,
+                                            syllabus: params.row.syllabus,
+                                            syllabusPath: params.row.syllabusPath,
+                                            createdByName: params.row.createdByName,
+                                            subjectName:params.row.subjectName,
+                                            createdOn: this.dateFormatFirst(params.row.createdOn)
                                         };
-                                        this.LocalSubjectId=params.row.SubjectId;
+                                        this.LocalSubjectId=params.row.subjectId;
 
                                         this.$refs.CourseDetail.infoInit(this.showForm);
                                         this.courseInfo = true;
                                     }
                                 }
                             },
-                            params.row.Name
+                            params.row.name
                         )
                     ]);
                 }
             },
-            { title: "学科名称", key: "SubjectName", align: "center" },
-            { title: "建课老师", key: "CreatedByName", align: "center" },
+            { title: "学科名称", key: "subjectName", align: "center" },
+            { title: "建课老师", key: "createdByName", align: "center" },
             {
                 title: "创建时间",
-                key: "CreatedOn",
+                key: "createdOn",
                 align: "center",
                 width: 160,
                 render: (h, params) => {
-                    return h("div", [this.dateFormatFirst(params.row.CreatedOn)])
+                    return h("div", [this.dateFormatFirst(params.row.createdOn)])
                 }
             },
             {
@@ -119,17 +119,17 @@ function CourseTableModuleJS() {
                                 on: {
                                     click: () => {
                                         this.editCourseForm = {
-                                            Id:params.row.Id,
-                                            SubjectName:params.row.SubjectName,
-                                            Code: params.row.Code,
-                                            Describe: params.row.Describe,
-                                            Name: params.row.Name,
-                                            Syllabus: params.row.Syllabus,
-                                            SyllabusPath: params.row.SyllabusPath,
-                                            SubjectName:params.row.SubjectName,
-                                            SubjectId:params.row.SubjectId,
-											VersionNumber: this.stringToByte(params.row.VersionNumber)
+                                            id:params.row.id,
+                                            subjectName:params.row.subjectName,
+                                            code: params.row.code,
+                                            description: params.row.description,
+                                            name: params.row.name,
+                                            syllabus: params.row.syllabus,
+                                            syllabusPath: params.row.syllabusPath,
+                                            subjectName:params.row.subjectName,
+                                            subjectId:params.row.subjectId,
                                         };
+                                        console.log(this.editCourseForm)
                                         this.editCourse = true;
 
                                     }
@@ -151,7 +151,7 @@ function CourseTableModuleJS() {
                                             title: "<span style='color:red'><b>提示</b></span>",
                                             content: "确定要删除信息吗？",
                                             onOk: () => {
-                                                this.deleteCourseAction(params.row.Id)
+                                                this.deleteCourseAction(params.row.id)
                                             },
                                             onCancel: () => {
                                             }
