@@ -26,6 +26,7 @@ function TestPaperTableModuleJS() {
                                 },
                                 on: {
                                     click: () => {
+                                        console.log(params.row)
                                         this.$emit("detailTestPaper",params.row);
                                     }
                                 }

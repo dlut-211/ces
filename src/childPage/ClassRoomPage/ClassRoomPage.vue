@@ -373,7 +373,7 @@
                 </TabPane>
               </Tabs>
             </TabPane>
-            <TabPane v-if="detailTestPaperForm.Status == 2" label="考试详情">
+            <TabPane v-if="detailTestPaperForm.status == 2" label="考试详情">
               <Row style="margin-bottom:10px;">
                 <Col span="4"><Button type="primary" @click="downloadStudentTestPaperTemplate">下载导入模板</Button></Col>
                 <Upload :action="uploadStudentTestPaperFile + detailTestPaperForm.Id" :headers="{Authorization:$store.state.token}" 
@@ -1186,15 +1186,15 @@ export default {
     // 试卷详情
     detailTestPaperModal:function(form){
       this.detailTestPaperForm = {
-			  Id:form.Id,
-        Name:form.Name,
-        ClassRoomId:form.ClassRoomId,
-        TestPaperType:form.TestPaperType,
-        TestPaperTypeName: form.TestPaperTypeName,
-        Status:form.Status,
-			  VersionNumber: this.stringToByte(form.VersionNumber)
+			  id:form.id,
+        name:form.name,
+        vlassRoomId:form.vlassRoomId,
+        testPaperType:form.testPaperType,
+        testPaperTypeName: form.testPaperTypeName,
+        status:form.status,
+			  //versionNumber: this.stringToByte(form.versionNumber)
       };
-      this.getDetailTestPaperDetailList(this.detailTestPaperForm.Id);
+      this.getDetailTestPaperDetailList(this.detailTestPaperForm.id);
       
     },
     getDetailTestPaperDetailList:function(id){
@@ -1202,32 +1202,34 @@ export default {
         testPaperId:id
       };
       Http.TestPaperDetailList(params).then(res => {
-        if(res.StatusCode==1){
-            this.detailTestPaperForm.A = res.Data.A;
-            this.detailTestPaperForm.B = res.Data.B;
+        console.log(res)
+        if(res.statusCode==1){
+            this.detailTestPaperForm.A = res.data.a;
+            console.log(res.data.a)
+            this.detailTestPaperForm.B = res.data.b;
             this.detailTabIndex = 0;
             this.detailTPDTabIndex = 0;
-            if(this.detailTestPaperForm.Status == 2){
+            if(this.detailTestPaperForm.status == 2){
               this.studentTestPaperColumn = [
-                { title: "学号", key: "StudentNumber", align: "center",width:100},
-                { title: "姓名", key: "StudentName", align: "center",width:100}
+                { title: "学号", key: "studentNumber", align: "center",width:100},
+                { title: "姓名", key: "studentName", align: "center",width:100}
               ];
               if(this.detailTestPaperForm.TestPaperType == 2){
                 this.studentTestPaperColumn.push(
                   {
                     title: "试卷类型",
-                    key: "DetailType",
+                    key: "detailType",
                     align: "center",
                     width: 85,
                     render: (h, params) => {
-                        return h("div", [params.row.DetailType == 1 ? 'A卷' : 'B卷'])
+                        return h("div", [params.row.detailType == 1 ? 'A卷' : 'B卷'])
                     }
                   }
                 );
               }
               var totalScoreColumn =  { 
                   title: "总分", 
-                  key: "TotalScore", 
+                  key: "totalScore", 
                   align: "center",
                   width:80
               };
@@ -1249,22 +1251,28 @@ export default {
     },
     getStudentTestPaperList:function(){
       var params = {
-        testPaperId:this.detailTestPaperForm.Id
+        testPaperId:this.detailTestPaperForm.id
       };
       Http.studentTestPaperList(params).then(res => {
-        if(res.StatusCode==1){
-            this.studentTestPaperList = res.Data.List;
+        console.log("res")
+        console.log(res)
+        if(res.statusCode==1){
+            this.studentTestPaperList = res.data.list;
             for(let i=0;i<this.studentTestPaperList.length;i++){
               var detailTotalScore = 0;
+              console.log(this.detailTestPaperForm.A.length)
+              console.log(this.detailTestPaperForm.A)
               for(let k=0;k<this.detailTestPaperForm.A.length;k++){
-                if(this.studentTestPaperList[i].DetailType == 1){
-                  this.studentTestPaperList[i][k+1] = this.studentTestPaperList[i][k+1] + '/' + this.detailTestPaperForm.A[k].Score;
+                //console.log(this.studentTestPaperList[i].detailType)
+                if(this.studentTestPaperList[i].detailType == 1){
+                  this.studentTestPaperList[i][k+1] = this.studentTestPaperList[i][k+1] + '/' + this.detailTestPaperForm.A[k].score;
                 }else {
-                  this.studentTestPaperList[i][k+1] = this.studentTestPaperList[i][k+1] + '/' + this.detailTestPaperForm.B[k].Score;
+                  this.studentTestPaperList[i][k+1] = this.studentTestPaperList[i][k+1] + '/' + this.detailTestPaperForm.B[k].score;
                 }
-                detailTotalScore = detailTotalScore + this.detailTestPaperForm.A[k].Score;
+                console.log(this.detailTestPaperForm.A[k])
+                detailTotalScore = detailTotalScore + this.detailTestPaperForm.A[k].score;
               }
-              this.studentTestPaperList[i].TotalScore = this.studentTestPaperList[i].TotalScore + '/' + detailTotalScore;
+              this.studentTestPaperList[i].totalScore = this.studentTestPaperList[i].totalScore + '/' + detailTotalScore;
             }
         }
       });
