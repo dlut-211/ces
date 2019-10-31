@@ -60,12 +60,13 @@
                         this.$store.state.username = res.data.name;
                         this.$store.state.token = res.data.token;
                         this.$store.state.id = res.data.id;
-                        this.$store.state.role = 3;
+                        this.$store.state.roles = 3;
                       
                         localStorage.setItem('username', this.$store.getters.username);
                         localStorage.setItem('token', this.$store.getters.token);
                         localStorage.setItem('id', this.$store.state.id);
-                      
+                        localStorage.setItem("roles",this.$store.state.roles);
+
                         this.$router.replace({
                             name: 'StudentHomePage'
                         })

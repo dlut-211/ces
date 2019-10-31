@@ -184,7 +184,8 @@
                 }
             };
             return {
-                userRole:this.$store.state.role,
+                userId:this.$store.state.id,
+                userRole:this.$store.state.roles,
                 actionList: [],
                 openNames:[],
                 aaa: true,
@@ -215,6 +216,8 @@
             };
         },
         mounted: async function() {
+            console.log("状态"+this.$store.state.roles)
+            console.log("id"+this.userId)
             if(this.$store.getters.home != ''){
                 this.$router.push({name:this.$store.getters.home});
             }
