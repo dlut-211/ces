@@ -779,13 +779,13 @@ export default {
     // 选择的课程后点击确定
     courseModalSubmit: function(a) {
       if(this.addClassRoom){
-        this.addClassRoomForm.CourseId = a.Id;
-        this.addClassRoomForm.CourseCode = a.Code;
-        this.addClassRoomForm.CourseName = a.Name;
+        this.addClassRoomForm.CourseId = a.id;
+        this.addClassRoomForm.CourseCode = a.code;
+        this.addClassRoomForm.CourseName = a.name;
       }else{
-        this.editClassRoomForm.CourseId = a.Id;
-        this.editClassRoomForm.CourseCode = a.Code;
-        this.editClassRoomForm.CourseName = a.Name;
+        this.editClassRoomForm.CourseId = a.id;
+        this.editClassRoomForm.CourseCode = a.code;
+        this.editClassRoomForm.CourseName = a.name;
       }
       this.courseModalVisible = false;
     },
@@ -867,8 +867,8 @@ export default {
     addClassRoomAction: function() {
       var params = this.addClassRoomForm;
       Http.postClassRoom(params).then(res => {
-        if (res.StatusCode == 1) {
-          this.$Message.success(res.Message);
+        if (res.statusCode == 1) {
+          this.$Message.success(res.message);
           //清空之前保存的数据
           this.addClassRoomForm = {
             BeginDate:"",
@@ -894,8 +894,8 @@ export default {
        
         console.log("params.CourseId"+params.CourseId)
         Http.putClassRoom(params).then(res=>{
-            if(res.StatusCode==1){
-                this.$Message.success(res.Message);
+            if(res.statusCode==1){
+                this.$Message.success(res.message);
 				this.editClassRoomForm = {
 					Id:null,
             BeginDate:"",
@@ -912,7 +912,7 @@ export default {
                 this.getClassRoomList();
             }
             else{
-                this.$Message.error(res.Message);
+                this.$Message.error(res.message);
             }
         })
     },
@@ -930,25 +930,25 @@ export default {
         Status: this.findClassRoomForm.Status
       };
       Http.getClassRoomList(params).then(res => {
-        if(res.StatusCode==1){
-            let valueList = res.Data.List;
+        if(res.statusCode==1){
+            let valueList = res.data.list;
             for (let i = 0; i < valueList.length; i++) {
-              if (valueList[i].Status == 1) {
+              if (valueList[i].status == 1) {
                 valueList[i].cellClassName = {
                   StatusName: 'status-column-yellow'
                 };
-              } else if (valueList[i].Status == 2) {
+              } else if (valueList[i].status == 2) {
                 valueList[i].cellClassName = {
                   StatusName: 'status-column-blue-new'
                 };
-              } else if (valueList[i].Status == 4) {
+              } else if (valueList[i].status == 4) {
                 valueList[i].cellClassName = {
                   StatusName: 'status-column-orange'
                 };
               } 
             }
-            this.tableModule.tableContent = res.Data.List;
-            this.tableModule.count = res.Data.Total;
+            this.tableModule.tableContent = res.data.list;
+            this.tableModule.count = res.data.total;
         }
       });
     },
@@ -958,12 +958,12 @@ export default {
             id:id
         }
         Http.deleteClassRoom(params).then(res=>{
-            if(res.StatusCode==1){
+            if(res.statusCode==1){
                 this.$Message.success("删除成功");
                 this.getClassRoomList();
             }
             else{
-                this.$Message.error(res.Message);
+                this.$Message.error(res.message);
             }
         })
     },
@@ -974,12 +974,12 @@ export default {
             Status:status
         }
         Http.editClassRoomStatus(params).then(res=>{
-            if(res.StatusCode==1){
-                this.$Message.success(res.Message);
+            if(res.statusCode==1){
+                this.$Message.success(res.message);
                 this.getClassRoomList();
             }
             else{
-                this.$Message.error(res.Message);
+                this.$Message.error(res.message);
             }
         })
     },
@@ -991,16 +991,18 @@ export default {
     downloadTemplate:function(){
         var params = {
         }
-        Http.getClassRoomStudentTemplate(params).then(res=>{
-            if(res.StatusCode==1){
-                window.open(res.Data);
-            }
-            else{
-                this.$Message.error("获取模板错误");
-            }
+        Http.getClassRoomStudentTemplate(params,{responseType: 'arraybuffer'}).then(res=>{
+            // if(res.statusCode==1){
+                window.open(res.data);
+            // }
+            // else{
+            //     this.$Message.error("获取模板错误");
+            // }
         })
         
     },
+    //test by yu 
+  
     // 编辑上传成功钩子 异步方法
     handleImportStudentSuccess: async function(res, file) {
         if (res.StatusCode == 1) {

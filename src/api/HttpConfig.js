@@ -112,7 +112,7 @@ var API = {
 
 
     // 获取课堂学员列表
-    getClassRoomStudentList: apiHost + '/classroomstudent/selectClassRoomCountById',
+    getClassRoomStudentList: apiHost + '/classroomstudent/list',
     // 删除课堂学员
     deleteClassRoomStudent: apiHost + '/classroomstudent/remove',
     // 添加课堂学员

@@ -88,9 +88,9 @@ export default {
         Syllabus: this.findCourseForm.Syllabus
       };
       Http.getCourseList(params).then(res => {
-        if(res.StatusCode==1){
-            this.tableModule.tableContent = res.Data.List;
-            this.tableModule.count = res.Data.Total;
+        if(res.statusCode==1){
+            this.tableModule.tableContent = res.data.content;
+            this.tableModule.count = res.data.total;
         }
       });
     },

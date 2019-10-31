@@ -30,16 +30,16 @@ function CourseTableModuleJS() {
                     ]);
                 }
             },
-            { title: "课程编号", key: "Code", align: "center" },
-            { title: "课程名称", key: "Name", align: "center" },
-            { title: "建课老师", key: "CreatedByName", align: "center" },
+            { title: "课程编号", key: "code", align: "center" },
+            { title: "课程名称", key: "name", align: "center" },
+            { title: "建课老师", key: "createdByName", align: "center" },
             {
                 title: "创建时间",
                 key: "CreatedOn",
                 align: "center",
                 width: 160,
                 render: (h, params) => {
-                    return h("div", [this.dateFormatFirst(params.row.CreatedOn)])
+                    return h("div", [this.dateFormatFirst(params.row.createdOn)])
                 }
             }
         ],

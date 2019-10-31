@@ -13,7 +13,7 @@ function ClassRoomTableModuleJS() {
         tableHead: [
             { 
                 title: "课堂名称",
-                key: "Name",
+                key: "name",
                 align: "center",
                 render: (h, params) => {
                     return h("div", [
@@ -28,36 +28,36 @@ function ClassRoomTableModuleJS() {
                                 on: {
                                     click: () => {
                                         this.showForm = {
-                                            Id: params.row.Id,
-                                            Name: params.row.Name,
-                                            CourseId: params.row.CourseId,
-                                            CourseCode: params.row.CourseCode,
-                                            CourseName: params.row.CourseName,
-                                            Status: params.row.Status,
-                                            StatusName: params.row.StatusName,
-                                            TermType: params.row.TermType,
-                                            TermTypeName: params.row.TermTypeName,
-                                            DateFormat: params.row.DateFormat,
-                                            CourseDescribe: params.row.CourseDescribe,
-                                            CourseSyllabusPath: params.row.CourseSyllabusPath,
+                                            Id: params.row.id,
+                                            Name: params.row.name,
+                                            CourseId: params.row.courseId,
+                                            CourseCode: params.row.courseCode,
+                                            CourseName: params.row.courseName,
+                                            Status: params.row.status,
+                                            StatusName: params.row.statusName,
+                                            TermType: params.row.termType,
+                                            TermTypeName: params.row.termTypeName,
+                                            DateFormat: params.row.dateFormat,
+                                            CourseDescribe: params.row.courseDescribe,
+                                            CourseSyllabusPath: params.row.courseSyllabusPath,
                                             dailyPerformanceWeight:params.row.dailyPerformanceWeight,//权重
-                                            TestPerformaceWeight:params.row.TestPerformaceWeight,//权重
+                                            TestPerformaceWeight:params.row.testPerformaceWeight,//权重
                                         };
                                         this.$refs.classRoomDetail.infoInit(this.showForm);
                                         this.classRoomInfoVisible = true;
                                     }
                                 }
                             },
-                            params.row.Name
+                            params.row.name
                         )
                     ]);
                 }
             },
-            { title: "状态", key: "StatusName", align: "center" , width: 120},
-            { title: "学期", key: "TermTypeName", align: "center" },
-            { title: "上课日期", key: "DateFormat", align: "center" ,width: 175},
-            { title: "课程代码", key: "CourseCode", align: "center" },
-            { title: "课程名称", key: "CourseName", align: "center" },
+            { title: "状态", key: "statusName", align: "center" , width: 120},
+            { title: "学期", key: "termTypeName", align: "center" },
+            { title: "上课日期", key: "dateFormat", align: "center" ,width: 175},
+            { title: "课程代码", key: "courseCode", align: "center" },
+            { title: "课程名称", key: "courseName", align: "center" },
             {
                 title: "操作",
                 key: "action",
@@ -73,7 +73,7 @@ function ClassRoomTableModuleJS() {
                                     color: "#00CC00",
                                     cursor: "pointer",
                                     margin: "0 5px",
-                                    display: (params.row.Status == 1) ?"inline":"none"
+                                    display: (params.row.status == 1) ?"inline":"none"
                                 },
                                 on: {
                                     click: () => {
@@ -81,7 +81,7 @@ function ClassRoomTableModuleJS() {
                                             title: "<span style='color:red'><b>提示</b></span>",
                                             content: "确定要开课吗？",
                                             onOk: () => {
-                                                this.editClassRoomStatusAction(params.row.Id,2);
+                                                this.editClassRoomStatusAction(params.row.id,2);
                                             },
                                             onCancel: () => {
                                             }
@@ -98,22 +98,22 @@ function ClassRoomTableModuleJS() {
                                     color: "#2d8cf0",
                                     cursor: "pointer",
                                     margin: "0 5px",
-                                    display: (params.row.Status == 1) ?"inline":"none"
+                                    display: (params.row.status == 1) ?"inline":"none"
                                 },
                                 on: {
                                     click: () => {
                                         this.editClassRoomForm = {
-                                            Id:params.row.Id,
-                                            BeginDate: params.row.BeginDate,
-                                            CourseId: params.row.CourseId,
-                                            CourseCode: params.row.CourseCode,
-                                            CourseName: params.row.CourseName,
-                                            EndDate: params.row.EndDate,
-                                            TermType: params.row.TermType,
-                                            Name: params.row.Name,
+                                            Id:params.row.id,
+                                            BeginDate: params.row.beginDate,
+                                            CourseId: params.row.courseId,
+                                            CourseCode: params.row.courseCode,
+                                            CourseName: params.row.courseName,
+                                            EndDate: params.row.endDate,
+                                            TermType: params.row.termType,
+                                            Name: params.row.name,
                                             dailyPerformanceWeight:params.row.dailyPerformanceWeight,//权重
-                                            TestPerformaceWeight:params.row.TestPerformaceWeight,//权重
-											VersionNumber: this.stringToByte(params.row.VersionNumber)
+                                            TestPerformaceWeight:params.row.testPerformaceWeight,//权重
+											// VersionNumber: this.stringToByte(params.row.VersionNumber)
                                         };
                                         console.log(params.row.dailyPerformanceWeight+params.row.Id);
                                         this.editClassRoom = true;
@@ -129,7 +129,7 @@ function ClassRoomTableModuleJS() {
                                     color: "#ed3f14",
                                     cursor: "pointer",
                                     margin: "0 5px",
-                                    display: (params.row.Status == 1) ?"inline":"none"
+                                    display: (params.row.status == 1) ?"inline":"none"
                                 },
                                 on: {
                                     click: () => {
@@ -154,7 +154,7 @@ function ClassRoomTableModuleJS() {
                                     color: "#FF9933",
                                     cursor: "pointer",
                                     margin: "0 5px",
-                                    display: (params.row.Status == 2) ?"inline":"none"
+                                    display: (params.row.status == 2) ?"inline":"none"
                                 },
                                 on: {
                                     click: () => {
@@ -162,7 +162,7 @@ function ClassRoomTableModuleJS() {
                                             title: "<span style='color:red'><b>提示</b></span>",
                                             content: "确定要结课吗？",
                                             onOk: () => {
-                                                this.editClassRoomStatusAction(params.row.Id,4);
+                                                this.editClassRoomStatusAction(params.row.id,4);
                                             },
                                             onCancel: () => {
                                             }

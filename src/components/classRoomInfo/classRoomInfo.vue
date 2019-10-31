@@ -363,9 +363,9 @@
                     StudentClassName: this.findClassRoomStudentForm.StudentClassName
                 };
                 Http.getClassRoomStudentList(params).then(res => {
-                    if(res.StatusCode==1){
-                        this.studentTableModule.tableContent = res.Data.List;
-                        this.studentTableModule.count = res.Data.Total;
+                    if(res.statusCode==1){
+                        this.studentTableModule.tableContent = res.data;
+                        this.studentTableModule.count = res.data.total;
                     }
                 });
             },
@@ -375,12 +375,12 @@
                     id:id
                 }
                 Http.deleteClassRoomStudent(params).then(res=>{
-                    if(res.StatusCode==1){
+                    if(res.statusCode==1){
                         this.$Message.success("删除成功");
                         this.getClassRoomStudentList();
                     }
                     else{
-                        this.$Message.error(res.Message);
+                        this.$Message.error(res.message);
                     }
                 })
             },

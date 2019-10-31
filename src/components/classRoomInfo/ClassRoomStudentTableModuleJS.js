@@ -11,10 +11,10 @@ function ClassRoomStudentTableModuleJS() {
         },
         count: 0,
         tableHead: [
-            { title: "学号", key: "StudentNumber", align: "center" },
-            { title: "姓名", key: "StudentName", align: "center" },
-            { title: "学校", key: "StudentSchool", align: "center" },
-            { title: "班级", key: "StudentClassName", align: "center" },
+            { title: "学号", key: "studentNumber", align: "center" },
+            { title: "姓名", key: "studentName", align: "center" },
+            { title: "学校", key: "studentSchool", align: "center" },
+            { title: "班级", key: "studentClassName", align: "center" },
             {
                 title: "操作",
                 key: "action",
@@ -37,7 +37,7 @@ function ClassRoomStudentTableModuleJS() {
                                             title: "<span style='color:red'><b>提示</b></span>",
                                             content: "确定要删除信息吗？",
                                             onOk: () => {
-                                                this.deleteClassRoomStudentAction(params.row.Id)
+                                                this.deleteClassRoomStudentAction(params.row.id)
                                             },
                                             onCancel: () => {
                                             }
