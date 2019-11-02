@@ -114,7 +114,9 @@ var API = {
 
 
     // 获取课堂学员列表
-    getClassRoomStudentList: apiHost + '/classroomstudent/selectClassRoomCountById',
+    getClassRoomStudentList: apiHost + '/classroomstudent/list',
+    // 学生首页
+    getClassRoomStudentList1:apiHost + '/classroomstudent/selectClassRoomCountById',
     // 删除课堂学员
     deleteClassRoomStudent: apiHost + '/classroomstudent/remove',
     // 添加课堂学员
@@ -125,7 +127,7 @@ var API = {
     importClassRoomStudent: apiHost + '/classroomstudent/importstu',
     // 获取学生导入模板
     getClassRoomStudentTemplate: apiHost + '/classroomstudent/gettemplate',
-
+    getClassRoomStudentTemplate2: 'http://localhost:8443/api' + '/classroomstudent/gettemplate',
     // 获取课堂章节作业
     getClassRoomWorkChapterList: apiHost + '/classroomwork/chapterlist',
     // 布置课堂作业
@@ -145,23 +147,23 @@ var API = {
     putStudentWorkDetail: apiHost + '/studentworkdetail/edit',
 
     // 获取试卷列表
-    getTestPaperList: apiHost + '/testpaper/list',
+    getTestPaperList: apiHost + '/test_paper/list',
     // 删除试卷
-    deleteTestPaper: apiHost + '/testpaper/remove',
+    deleteTestPaper: apiHost + '/test_paper/remove',
     // 添加试卷
-    postTestPaper: apiHost + '/testpaper/add',
+    postTestPaper: apiHost + '/test_paper/add',
     // 编辑试卷
-    putTestPaper: apiHost + '/testpaper/edit',
+    putTestPaper: apiHost + '/test_paper/edit',
     // 修改试卷状态
-    editTestPaperStatus: apiHost + '/testpaper/editstatus',
+    editTestPaperStatus: apiHost + '/test_paper/examined',
     // 根据试卷获取试题
     TestPaperDetailList: apiHost + '/testpaperdetail/testpaperlist',
     // 学生考试成绩
     studentTestPaperList: apiHost + '/studenttestpaper/testpaperlist',
     // 获取成绩导入模板
-    getStudentTestPaperTemplate: apiHost + '/studenttestpaper/gettemplate',
+    getStudentTestPaperTemplate: apiHost + '/test_paper/gettemplate',
     // 导入试卷成绩
-    importStudentTestPaper: apiHost + '/studenttestpaper/importstp',
+    importStudentTestPaper: apiHost + '/test_paper/importstp',
 
     // 获取学生作业列表
     getStudentWorkList: apiHost + '/studentwork/list',

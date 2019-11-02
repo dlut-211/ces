@@ -203,6 +203,10 @@ export const editClassRoomStatus = (param) =>{
 export const getClassRoomStudentList = (param) =>{
     return GET(API.getClassRoomStudentList,param);
 }
+// 获取学生首页学员列表
+export const getClassRoomStudentList1 = (param) =>{
+    return GET(API.getClassRoomStudentList1,param);
+}
 // 添加课堂学员
 export const postClassRoomStudent = (param) =>{
     return POST(API.postClassRoomStudent,param);
