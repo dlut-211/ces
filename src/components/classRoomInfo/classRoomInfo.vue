@@ -174,7 +174,7 @@
                 mainChpterColumn:[
                     { 
                         title: "主章节", 
-                        key: "Name",
+                        key: "name",
                         render: (h, params) => {
                             return h("div", [
                                 h(
@@ -182,11 +182,11 @@
                                     {
                                         style: {
                                             fontSize:'14px',
-                                            fontWeight: params.row.ChapterLevel == 1 ? 'bold': 'normal',
-                                            paddingLeft:this.paddingValue(params.row.ChapterLevel)
+                                            fontWeight: params.row.chapterLevel == 1 ? 'bold': 'normal',
+                                            paddingLeft:this.paddingValue(params.row.chapterLevel)
                                         }
                                     },
-                                    params.row.Name
+                                    params.row.name
                                 )
                             ]);
                         }
@@ -196,7 +196,7 @@
                 workColumn:[
                     { 
                         title: "作业名称", 
-                        key: "WorkName",
+                        key: "workName",
                         render: (h, params) => {
                             return h("div", [
                                 h(
@@ -215,13 +215,13 @@
                                             }
                                         }
                                     },
-                                    params.row.WorkName
+                                    params.row.workName
                                 )
                             ]);
                         }
                     },
-                    { title: "描述", key: "WorkDescribe" },
-                    { title: "状态", key: "StatusName" ,field:'right',width:80},
+                    { title: "描述", key: "description" },
+                    { title: "状态", key: "status" ,field:'right',width:80},
                     {
                         title: "操作",
                         key: "action",
@@ -237,20 +237,20 @@
                                             color: "#04B404",
                                             cursor: "pointer",
                                             margin: "0 5px",
-                                            display: (params.row.Status == 1) ?"inline":"none"
+                                            display: (params.row.status == 1) ?"inline":"none"
                                         },
                                         on: {
                                             click: () => {
                                                 // this.$Modal.confirm({
                                                 //     title: "<span style='color:red'><b>提示</b></span>",
-                                                //     content: "确定要布置作业《"+ params.row.WorkName +"》吗？",
+                                                //     content: "确定要布置作业《"+ params.row.workName +"》吗？",
                                                 //     onOk: () => {
                                                 //         this.layoutWorkAction(params.row.Id);
                                                 //     },
                                                 //     onCancel: () => {
                                                 //     }
                                                 // }) 
-                                                this.LocalClassRoomWorkId=params.row.Id
+                                                this.LocalClassRoomWorkId=params.row.id
                                                 this.ShowEndTime=true;
                                             }
                                         }
@@ -264,15 +264,15 @@
                                             color: "#FF8000",
                                             cursor: "pointer",
                                             margin: "0 5px",
-                                            display: (params.row.Status == 2) ?"inline":"none"
+                                            display: (params.row.status == 2) ?"inline":"none"
                                         },
                                         on: {
                                             click: () => {
                                                 this.$Modal.confirm({
                                                     title: "<span style='color:red'><b>提示</b></span>",
-                                                    content: "<span style='color:red'><b>撤销布置作业会清空所有学生作业情况</b></span><br/>确定要撤销布置作业《"+ params.row.WorkName +"》吗？",
+                                                    content: "<span style='color:red'><b>撤销布置作业会清空所有学生作业情况</b></span><br/>确定要撤销布置作业《"+ params.row.workName +"》吗？",
                                                     onOk: () => {
-                                                        this.revokeLayoutWorkAction(params.row.Id);
+                                                        this.revokeLayoutWorkAction(params.row.id);
                                                     },
                                                     onCancel: () => {
                                                     }
@@ -394,41 +394,29 @@
                 this.mainChapters = [];
                 this.workList = [];
                 var params = {
-                    courseId : this.classRoomData.CourseId
+                    id : this.classRoomData.CourseId
                 };
                 Http.getChapterMain(params).then(res => {
-                    if(res.StatusCode==1){
-                        this.mainChapters = res.Data.List;
+                    if(res.statusCode==1){
+                        this.mainChapters = res.data;
                     }
                 });
             },
             selectChapter:function(now,old){
                 if(now){
                     this.chooseChapter = true;
-                    this.chooseChapterId = now.Id;   
+                    this.chooseChapterId = now.id;   
                     this.getWorkByChapter();     
                 }           
             },
             getWorkByChapter:function(){
                 var params = {
-                    classRoomId: this.classRoomData.Id,
+                    classroomId: this.classRoomData.Id,
                     chapterId : this.chooseChapterId
                 };
                 Http.getClassRoomWorkChapterList(params).then(res => {
-                    if(res.StatusCode==1){
-                        let valueList = res.Data.List;
-                        for (let i = 0; i < valueList.length; i++) {
-                            if (valueList[i].Status == 1) {
-                                valueList[i].cellClassName = {
-                                StatusName: 'status-column-red'
-                                };
-                            } else if (valueList[i].Status == 2) {
-                                valueList[i].cellClassName = {
-                                StatusName: 'status-column-green'
-                                };
-                            } 
-                        }
-                        this.workList = res.Data.List;
+                    if(res.statusCode==1){
+                        this.workList = res.data;
                     }
                 });
             },

@@ -81,7 +81,7 @@ export default new Router({
                 name: 'TeacherPage',
                 component: TeacherPage,
                 meta: {
-                    title: "教师"
+                    title: "首页"
                 }
             },
             {
