@@ -127,7 +127,7 @@ var API = {
     importClassRoomStudent: apiHost + '/classroomstudent/importstu',
     // 获取学生导入模板
     getClassRoomStudentTemplate: apiHost + '/classroomstudent/gettemplate',
-
+    getClassRoomStudentTemplate2: 'http://localhost:8443/api' + '/classroomstudent/gettemplate',
     // 获取课堂章节作业
     getClassRoomWorkChapterList: apiHost + '/classroomwork/chapterlist',
     // 布置课堂作业
@@ -161,9 +161,9 @@ var API = {
     // 学生考试成绩
     studentTestPaperList: apiHost + '/studenttestpaper/testpaperlist',
     // 获取成绩导入模板
-    getStudentTestPaperTemplate: apiHost + '/studenttestpaper/gettemplate',
+    getStudentTestPaperTemplate: apiHost + '/test_paper/gettemplate',
     // 导入试卷成绩
-    importStudentTestPaper: apiHost + '/studenttestpaper/importstp',
+    importStudentTestPaper: apiHost + '/test_paper/importstp',
 
     // 获取学生作业列表
     getStudentWorkList: apiHost + '/studentwork/list',

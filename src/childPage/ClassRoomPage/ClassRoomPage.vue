@@ -137,8 +137,8 @@
       <!-- 导入学生 -->
       <Modal v-model="importStudentVisible" title="导入学生" width="300px" :mask-closable="false" :footer-hide="true">
           <Row style="margin-bottom:20px;">
-            <Col span="12"><Button type="primary" @click="downloadTemplate">下载模板</Button></Col>
-            <Col span="12"><div style="padding-top:8px;color:red;font-weight:bold;">请先下载导入模板</div> </Col>
+            <a  :href='url'  download="muban" style="color:white;display:inline-block;width:100px;
+            height:35px;background-color:rgb(45,140,240);line-height:35px;text-align:center">下载模板</a>
           </Row>
           <Row>
             <Col span="24">
@@ -375,7 +375,12 @@
             </TabPane>
             <TabPane v-if="detailTestPaperForm.status == 2" label="考试详情">
               <Row style="margin-bottom:10px;">
-                <Col span="4"><Button type="primary" @click="downloadStudentTestPaperTemplate">下载导入模板</Button></Col>
+                <Col span="4">
+                  <a  :href='downloadStudentTestPaperTemplateUrl+detailTestPaperForm.Id'  download="muban" style="color:white;display:inline-block;width:100px;
+                  height:35px;background-color:rgb(45,140,240);line-height:35px;text-align:center">下载导入模板</a>
+                  <Button type="primary" @click="downloadStudentTestPaperTemplate">下载导入模板</Button>
+
+                </Col>
                 <Upload :action="uploadStudentTestPaperFile + detailTestPaperForm.Id" :headers="{Authorization:$store.state.token}" 
                   style="float: left; margin-right: 20px;" :show-upload-list="false" 
                   :on-success="handleImportStudentTestPaperSuccess" :on-format-error="handleFormatError">
@@ -505,6 +510,7 @@ import {StudentWorkDetailTableModuleJS} from "./StudentWorkDetailTableModuleJS.j
 // 引入API
 import * as Http from "@/api/HttpService.js";
 import { API } from "@/api/HttpConfig";
+
 export default {
   computed: {
       uploadFile: function() {
@@ -533,6 +539,8 @@ export default {
     
     
     return {
+      downloadStudentTestPaperTemplateUrl:'',
+      url:'',
       selectModule: (ClassRoomSelectModuleJS.bind(this))(),
       tableModule: (ClassRoomTableModuleJS.bind(this))(),
       addClassRoom:false,
@@ -707,16 +715,16 @@ export default {
       testPaperDetailColumn:[
         {
             title: "题号",
-            key: "DetailNumber",
+            key: "detailNumber",
             align: "center",
             width: 85,
             render: (h, params) => {
-                return h("div", ['第' + this.NumberToChinese(params.row.DetailNumber) + '题'])
+                return h("div", ['第' + this.NumberToChinese(params.row.detailNumber) + '题'])
             }
         },
-        { title: "试题标题", key: "Title", align: "center",width:180 },
-        { title: "分数", key: "Score", align: "center",width:80 },
-        { title: "知识点", key: "KnowledgeName", align: "center"}
+        { title: "试题标题", key: "title", align: "center",width:180 },
+        { title: "分数", key: "score", align: "center",width:80 },
+        { title: "知识点", key: "knowledgeName", align: "center"}
       ],
       studentTestPaperColumn:[],
       studentTestPaperList:[],
@@ -735,6 +743,7 @@ export default {
     };
   },
   mounted:function(){
+    this.test();
 	this.$store.commit("changeBreadCrumb", [
       "首页",
       "教学管理",
@@ -751,6 +760,14 @@ export default {
     classRoomInfo: classRoomInfo
   },
   methods: {
+    //郁用测试
+    test:function(){
+      this.url=API.getClassRoomStudentTemplate;
+      this.downloadStudentTestPaperTemplateUrl = API.getStudentTestPaperTemplate;
+      console.log("这是模板"+API.getStudentTestPaperTemplate);
+    },
+
+
     //添加分数
     editStudentWork:function(){
 
@@ -1005,12 +1022,12 @@ export default {
   
     // 编辑上传成功钩子 异步方法
     handleImportStudentSuccess: async function(res, file) {
-        if (res.StatusCode == 1) {
-          this.$Message.success(res.Message);
+        if (res.statusCode == 1) {
+          this.$Message.success(res.message);
           this.$refs.classRoomDetail.getClassRoomStudentList();
           this.importStudentVisible = false;
         }else{
-          this.$Message.error(res.Message);
+          this.$Message.error(res.message);
         }
     },
     // 文件格式验证失败钩子
@@ -1236,7 +1253,7 @@ export default {
               this.studentTestPaperColumn.push(totalScoreColumn);
               for(let i = 1;i<=this.detailTestPaperForm.A.length;i++){
                 var column = { 
-                  title: '第' + this.NumberToChinese(i) + '题', 
+                  title: '第' + this.NumberToChinese(i) + '题',
                   key: i.toString(), 
                   align: "center",
                   width:85
@@ -1279,11 +1296,11 @@ export default {
     },
     downloadStudentTestPaperTemplate:function(){
       var params = {
-          testPaperId:this.detailTestPaperForm.Id
+          testPaperId:this.detailTestPaperForm.id
         }
         Http.getStudentTestPaperTemplate(params).then(res=>{
-            if(res.StatusCode==1){
-                window.open(res.Data);
+            if(res.statusCode==1){
+                window.open(res.data);
             }
             else{
                 this.$Message.error("获取模板错误");
@@ -1490,6 +1507,7 @@ export default {
     },
   }
 };
+
 </script>
 <style lang="scss" scoped>
 @import "./ClassRoomPage.scss";
