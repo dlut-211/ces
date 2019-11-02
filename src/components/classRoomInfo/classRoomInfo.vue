@@ -135,18 +135,18 @@
                 chapterColumn:[
                     { 
                         title: "章节", 
-                        key: "Name",
+                        key: "name",
                         render: (h, params) => {
                             return h("div", [
                                 h(
                                     "span",
                                     {
                                         style: {
-                                            fontWeight: params.row.ChapterLevel == 1 ? 'bold': 'normal',
-                                            paddingLeft:this.paddingValue(params.row.ChapterLevel)
+                                            fontWeight: params.row.chapterLevel == 1 ? 'bold': 'normal',
+                                            paddingLeft:this.paddingValue(params.row.chapterLevel)
                                         }
                                     },
-                                    params.row.Name
+                                    params.row.name
                                 )
                             ]);
                         }
@@ -174,7 +174,7 @@
                 mainChpterColumn:[
                     { 
                         title: "主章节", 
-                        key: "Name",
+                        key: "name",
                         render: (h, params) => {
                             return h("div", [
                                 h(
@@ -182,11 +182,11 @@
                                     {
                                         style: {
                                             fontSize:'14px',
-                                            fontWeight: params.row.ChapterLevel == 1 ? 'bold': 'normal',
-                                            paddingLeft:this.paddingValue(params.row.ChapterLevel)
+                                            fontWeight: params.row.chapterLevel == 1 ? 'bold': 'normal',
+                                            paddingLeft:this.paddingValue(params.row.chapterLevel)
                                         }
                                     },
-                                    params.row.Name
+                                    params.row.name
                                 )
                             ]);
                         }
@@ -196,7 +196,7 @@
                 workColumn:[
                     { 
                         title: "作业名称", 
-                        key: "WorkName",
+                        key: "workName",
                         render: (h, params) => {
                             return h("div", [
                                 h(
@@ -215,13 +215,42 @@
                                             }
                                         }
                                     },
-                                    params.row.WorkName
+                                    params.row.workName
                                 )
                             ]);
                         }
                     },
-                    { title: "描述", key: "WorkDescribe" },
-                    { title: "状态", key: "StatusName" ,field:'right',width:80},
+                    { title: "描述", key: "description" },
+                    { title: "状态", key: "status" ,field:'right',width:80,
+                        render:(h,params)=>{
+                            if(params.row.status==1){
+                            return h("div", [
+                                h(
+                                    "span",
+                                    {
+                                        style:{
+                                            color:"#d50000"
+                                        }
+                                    },
+                                    "未布置"
+                                )
+                            ]);                                
+                            }
+                            else if(params.row.status==2){
+                            return h("div", [
+                                h(
+                                    "span",
+                                    {
+                                        style:{
+                                            color:"#04B404"
+                                        }
+                                    },
+                                    "已布置"
+                                )
+                            ]);                                
+                            }
+                        }
+                    },
                     {
                         title: "操作",
                         key: "action",
@@ -237,20 +266,20 @@
                                             color: "#04B404",
                                             cursor: "pointer",
                                             margin: "0 5px",
-                                            display: (params.row.Status == 1) ?"inline":"none"
+                                            display: (params.row.status == 1) ?"inline":"none"
                                         },
                                         on: {
                                             click: () => {
                                                 // this.$Modal.confirm({
                                                 //     title: "<span style='color:red'><b>提示</b></span>",
-                                                //     content: "确定要布置作业《"+ params.row.WorkName +"》吗？",
+                                                //     content: "确定要布置作业《"+ params.row.workName +"》吗？",
                                                 //     onOk: () => {
                                                 //         this.layoutWorkAction(params.row.Id);
                                                 //     },
                                                 //     onCancel: () => {
                                                 //     }
                                                 // }) 
-                                                this.LocalClassRoomWorkId=params.row.Id
+                                                this.LocalClassRoomWorkId=params.row.id
                                                 this.ShowEndTime=true;
                                             }
                                         }
@@ -264,15 +293,15 @@
                                             color: "#FF8000",
                                             cursor: "pointer",
                                             margin: "0 5px",
-                                            display: (params.row.Status == 2) ?"inline":"none"
+                                            display: (params.row.status == 2) ?"inline":"none"
                                         },
                                         on: {
                                             click: () => {
                                                 this.$Modal.confirm({
                                                     title: "<span style='color:red'><b>提示</b></span>",
-                                                    content: "<span style='color:red'><b>撤销布置作业会清空所有学生作业情况</b></span><br/>确定要撤销布置作业《"+ params.row.WorkName +"》吗？",
+                                                    content: "<span style='color:red'><b>撤销布置作业会清空所有学生作业情况</b></span><br/>确定要撤销布置作业《"+ params.row.workName +"》吗？",
                                                     onOk: () => {
-                                                        this.revokeLayoutWorkAction(params.row.Id);
+                                                        this.revokeLayoutWorkAction(params.row.id);
                                                     },
                                                     onCancel: () => {
                                                     }
@@ -320,11 +349,11 @@
             getCourseChapter:function(){
                 this.chapterData = [];
                 var params = {
-                    courseId : this.classRoomData.CourseId
+                    id : this.classRoomData.CourseId
                 };
                 Http.getChapterCourse(params).then(res => {
-                    if(res.StatusCode==1){
-                        this.chapterData = res.Data.List;
+                    if(res.statusCode==1){
+                        this.chapterData = res.data;
                     }
                 });
             },
@@ -394,50 +423,59 @@
                 this.mainChapters = [];
                 this.workList = [];
                 var params = {
-                    courseId : this.classRoomData.CourseId
+                    id : this.classRoomData.CourseId
                 };
                 Http.getChapterMain(params).then(res => {
-                    if(res.StatusCode==1){
-                        this.mainChapters = res.Data.List;
+                    if(res.statusCode==1){
+                        this.mainChapters = res.data;
                     }
                 });
             },
             selectChapter:function(now,old){
                 if(now){
                     this.chooseChapter = true;
-                    this.chooseChapterId = now.Id;   
+                    this.chooseChapterId = now.id;   
                     this.getWorkByChapter();     
                 }           
             },
             getWorkByChapter:function(){
                 var params = {
-                    classRoomId: this.classRoomData.Id,
+                    classroomId: this.classRoomData.Id,
                     chapterId : this.chooseChapterId
                 };
                 Http.getClassRoomWorkChapterList(params).then(res => {
-                    if(res.StatusCode==1){
-                        let valueList = res.Data.List;
-                        for (let i = 0; i < valueList.length; i++) {
-                            if (valueList[i].Status == 1) {
-                                valueList[i].cellClassName = {
-                                StatusName: 'status-column-red'
-                                };
-                            } else if (valueList[i].Status == 2) {
-                                valueList[i].cellClassName = {
-                                StatusName: 'status-column-green'
-                                };
-                            } 
-                        }
-                        this.workList = res.Data.List;
+                    if(res.statusCode==1){
+                        this.workList = res.data;
                     }
                 });
             },
+    //日期格式化
+formatDate:function(date, fmt) {
+    var o = { 
+        "M+" : date.getMonth()+1,                 //月份 
+        "d+" : date.getDate(),                    //日 
+        "h+" : date.getHours(),                   //小时 
+        "m+" : date.getMinutes(),                 //分 
+        "s+" : date.getSeconds(),                 //秒 
+        "q+" : Math.floor((date.getMonth()+3)/3), //季度 
+        "S"  : date.getMilliseconds()             //毫秒 
+    }; 
+    if(/(y+)/.test(fmt)) {
+            fmt=fmt.replace(RegExp.$1, (date.getFullYear()+"").substr(4 - RegExp.$1.length)); 
+    }
+     for(var k in o) {
+        if(new RegExp("("+ k +")").test(fmt)){
+             fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+         }
+     }
+    return fmt; 
+},            
             layoutWorkAction:function(id){
                 
                 var params = {
                     userId:this.$store.state.id,
                     classroomWorkId: id,
-                    endTime:this.dateFormatFinal(this.EndTime)
+                    endTime:this.formatDate(this.EndTime,'yy/MM/dd hh:mm:ss')
                 };
                 Http.layoutClassRoomWork(params).then(res =>{
                     if(res.statusCode == 1){
@@ -453,14 +491,15 @@
             },
             revokeLayoutWorkAction:function(id){
                 var params = {
-                    classroomWorkId: id
+                    classroomWorkId: id,
+                    userId:this.$store.state.id
                 };
                 Http.revokeLayoutClassRoomWork(params).then(res =>{
-                    if(res.StatusCode == 1){
-                        this.$Message.success(res.Message);
+                    if(res.statusCode == 1){
+                        this.$Message.success(res.message);
                         this.getWorkByChapter();
                     }else{
-                        this.$Message.error(res.Message);
+                        this.$Message.error(res.message);
                     }
                     
                 });

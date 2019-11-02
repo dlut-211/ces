@@ -120,6 +120,7 @@
         methods: {
             // 改变路由
             changeRouter: function(name) {
+                console.log("主页面"+this.$store.getters.home)
                 this.$store.commit("changeActiveName", name);
                 this.$router.push({
                     name: name

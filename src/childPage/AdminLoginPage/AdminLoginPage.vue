@@ -61,13 +61,14 @@
                         this.$store.state.token = res.data.token;
                         this.$store.state.id = res.data.id;
                         this.$store.state.roles = 1;
+                        this.$store.state.home = 'AdminHomePage';
                         localStorage.setItem('username', this.$store.getters.username);
                         localStorage.setItem('token', this.$store.getters.token);
                         localStorage.setItem('id', this.$store.state.id);
                         localStorage.setItem("roles",this.$store.state.roles);
                      
                         this.$router.replace({
-                            name: 'AdminHomePage'
+                            name: 'DashboardPage'
                         })
                     } else {
                         this.$Message.error('账号或密码不存在');

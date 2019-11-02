@@ -81,7 +81,7 @@ export default new Router({
                 name: 'TeacherPage',
                 component: TeacherPage,
                 meta: {
-                    title: "教师"
+                    title: "首页"
                 }
             },
             {
@@ -96,6 +96,9 @@ export default new Router({
                 path: 'ClassRoomPage',
                 name: 'ClassRoomPage',
                 component: ClassRoomPage,
+                meta:{
+                    title:"我的课堂"
+                }
                 
             },
             {
@@ -153,7 +156,10 @@ export default new Router({
             {
                 path: 'SubjectManagePage',
                 name: 'SubjectManagePage',
-                component: SubjectManagePage
+                component: SubjectManagePage,
+                meta:{
+                    title:"我的课堂"
+                }
             },
             {
                 path: 'TestPage',
