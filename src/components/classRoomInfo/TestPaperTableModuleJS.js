@@ -26,7 +26,7 @@ function TestPaperTableModuleJS() {
                                 },
                                 on: {
                                     click: () => {
-                                        console.log(params.row)
+                                        console.log("行号 ++++"+params.row)
                                         this.$emit("detailTestPaper",params.row);
                                     }
                                 }

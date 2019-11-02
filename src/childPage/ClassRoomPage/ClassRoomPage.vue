@@ -376,10 +376,8 @@
             <TabPane v-if="detailTestPaperForm.status == 2" label="考试详情">
               <Row style="margin-bottom:10px;">
                 <Col span="4">
-                  <a  :href='downloadStudentTestPaperTemplateUrl+detailTestPaperForm.Id'  download="muban" style="color:white;display:inline-block;width:100px;
+                  <a  :href='downloadStudentTestPaperTemplateUrl'  download="muban" style="color:white;display:inline-block;width:100px;
                   height:35px;background-color:rgb(45,140,240);line-height:35px;text-align:center">下载导入模板</a>
-                  <Button type="primary" @click="downloadStudentTestPaperTemplate">下载导入模板</Button>
-
                 </Col>
                 <Upload :action="uploadStudentTestPaperFile + detailTestPaperForm.Id" :headers="{Authorization:$store.state.token}" 
                   style="float: left; margin-right: 20px;" :show-upload-list="false" 
@@ -539,6 +537,7 @@ export default {
     
     
     return {
+      detailTestPaperId:'',
       downloadStudentTestPaperTemplateUrl:'',
       url:'',
       selectModule: (ClassRoomSelectModuleJS.bind(this))(),
@@ -743,7 +742,7 @@ export default {
     };
   },
   mounted:function(){
-    this.test();
+    this.getClassRoomStudentTemplateUrl();
 	this.$store.commit("changeBreadCrumb", [
       "首页",
       "教学管理",
@@ -760,13 +759,9 @@ export default {
     classRoomInfo: classRoomInfo
   },
   methods: {
-    //郁用测试
-    test:function(){
+    getClassRoomStudentTemplateUrl:function(){
       this.url=API.getClassRoomStudentTemplate;
-      this.downloadStudentTestPaperTemplateUrl = API.getStudentTestPaperTemplate;
-      console.log("这是模板"+API.getStudentTestPaperTemplate);
     },
-
 
     //添加分数
     editStudentWork:function(){
@@ -1262,6 +1257,8 @@ export default {
               }
               this.getStudentTestPaperList();
             }
+
+            this.downloadStudentTestPaperTemplateUrl = API.getStudentTestPaperTemplate+"?testPaperId="+id;
             this.detailTestPaper = true;
         }
       });
