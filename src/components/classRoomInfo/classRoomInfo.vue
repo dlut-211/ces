@@ -135,18 +135,18 @@
                 chapterColumn:[
                     { 
                         title: "章节", 
-                        key: "Name",
+                        key: "name",
                         render: (h, params) => {
                             return h("div", [
                                 h(
                                     "span",
                                     {
                                         style: {
-                                            fontWeight: params.row.ChapterLevel == 1 ? 'bold': 'normal',
-                                            paddingLeft:this.paddingValue(params.row.ChapterLevel)
+                                            fontWeight: params.row.chapterLevel == 1 ? 'bold': 'normal',
+                                            paddingLeft:this.paddingValue(params.row.chapterLevel)
                                         }
                                     },
-                                    params.row.Name
+                                    params.row.name
                                 )
                             ]);
                         }
@@ -221,7 +221,36 @@
                         }
                     },
                     { title: "描述", key: "description" },
-                    { title: "状态", key: "status" ,field:'right',width:80},
+                    { title: "状态", key: "status" ,field:'right',width:80,
+                        render:(h,params)=>{
+                            if(params.row.status==1){
+                            return h("div", [
+                                h(
+                                    "span",
+                                    {
+                                        style:{
+                                            color:"#d50000"
+                                        }
+                                    },
+                                    "未布置"
+                                )
+                            ]);                                
+                            }
+                            else if(params.row.status==2){
+                            return h("div", [
+                                h(
+                                    "span",
+                                    {
+                                        style:{
+                                            color:"#04B404"
+                                        }
+                                    },
+                                    "已布置"
+                                )
+                            ]);                                
+                            }
+                        }
+                    },
                     {
                         title: "操作",
                         key: "action",
@@ -320,11 +349,11 @@
             getCourseChapter:function(){
                 this.chapterData = [];
                 var params = {
-                    courseId : this.classRoomData.CourseId
+                    id : this.classRoomData.CourseId
                 };
                 Http.getChapterCourse(params).then(res => {
-                    if(res.StatusCode==1){
-                        this.chapterData = res.Data.List;
+                    if(res.statusCode==1){
+                        this.chapterData = res.data;
                     }
                 });
             },
@@ -420,12 +449,33 @@
                     }
                 });
             },
+    //日期格式化
+formatDate:function(date, fmt) {
+    var o = { 
+        "M+" : date.getMonth()+1,                 //月份 
+        "d+" : date.getDate(),                    //日 
+        "h+" : date.getHours(),                   //小时 
+        "m+" : date.getMinutes(),                 //分 
+        "s+" : date.getSeconds(),                 //秒 
+        "q+" : Math.floor((date.getMonth()+3)/3), //季度 
+        "S"  : date.getMilliseconds()             //毫秒 
+    }; 
+    if(/(y+)/.test(fmt)) {
+            fmt=fmt.replace(RegExp.$1, (date.getFullYear()+"").substr(4 - RegExp.$1.length)); 
+    }
+     for(var k in o) {
+        if(new RegExp("("+ k +")").test(fmt)){
+             fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+         }
+     }
+    return fmt; 
+},            
             layoutWorkAction:function(id){
                 
                 var params = {
                     userId:this.$store.state.id,
                     classroomWorkId: id,
-                    endTime:this.dateFormatFinal(this.EndTime)
+                    endTime:this.formatDate(this.EndTime,'yy/MM/dd hh:mm:ss')
                 };
                 Http.layoutClassRoomWork(params).then(res =>{
                     if(res.statusCode == 1){
@@ -441,14 +491,15 @@
             },
             revokeLayoutWorkAction:function(id){
                 var params = {
-                    classroomWorkId: id
+                    classroomWorkId: id,
+                    userId:this.$store.state.id
                 };
                 Http.revokeLayoutClassRoomWork(params).then(res =>{
-                    if(res.StatusCode == 1){
-                        this.$Message.success(res.Message);
+                    if(res.statusCode == 1){
+                        this.$Message.success(res.message);
                         this.getWorkByChapter();
                     }else{
-                        this.$Message.error(res.Message);
+                        this.$Message.error(res.message);
                     }
                     
                 });
