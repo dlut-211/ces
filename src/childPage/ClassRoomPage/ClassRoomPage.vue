@@ -1174,23 +1174,27 @@ export default {
       this.$refs["addTestPaperForm"].resetFields();
     },
     editTestPaperModal:function(form,knowledgeList){
+      console.log(form);
+      console.log(knowledgeList)
       this.courseKnowledgeList = knowledgeList;
       this.editTestPaperForm = {
-			  Id:form.Id,
-        Name:form.Name,
-        ClassRoomId:form.ClassRoomId,
-        TestPaperType:form.TestPaperType,
-        Status:form.Status,
-        A: form.A,
-        B: form.TestPaperType == 1 ? [] : form.B,
-			  VersionNumber: this.stringToByte(form.VersionNumber)
+			  Id:form.id,
+        Name:form.name,
+        ClassRoomId:form.classroomId,
+        TestPaperType:form.testPaperType,
+        Status:form.status,
+        // A: form.A,
+        // B: form.TestPaperType == 1 ? [] : form.B,
+			  // VersionNumber: this.stringToByte(form.VersionNumber)
       };
+      console.log("valuevaluevalue")
       if(form.TestPaperType == 1){
         this.testPaperrules.B = [{ validator: function(rule, value, callback) {
                                                   callback();
                                               }, trigger: 'blur',trigger: "change", type: 'array' }];
       } else{
         this.testPaperrules.B = [{ validator: function(rule, value, callback) {
+          
                                                   if(value.length == 0){
                                                     callback(new Error("B卷不能为空"));
                                                   } else {

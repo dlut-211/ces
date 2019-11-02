@@ -124,6 +124,7 @@ function TestPaperTableModuleJS() {
                                 },
                                 on: {
                                     click: () => {
+                                        console.log("zzzzzzzzzzzzz");
                                         this.$emit("editTestPaper",params.row,this.courseKnowledgeList);
                                     }
                                 }
@@ -170,7 +171,7 @@ function TestPaperTableModuleJS() {
                                             title: "<span style='color:red'><b>提示</b></span>",
                                             content: "<span style='color:red'><b>撤销考试会清空所有学生答题情况</b></span><br/>确定要撤销试卷《"+ params.row.name +"》的考试吗？",
                                             onOk: () => {
-                                                this.editTestPaperStatusAction(params.row.id,1);
+                                                this.editTestPaperStatusAction1(params.row.id,1);
                                             },
                                             onCancel: () => {
                                             }

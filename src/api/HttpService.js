@@ -284,6 +284,10 @@ export const deleteTestPaper = (param) =>{
 export const editTestPaperStatus = (param) =>{
     return PUT(API.editTestPaperStatus,param);
 }
+// 撤销试卷
+export const editTestPaperStatus1 = (param) =>{
+    return PUT(API.editTestPaperStatus1,param);
+}
 // 根据试卷获取试题
 export const TestPaperDetailList = (param) =>{
     return GET(API.TestPaperDetailList,param);

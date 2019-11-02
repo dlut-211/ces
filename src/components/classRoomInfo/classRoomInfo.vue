@@ -507,7 +507,7 @@
                         this.getTestPaperList();
                     }
                     else{
-                        this.$Message.error(res.Message);
+                        this.$Message.error(res.message);
                     }
                 })
             },
@@ -519,11 +519,27 @@
                 }
                 Http.editTestPaperStatus(params).then(res=>{
                     if(res.statusCode==1){
-                        this.$Message.success(res.Message);
                         this.getTestPaperList();
+                        this.$Message.success(res.message);
                     }
                     else{
-                        this.$Message.error(res.Message);
+                        this.$Message.error(res.message);
+                    }
+                })
+            },
+            // 撤销试卷
+            editTestPaperStatusAction1:function(id,status){
+                var params = {
+                    id:id,
+                    status:status
+                }
+                Http.editTestPaperStatus1(params).then(res=>{
+                    if(res.statusCode==1){
+                        this.getTestPaperList();
+                        this.$Message.success(res.message);
+                    }
+                    else{
+                        this.$Message.error(res.message);
                     }
                 })
             },

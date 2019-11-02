@@ -156,6 +156,8 @@ var API = {
     putTestPaper: apiHost + '/test_paper/edit',
     // 修改试卷状态
     editTestPaperStatus: apiHost + '/test_paper/examined',
+    //撤销试卷
+    editTestPaperStatus1:apiHost + '/test_paper/revokeExamined',
     // 根据试卷获取试题
     TestPaperDetailList: apiHost + '/testpaperdetail/testpaperlist',
     // 学生考试成绩
