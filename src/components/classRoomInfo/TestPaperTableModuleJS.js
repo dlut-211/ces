@@ -36,6 +36,38 @@ function TestPaperTableModuleJS() {
                     ]);
                 }
             },
+            {
+                title: "试卷结果分析",
+                key: "action",
+                align: "center",
+                field:'right',
+                width: 140,
+                render: (h, params) => {
+                    return h("div",[
+                        h(
+                            "span",
+                            {
+                                style: {
+                                    color: "#FF8000",
+                                    cursor: "pointer",
+                                    margin: "0 5px",
+                                    display: (params.row.status == 2) ?"inline":"none"
+                                },
+                                on: {
+                                    click: () => {
+                                        console.log("show res!")
+                                        this.$emit("showResultAnalysisModal",true,params.row.id);
+                                    }
+                                }
+                            },
+                            "查看"
+                        )
+                    ]
+
+                    )
+                }
+            }
+            ,
             { title: "试卷类型", key: "testPaperType", align: "center",
                 render:(h,params)=>{
                     if(params.row.testPaperType==1){
