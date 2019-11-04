@@ -367,7 +367,6 @@
                 };
                 Http.getKnowledgeList(params).then(res => {
                     if(res.statusCode == 1){
-                        console.log(res)
                         this.tableModule.tableContent = res.data.content;
                         this.tableModule.count = res.data.totalElements;
                     }
