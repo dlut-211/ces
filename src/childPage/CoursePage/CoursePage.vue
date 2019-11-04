@@ -592,15 +592,8 @@ export default {
         name: this.findCourseForm.name
       };
       Http.getCourseList(params).then(res => {
-        if(res.statusCode==1){
-          console.log(res);
+        if(res.statusCode == 1){
             this.tableModule.tableContent = res.data.content;
-              console.log("课程");
-            if(res.data.content.length>0){
-              //this.subjectId = res.Data.List[0].SubjectId;
-               console.log(12334);
-               console.log(this.subjectId);
-            }
             this.tableModule.count = res.data.totalElements;
         }
       });

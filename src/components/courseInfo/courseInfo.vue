@@ -175,7 +175,7 @@
                     h('span', [
                         h('tooltip', {
                             props: { 
-                                content: data.name, placement: 'right' ,maxWidth: '200',theme: 'light'
+                                content: data.description, placement: 'right' ,maxWidth: '200',theme: 'light'
                             },
                             style: {
                                 fontSize:'14px',
