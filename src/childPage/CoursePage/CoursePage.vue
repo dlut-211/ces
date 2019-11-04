@@ -215,7 +215,7 @@
           </Col>
           <Col span="24">
 					<FormItem label="知识点" class="forms" prop="knowledgeIdList">
-            <Select v-model="addWorkForm.knowledgeIdList" multiple :placeholder="'请选择知识点'">
+            <Select v-model="addWorkForm.knowledgeIdList" multiple :placeholder="'请选择知识点'" transfer>
                 <Option v-for="item in KnowledgeList" :value="item.id" :key="item.id">{{ item.name }}</Option>
             </Select>
 					</FormItem>
@@ -247,7 +247,7 @@
           </Col>
           <Col span="24">
 					<FormItem label="知识点" class="forms" prop="Knowledges">
-            <Select v-model="editWorkForm.knowledgeIdList" multiple :placeholder="'请选择知识点'">
+            <Select v-model="editWorkForm.knowledgeIdList" multiple :placeholder="'请选择知识点'" transfer>
                 <Option v-for="item in KnowledgeList" :value="item.selectId" :key="item.selectId">{{ item.name }}</Option>
             </Select>
 					</FormItem>
@@ -592,15 +592,8 @@ export default {
         name: this.findCourseForm.name
       };
       Http.getCourseList(params).then(res => {
-        if(res.statusCode==1){
-          console.log(res);
+        if(res.statusCode == 1){
             this.tableModule.tableContent = res.data.content;
-              console.log("课程");
-            if(res.data.content.length>0){
-              //this.subjectId = res.Data.List[0].SubjectId;
-               console.log(12334);
-               console.log(this.subjectId);
-            }
             this.tableModule.count = res.data.totalElements;
         }
       });

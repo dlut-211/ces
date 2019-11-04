@@ -175,7 +175,7 @@
                     h('span', [
                         h('tooltip', {
                             props: { 
-                                content: data.name, placement: 'right' ,maxWidth: '200',theme: 'light'
+                                content: data.description, placement: 'right' ,maxWidth: '200',theme: 'light'
                             },
                             style: {
                                 fontSize:'14px',
@@ -367,7 +367,6 @@
                 };
                 Http.getKnowledgeList(params).then(res => {
                     if(res.statusCode == 1){
-                        console.log(res)
                         this.tableModule.tableContent = res.data.content;
                         this.tableModule.count = res.data.totalElements;
                     }
