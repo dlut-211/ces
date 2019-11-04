@@ -747,7 +747,6 @@ export default {
       courseKnowledgeList:[],
       knowledgeRule:{ validator: validateKnowledgeList, trigger: 'change', type: 'array' },
      //  PerformaceWeightRule:{ validator: validatePerformaceWeightList, trigger: 'change', type: 'array' }//考试成绩规则
-      
     };
   },
   mounted:function(){
