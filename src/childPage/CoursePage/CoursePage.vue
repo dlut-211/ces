@@ -50,11 +50,7 @@
             <Button type="primary" size="large" @click="addCourseHandleSubmit('addCourseForm')">确定</Button>
         </div>
       </Modal>
-	  <Modal 
-          v-model="editCourse" 
-		  title="编辑课程"
-		  width="800px"
-		  :mask-closable="false">
+	  <Modal v-model="editCourse" title="编辑课程" width="800px" :mask-closable="false">
 		  <Form :model="editCourseForm" label-position="left" :label-width="100" :rules="rules" ref="editCourseForm">
 		  <Row>
           <Col span="12">
@@ -723,8 +719,7 @@ export default {
               }
           })
         },
-        onCancel: () => {
-        }
+        onCancel: () => {}
       })   
     },
     //知识点===================================================================
@@ -761,7 +756,7 @@ export default {
       }
     },
 
- addKnowledgeAction: function() {
+    addKnowledgeAction: function() {
       var params = this.addKnowledgeForm;
                 Http.postKnowledge(params).then(res => {
                   console.log(res)
