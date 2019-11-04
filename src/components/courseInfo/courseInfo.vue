@@ -224,6 +224,8 @@
                 ]);
             },
             append (data) {
+                console.log(this.chapters)
+                console.log(data)
                 this.addChapterForm = {
                     chapterLevel: data.chapterLevel == null ? data.chapterLevel : data.chapterLevel + 1,
                     courseId:this.courseId,

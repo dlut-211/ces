@@ -415,14 +415,14 @@
                 var params = {
                     id : this.classRoomData.CourseId
                 };
-                Http.getChapterMain(params).then(res => {
+                Http.getChapterCourse(params).then(res => {
                     if(res.statusCode==1){
                         this.mainChapters = res.data;
                     }
                 });
             },
             selectChapter:function(now,old){
-                if(now){
+                if(now.parentId){
                     this.chooseChapter = true;
                     this.chooseChapterId = now.id;   
                     this.getWorkByChapter();     
