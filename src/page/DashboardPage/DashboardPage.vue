@@ -12,7 +12,7 @@
                         <MenuItem v-for="(value2,key2) in value.Childs" :name="value2.Route" :key="key2">{{value2.MenuName}}</MenuItem>
                     </Submenu>
                 </Menu> -->
-                <Menu v-if="userRole==1" :theme="theme2" :open-names="['1','2']" theme="dark" width="auto"
+                <Menu v-if="userRole==1" :open-names="['1','2']" theme="dark" width="auto"
                     :style="{paddingTop:'10px'}" @on-select="changeRouter">
                 <Submenu name="1">
                     <template slot="title">
@@ -29,7 +29,7 @@
                     <MenuItem name="SubjectPage">学科</MenuItem>
                 </Submenu>
             </Menu>
-            <Menu v-if="userRole==2" :theme="theme2" :open-names="['1']" theme="dark" width="auto"
+            <Menu v-if="userRole==2" :open-names="['1']" theme="dark" width="auto"
                     :style="{paddingTop:'10px'}" @on-select="changeRouter">
                 <Submenu name="1">
                     <template slot="title">
@@ -41,7 +41,7 @@
                     <MenuItem name="SubjectManagePage">学科管理</MenuItem>
                 </Submenu>
             </Menu>
-                <Menu v-if="userRole==3" :theme="theme2" :open-names="['1']" theme="dark" width="auto"
+                <Menu v-if="userRole==3" :open-names="['1']" theme="dark" width="auto"
                     :style="{paddingTop:'10px'}" @on-select="changeRouter">
                 <Submenu name="1">
                     <template slot="title">
@@ -140,8 +140,7 @@
             updatePasswordAction: function() {
                 var params = this.updatePasswordForm;
                 Http.updatePassword(params).then(res => {
-                    if (res.StatusCode == 1) {
-                        this.$Message.success(res.Message);
+                    this.$Message.success(res.Message);
                         this.updatePasswordForm = {
                             Id: "",
                             OldPassword: "",
@@ -149,9 +148,11 @@
                             ConfirmPassword: ""
                         };
                         this.updatePassword = false;
-                    } else {
-                        this.$Message.error(res.Message);
-                    }
+                    // if (res.statusCode == 1) {
+                        
+                    // } else {
+                    //     this.$Message.error(res.Message);
+                    // }
                 });
             },
             updatePasswordHandleSubmit: function(name) {
@@ -217,36 +218,36 @@
             };
         },
         mounted: async function() {
-            console.log("状态"+this.$store.state.roles)
-            console.log("id"+this.userId)
-            if(this.$store.getters.home != ''){
-                this.$router.push({name:this.$store.getters.home});
-            }
-            var result = await Http.getPermission();
-            if (result.StatusCode == 1) {
-                this.actionList = result.Data;
-                this.openNames = [];
-                for(let i = 0;i<this.actionList.length;i++){
-                    this.openNames.push(this.actionList[i].MenuCode);
-                }
-                this.$store.commit("changeActionList", result.Data);
-            } else {
-                this.$Message.error(result.Message);
-            }
-            for (let i in this.actionList) {
-                for (let j in this.actionList[i].Childs) {
-                    if (this.actionList[i].Childs[j].Route == this.$route.name) {
-                        this.$store.commit("changeOpenName", [this.actionList[i].Code]);
-                        this.$store.commit("changeActiveName", this.$route.name);
-                        break;
-                    }
-                }
-            }
-            // this.initLocalStorage()
-            this.$nextTick(function() {
-                this.$refs.Menu.updateOpened();
-                this.$refs.Menu.updateActiveName();
-            });
+            // console.log("状态"+this.$store.state.roles)
+            // console.log("id"+this.userId)
+            // if(this.$store.getters.home != ''){
+            //     this.$router.push({name:this.$store.getters.home});
+            // }
+            // var result = await Http.getPermission();
+            // if (result.statusCode == 1) {
+            //     this.actionList = result.Data;
+            //     this.openNames = [];
+            //     for(let i = 0;i<this.actionList.length;i++){
+            //         this.openNames.push(this.actionList[i].MenuCode);
+            //     }
+            //     this.$store.commit("changeActionList", result.Data);
+            // } else {
+            //     this.$Message.error(result.Message);
+            // }
+            // for (let i in this.actionList) {
+            //     for (let j in this.actionList[i].Childs) {
+            //         if (this.actionList[i].Childs[j].Route == this.$route.name) {
+            //             this.$store.commit("changeOpenName", [this.actionList[i].Code]);
+            //             this.$store.commit("changeActiveName", this.$route.name);
+            //             break;
+            //         }
+            //     }
+            // }
+            // // this.initLocalStorage()
+            // this.$nextTick(function() {
+            //     this.$refs.Menu.updateOpened();
+            //     this.$refs.Menu.updateActiveName();
+            // });
         },
         components: {
             customService: customService,

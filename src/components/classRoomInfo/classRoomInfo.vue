@@ -203,13 +203,13 @@
                                     "span",
                                     {
                                         style: {
-                                            color: (params.row.Status == 1) ? "#495060" :"#2d8cf0",
-                                            cursor: (params.row.Status == 1) ?  'auto' : "pointer",
+                                            color: (params.row.status == 1) ? "#495060" :"#2d8cf0",
+                                            cursor: (params.row.status == 1) ?  'auto' : "pointer",
                                             margin: "0 5px",
                                         },
                                         on: {
                                             click: () => {
-                                                if(params.row.Status == 2){
+                                                if(params.row.status == 2){
                                                     this.openStudentWorkDetailAction(params.row);
                                                 }
                                             }
@@ -222,32 +222,31 @@
                     },
                     { title: "描述", key: "description" },
                     { title: "状态", key: "status" ,field:'right',width:80,
-                        render:(h,params)=>{
-                            if(params.row.status==1){
-                            return h("div", [
-                                h(
-                                    "span",
-                                    {
-                                        style:{
-                                            color:"#d50000"
-                                        }
-                                    },
-                                    "未布置"
-                                )
-                            ]);                                
-                            }
-                            else if(params.row.status==2){
-                            return h("div", [
-                                h(
-                                    "span",
-                                    {
-                                        style:{
-                                            color:"#04B404"
-                                        }
-                                    },
-                                    "已布置"
-                                )
-                            ]);                                
+                        render:(h, params)=>{
+                            if(params.row.status == 1){
+                                return h("div", [
+                                    h(
+                                        "span",
+                                        {
+                                            style:{
+                                                color:"#d50000"
+                                            }
+                                        },
+                                        "未布置"
+                                    )
+                                ]);                                
+                            } else if(params.row.status == 2) {
+                                return h("div", [
+                                    h(
+                                        "span",
+                                        {
+                                            style:{
+                                                color:"#04B404"
+                                            }
+                                        },
+                                        "已布置"
+                                    )
+                                ]);                                
                             }
                         }
                     },
@@ -270,15 +269,6 @@
                                         },
                                         on: {
                                             click: () => {
-                                                // this.$Modal.confirm({
-                                                //     title: "<span style='color:red'><b>提示</b></span>",
-                                                //     content: "确定要布置作业《"+ params.row.workName +"》吗？",
-                                                //     onOk: () => {
-                                                //         this.layoutWorkAction(params.row.Id);
-                                                //     },
-                                                //     onCancel: () => {
-                                                //     }
-                                                // }) 
                                                 this.LocalClassRoomWorkId=params.row.id
                                                 this.ShowEndTime=true;
                                             }

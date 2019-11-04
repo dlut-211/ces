@@ -135,7 +135,7 @@ var API = {
     // 撤销布置作业
     revokeLayoutClassRoomWork: apiHost + '/classroomwork/revokelayout',
     // 获取作业情况
-    getClassRoomWorkDetail: apiHost + '/studentwork/worklist',
+    getClassroomWorkDetail: apiHost + '/studentwork/worklist',
 
     // 获取学生作业明细列表
     getStudentWorkDetailList: apiHost + '/studentworkdetail/list',
