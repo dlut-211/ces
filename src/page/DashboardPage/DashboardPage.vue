@@ -218,11 +218,11 @@
             };
         },
         mounted: async function() {
-            // console.log("状态"+this.$store.state.roles)
-            // console.log("id"+this.userId)
-            // if(this.$store.getters.home != ''){
-            //     this.$router.push({name:this.$store.getters.home});
-            // }
+            console.log("状态"+this.$store.state.roles)
+            console.log("id"+this.userId)
+            if(this.$store.getters.home != ''){
+                this.$router.push({name:this.$store.getters.home});
+            }
             // var result = await Http.getPermission();
             // if (result.statusCode == 1) {
             //     this.actionList = result.Data;
