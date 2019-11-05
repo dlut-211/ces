@@ -28,7 +28,7 @@
        <!-- 上传作业 -->
        <Modal
           v-model="SubmitWork"
-          title="上传作业"
+          title="上传作业（仅支持上传:war、zip、rar类型的文件）"
 		  width="800px"
 		  :mask-closable="false"
       style="position:fixed;z-index:99999"
@@ -50,7 +50,8 @@
         </Form>
 		<div slot="footer">
             <Button type="ghost" size="large"   @click="SubmitWork=false">取消</Button>
-            <Button type="primary" size="large" @click="SubmitWorkAction()">确定</Button>
+            <Button v-if="SubmitWorkForm.WorkPath" type="primary" size="large" @click="SubmitWorkAction()">确定</Button>
+            <Button v-if="!SubmitWorkForm.WorkPath" type="primary" disabled size="large" @click="SubmitWorkAction()">确定</Button>
         </div>
       </Modal>
     <!-- <div style="text-align:right">
@@ -147,7 +148,7 @@ export default {
        WorkPath:"",
        SubmitTime:"",
        UseTime:"",
-       StudentWorkId:'',
+       studentWorkId:'',
       },
           editStudentWorkForm:{
         Id:"",
@@ -280,8 +281,9 @@ export default {
                         field:'right',
                         width: 140,
                         render: (h, params) => {
+                          if(params.row.status!=4){
                           var mydate=new Date()
-                          if(this.dateFormatFinal(mydate)>=this.dateFormatFinal(params.row.EndTime)){
+                          if(this.dateFormatFinal(mydate)>=this.dateFormatFinal(params.row.endTime)){
                          return h("div",[
                            h(
                               "span",
@@ -313,14 +315,14 @@ export default {
                                         on: {
                                             click: () => {
                                               this.editStudentWorkForm={
-                                                Id:params.row.StudentWorkId, 
+                                                Id:params.row.studentWorkId, 
                                               ClassRoomStudentId:"",
                                                ClassRoomWorkId:"",
                                               Score:"",
                                               WorkMessage:"",
                                               VersionNumber:""
                                               };
-                                              this.layouttime=params.row.LayoutTime;
+                                              this.layouttime=params.row.layoutTime;
                                                this.SubmitWorkForm={
                                                  
                                                  StudentWorkScore:"",
@@ -331,7 +333,7 @@ export default {
                                                      WorkPath:"",
                                                      SubmitTime:"",
                                                      UseTime:"",
-                                                   StudentWorkId:params.row.StudentWorkId,
+                                                   studentWorkId:params.row.studentWorkId,
 
                                                }
                                                 this.SubmitWork=true;
@@ -345,7 +347,63 @@ export default {
                             ]);
                        }
                         }
-                    }
+                        else{
+                          return h("div",[
+                            h(
+                              "span",
+                              {
+                                style:{
+                                        color: "#808080",
+                                        margin: "0 5px"
+                                },
+                              },
+                              "已结课"
+                            )
+                          ])
+                        }
+                        }
+                    },
+                    { 
+                        title: "下载作业", 
+                        key: "workPath",
+                        align: "center",
+                        field:'right',
+                        width: 140,
+                        render: (h, params) => {
+                          if(params.row.workPath==null){
+                            return h("div",
+                              {
+                                style:{
+                                        color: "#808080",
+                                        margin: "0 5px"
+                                },
+                              },
+                              "下载附件" 
+                            )
+                          }
+                          else{
+                            return h("A",
+                              {
+                                attrs:{
+                                  href:params.row.workPath
+                                },
+                                style:{
+                                        color: "#04B404",
+                                        cursor: "pointer",
+                                        margin: "0 5px"
+                                },
+                                // on:{
+                                //   click:()=>{
+
+                                //   }
+                                // }
+                            
+                              },
+                              "下载附件" 
+                            )
+                          }
+                        }
+                    },
                 ],
 	 
     };
@@ -368,32 +426,52 @@ export default {
     tableModule: tableModule
   },
   methods: {
+        //日期格式化
+formatDate:function(date, fmt) {
+    var o = { 
+        "M+" : date.getMonth()+1,                 //月份 
+        "d+" : date.getDate(),                    //日 
+        "h+" : date.getHours(),                   //小时 
+        "m+" : date.getMinutes(),                 //分 
+        "s+" : date.getSeconds(),                 //秒 
+        "q+" : Math.floor((date.getMonth()+3)/3), //季度 
+        "S"  : date.getMilliseconds()             //毫秒 
+    }; 
+    if(/(y+)/.test(fmt)) {
+            fmt=fmt.replace(RegExp.$1, (date.getFullYear()+"").substr(4 - RegExp.$1.length)); 
+    }
+     for(var k in o) {
+        if(new RegExp("("+ k +")").test(fmt)){
+             fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+         }
+     }
+    return fmt; 
+},
 //提交作业
  SubmitWorkAction:function(){
    
    console.log("我在这里"+this.Score)
-     this.SubmitWorkForm.SubmitTime=this.dateFormatFinal(new Date());
+     this.SubmitWorkForm.SubmitTime=this.formatDate(new Date(),"yyyy/MM/dd hh:mm:ss");
     var submitTime=new Date().getTime();
-    var laytime=new Date(this.layouttime).getTime()
+    var laytime=new Date(this.layouttime).getTime();
      this.SubmitWorkForm.UseTime=parseInt((submitTime-laytime)/1000);
-
       var params={
-        isSubmit:1,
-        StudentWorkScore:null,
-        StudentWorkMessage:this.editStudentWorkForm.WorkMessage,
-        CasePassCount:"",
-        CodeRowNumber:"",
-        Cpmplexity: "",
-       WorkPath: this.SubmitWorkForm.WorkPath,
-       SubmitTime: this.SubmitWorkForm.SubmitTime,
-       UseTime:this.SubmitWorkForm.UseTime,
-       StudentWorkId:this.SubmitWorkForm.StudentWorkId,
+        createdBy:this.$store.state.id,
+        casePassCount:"",
+        lineOfCode:"",
+        cpmplexity: "",
+        workPath: this.SubmitWorkForm.WorkPath,
+        submitTime: this.SubmitWorkForm.SubmitTime,
+        useTime:this.SubmitWorkForm.UseTime,
+        studentWorkId:this.SubmitWorkForm.studentWorkId,
+        modifiedBy:this.$store.state.id,
+        modifiedOn:this.SubmitWorkForm.SubmitTime,
       }
-      console.log(" isSubmit"+params.isSubmit)
+      console.log(" Submittime"+params.submitTime)
     console.log("秒数："+this.SubmitWorkForm.UseTime);
     Http.postStudentWorkDetail(params).then(res=>{
-      if(res.StatusCode==1){
-        this.$Message.success(res.Message);
+      if(res.statusCode==1){
+        
       this. SubmitWorkForm=
       {
         StudentWorkScore:"",
@@ -404,9 +482,10 @@ export default {
        WorkPath:"",
        SubmitTime:"",
        UseTime:"",
-       StudentWorkId:'',
+       studentWorkId:'',
       }
       this.SubmitWork=false;
+      this.$Message.success(res.message);
       this.getWorkByChapter();
       this.getchapterWorkList(this.findWorkList.ClassRoomId);
       this.getClassRoomWork(this.findWorkList.ClassRoomId);
@@ -434,17 +513,21 @@ export default {
             },
 
              handleAddSyllabusSuccess: async function(res, file) {
-        if (res.StatusCode == 1) {
-          this.SubmitWorkForm.WorkPath = res.Data;
-          this.SubmitWorkForm.Syllabus = res.FileName;
+        if (res.statusCode == 1) {
+          this.$Message.success("上传成功");
+          this.SubmitWorkForm.WorkPath = res.data.path;
+          this.SubmitWorkForm.Syllabus = res.data.fileName;   
         }
+        else{
+            this.$Message.error("请选择指定类型的文件上传")
+          }
     },
     // 编辑上传成功钩子 异步方法
     handleEditSyllabusSuccess: async function(res, file) {
         console.log(res)
         if (res.StatusCode == 1) {
-          this.editCourseForm.WorkPath = res.Data;
-          this.editCourseForm.Syllabus = res.FileName;
+          this.editCourseForm.WorkPath = res.data;
+          this.editCourseForm.Syllabus = res.fileName;
           console.log(this.editCourseForm)
         }
     },

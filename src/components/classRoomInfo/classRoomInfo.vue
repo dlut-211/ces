@@ -151,7 +151,7 @@
                             ]);
                         }
                     },
-                    { title: "描述", key: "Describe" }
+                    { title: "描述", key: "description" }
                 ],
                 chapterData:[],
                 // 学生
@@ -475,7 +475,7 @@ formatDate:function(date, fmt) {
                 var params = {
                     userId:this.$store.state.id,
                     classroomWorkId: id,
-                    endTime:this.formatDate(this.EndTime,'yy/MM/dd hh:mm:ss')
+                    endTime:this.formatDate(this.EndTime,'yyyy/MM/dd hh:mm:ss')
                 };
                 Http.layoutClassRoomWork(params).then(res =>{
                     if(res.statusCode == 1){
