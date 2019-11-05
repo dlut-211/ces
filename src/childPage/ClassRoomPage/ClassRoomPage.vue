@@ -1191,13 +1191,20 @@ export default {
         // B: form.TestPaperType == 1 ? [] : form.B,
 			  // VersionNumber: this.stringToByte(form.VersionNumber)
       };
+<<<<<<< Updated upstream
       if(form.TestPaperType == 1){
         this.testPaperrules.B = [{ validator: function(rule, value, callback) {
+=======
+      console.log("valuevaluevalue")
+      if(form.testPaperType == 1){
+        console.log(this.testPaperrules.A)
+        this.testPaperrules.A = [{ validator: function(rule, value, callback) {
+>>>>>>> Stashed changes
                                                   callback();
                                               }, trigger: 'blur',trigger: "change", type: 'array' }];
+        console.log(this.testPaperrules.A)
       } else{
         this.testPaperrules.B = [{ validator: function(rule, value, callback) {
-          
                                                   if(value.length == 0){
                                                     callback(new Error("B卷不能为空"));
                                                   } else {

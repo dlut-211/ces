@@ -13,15 +13,37 @@ function TeacherTableModuleJS() {
         tableHead: [
             { title: "教师工号", key: "number", align: "center" },
             { title: "姓名", key: "name", align: "center" },
-            // { title: "状态", key: "StatusName", align: "center" },
+            { title: "学校", key: "schoolName", align: "center" },
             {
                 title: "操作",
                 key: "action",
                 align: "center",
-                field:'right',
-                width: 140,
                 render: (h, params) => {
                     return h("div", [
+                        h(
+                            "span",
+                            {
+                                style: {
+                                    color: "#FF8000",
+                                    cursor: "pointer",
+                                    margin: "0 5px",
+                                },
+                                on: {
+                                    click: () => {
+                                        this.$Modal.confirm({
+                                            title: "<span style='color:red'><b>提示</b></span>",
+                                            content: "确定要重置("+ params.row.number +'/'+ params.row.name +")的密码吗？<br/><span style='color:red'><b>重置密码:123456</b></span>",
+                                            onOk: () => {
+                                                this.resetPasswordAction(params.row.id);
+                                            },
+                                            onCancel: () => {
+                                            }
+                                        }) 
+                                    }
+                                }
+                            },
+                            "重置密码"
+                        ),
                         h(
                             "span",
                             {
@@ -41,6 +63,8 @@ function TeacherTableModuleJS() {
                                             school: params.row.school,
                                             status: params.row.status,
                                             token: params.row.token,
+                                            subjectId:params.row.subjectId,
+                                            schoolId:params.row.schoolId
 											//versionNumber: this.stringToByte(params.row.versionNumber)
                                         };
                                         this.editTeacher = true;

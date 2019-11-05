@@ -12,7 +12,11 @@
                         <MenuItem v-for="(value2,key2) in value.Childs" :name="value2.Route" :key="key2">{{value2.MenuName}}</MenuItem>
                     </Submenu>
                 </Menu> -->
+<<<<<<< Updated upstream
                 <Menu v-if="userRole==1" :open-names="['1','2']" theme="dark" width="auto"
+=======
+                <Menu v-if="userRole==1" :theme="theme2" :open-names="['1','2','3']" theme="dark" width="auto"
+>>>>>>> Stashed changes
                     :style="{paddingTop:'10px'}" @on-select="changeRouter">
                 <Submenu name="1">
                     <template slot="title">
@@ -27,6 +31,13 @@
                         学科管理
                     </template>
                     <MenuItem name="SubjectPage">学科</MenuItem>
+                </Submenu>
+                <Submenu name="3">
+                    <template slot="title">
+                        <Icon type="ios-paper"></Icon>
+                        学校管理
+                    </template>
+                    <MenuItem name="SchoolPage">学校</MenuItem>
                 </Submenu>
             </Menu>
             <Menu v-if="userRole==2" :open-names="['1']" theme="dark" width="auto"
