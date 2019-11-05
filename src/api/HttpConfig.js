@@ -15,7 +15,7 @@ var API = {
     // 修改密码
     updatePassword: apiHost + '/user/editpassword',
     // 返回用户拥有的权限的接口selectByAccountAndPassword
-    getPermission: apiHost + '/user/getpermission',
+    // getPermission: apiHost + '/user/getpermission',
     // 校验Token是否失效
     verifyToken: apiHost + '/user/verifytoken',
     // 图片上传
@@ -135,7 +135,7 @@ var API = {
     // 撤销布置作业
     revokeLayoutClassRoomWork: apiHost + '/classroomwork/revokelayout',
     // 获取作业情况
-    getClassRoomWorkDetail: apiHost + '/studentwork/worklist',
+    getClassroomWorkDetail: apiHost + '/studentwork/worklist',
 
     // 获取学生作业明细列表
     getStudentWorkDetailList: apiHost + '/studentworkdetail/list',

@@ -175,7 +175,7 @@
                     h('span', [
                         h('tooltip', {
                             props: { 
-                                content: data.name, placement: 'right' ,maxWidth: '200',theme: 'light'
+                                content: data.description, placement: 'right' ,maxWidth: '200',theme: 'light'
                             },
                             style: {
                                 fontSize:'14px',
@@ -224,6 +224,8 @@
                 ]);
             },
             append (data) {
+                console.log(this.chapters)
+                console.log(data)
                 this.addChapterForm = {
                     chapterLevel: data.chapterLevel == null ? data.chapterLevel : data.chapterLevel + 1,
                     courseId:this.courseId,
@@ -322,16 +324,6 @@
                 this.getMainChaperts();
                 this.getCourseKnowledgeList();
             },
-            // 改变页码
-            changePage:function(page){
-                this.nowPage = page;
-                this.getKnowledgeList();
-            },
-                // 改变每页显示的条数
-            changeSize: function(size) {
-                this.pageSize = size;
-                this.getKnowledgeList();
-            },
             // 获取课程主章节（作业用）
             getMainChaperts:function(){
                 this.chooseChapter = false;
@@ -340,9 +332,8 @@
                 var params = {
                     id : this.courseId
                 };
-                Http.getChapterMain(params).then(res => {
-                    console.log(res)
-                    if(res.statusCode==1){
+                Http.getChapterCourse(params).then(res => {
+                    if(res.statusCode == 1){
                         this.mainChapters = res.data;
                     }
                 });
@@ -353,12 +344,21 @@
                     courseId : this.courseId
                 };
                 Http.getChapterTree(params).then(res => {
-                    console.log("tree"+res)
-                    if(res.statusCode==1){
+                    if(res.statusCode == 1){
                         this.setChapters(res.data);
                         this.getMainChaperts();
                     }
                 });
+            },
+            // 改变页码
+            changePage:function(page){
+                this.nowPage = page;
+                this.getKnowledgeList();
+            },
+                // 改变每页显示的条数
+            changeSize: function(size) {
+                this.pageSize = size;
+                this.getKnowledgeList();
             },
             // 获取课程知识点
             getKnowledgeList:function(){
@@ -368,8 +368,7 @@
                     courseId : this.courseId
                 };
                 Http.getKnowledgeList(params).then(res => {
-                    console.log(res)
-                    if(res.statusCode==1){
+                    if(res.statusCode == 1){
                         this.tableModule.tableContent = res.data.content;
                         this.tableModule.count = res.data.totalElements;
                     }
@@ -391,7 +390,7 @@
             },
             // 作业==============
             selectChapter:function(now,old){
-                if(now){
+                if(now.parentId){
                     this.chooseChapter = true;
                     this.chooseChapterId = now.id;   
                     this.getWorkByChapter();     
@@ -418,7 +417,6 @@
                     knowledgeIdList:""
                 };
                 this.$emit("addWork", this.addWorkForm,this.KnowledgeList);
-                console.log(this.addWorkForm)
             },
             editWork:function(data){
                 this.editWorkForm = {
@@ -428,7 +426,6 @@
                     name:data.name,
                     knowledgeIdList:data.knowledgeIdList
                 };
-                console.log(this.editWorkForm)
                 this.$emit("editWork", this.editWorkForm,this.KnowledgeList);
             },
             deleteWork:function(id){
@@ -446,9 +443,7 @@
                     courseId : this.courseId
                 };
                 Http.getKnowledgeAllList(params).then(res => {
-                    console.log("知识点列表")
-                    console.log(res)
-                    if(res.statusCode==1){
+                    if(res.statusCode == 1){
                         this.KnowledgeList = res.data;
                     }
                 });

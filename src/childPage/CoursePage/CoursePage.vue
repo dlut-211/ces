@@ -50,11 +50,7 @@
             <Button type="primary" size="large" @click="addCourseHandleSubmit('addCourseForm')">确定</Button>
         </div>
       </Modal>
-	  <Modal 
-          v-model="editCourse" 
-		  title="编辑课程"
-		  width="800px"
-		  :mask-closable="false">
+	  <Modal v-model="editCourse" title="编辑课程" width="800px" :mask-closable="false">
 		  <Form :model="editCourseForm" label-position="left" :label-width="100" :rules="rules" ref="editCourseForm">
 		  <Row>
           <Col span="12">
@@ -219,7 +215,7 @@
           </Col>
           <Col span="24">
 					<FormItem label="知识点" class="forms" prop="knowledgeIdList">
-            <Select v-model="addWorkForm.knowledgeIdList" multiple :placeholder="'请选择知识点'">
+            <Select v-model="addWorkForm.knowledgeIdList" multiple :placeholder="'请选择知识点'" transfer>
                 <Option v-for="item in KnowledgeList" :value="item.id" :key="item.id">{{ item.name }}</Option>
             </Select>
 					</FormItem>
@@ -251,7 +247,7 @@
           </Col>
           <Col span="24">
 					<FormItem label="知识点" class="forms" prop="Knowledges">
-            <Select v-model="editWorkForm.knowledgeIdList" multiple :placeholder="'请选择知识点'">
+            <Select v-model="editWorkForm.knowledgeIdList" multiple :placeholder="'请选择知识点'" transfer>
                 <Option v-for="item in KnowledgeList" :value="item.selectId" :key="item.selectId">{{ item.name }}</Option>
             </Select>
 					</FormItem>
@@ -596,15 +592,8 @@ export default {
         name: this.findCourseForm.name
       };
       Http.getCourseList(params).then(res => {
-        if(res.statusCode==1){
-          console.log(res);
+        if(res.statusCode == 1){
             this.tableModule.tableContent = res.data.content;
-              console.log("课程");
-            if(res.data.content.length>0){
-              //this.subjectId = res.Data.List[0].SubjectId;
-               console.log(12334);
-               console.log(this.subjectId);
-            }
             this.tableModule.count = res.data.totalElements;
         }
       });
@@ -628,6 +617,7 @@ export default {
     // 添加章节
     addChapterModal:function(a){
       this.addChapterForm = a;
+      console.log(a)
       this.$refs['addChapterForm'].resetFields();
       this.addChapter=true;
     },
@@ -723,8 +713,7 @@ export default {
               }
           })
         },
-        onCancel: () => {
-        }
+        onCancel: () => {}
       })   
     },
     //知识点===================================================================
@@ -761,7 +750,7 @@ export default {
       }
     },
 
- addKnowledgeAction: function() {
+    addKnowledgeAction: function() {
       var params = this.addKnowledgeForm;
                 Http.postKnowledge(params).then(res => {
                   console.log(res)

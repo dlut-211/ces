@@ -6,7 +6,6 @@ const path = require('path')
 
 module.exports = {
     dev: {
-
         // Paths
         assetsSubDirectory: 'static',
         assetsPublicPath: '/',
@@ -15,13 +14,12 @@ module.exports = {
                 //  target: 'http://localhost:2834/api',
                 target: 'http://localhost:8443/api',
                 // target: 'http://192.168.0.104:7017/api',
-                changeOrigin: true,
+                 changeOrigin: false,
                 pathRewrite: {
                     '^/api': ''
                 }
             }
         },
-
 
         // Various Dev Server settings
         host: '0.0.0.0', // can be overwritten by process.env.HOST

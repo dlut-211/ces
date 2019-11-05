@@ -1,27 +1,26 @@
-
 function StudentWorkTableModuleJS() {
     return {
         title: "学生作业列表",
         icon: "person-stalker",
         count: 0,
         tableHead: [
-            { title: "学号", key: "StudentNumber", align: "left" },
-            { title: "学生姓名", key: "StudentName", align: "left" },
+            { title: "学号", key: "studentNumber", align: "left" },
+            { title: "学生姓名", key: "studentName", align: "left" },
             {
                 title: "最终提交时间",
-                key: "SubmitTime",
+                key: "submitTime",
                 align: "center",
                 width: 160,
                 render: (h, params) => {
-                    return h("div", [this.dateFormat(params.row.SubmitTime)])
+                    return h("div", [this.dateFormat(params.row.submitTime)])
                 }
             },
-            { title: "用时", key: "UseTimeFormat", align: "center" ,width: 120},
-            { title: "分数", key: "Score", align: "center" },
+            { title: "用时", key: "useTimeFormat", align: "center" ,width: 120},
+            { title: "分数", key: "score", align: "center" },
            
             { 
                 title: "提交次数", 
-                key: "WorkName",
+                key: "workName",
                 align: "center",
                 render: (h, params) => {
                     return h("div", [
@@ -29,25 +28,24 @@ function StudentWorkTableModuleJS() {
                             "span",
                             {
                                 style: {
-                                    color: (params.row.SubmitCount == 0) ? "#495060" :"#2d8cf0",
-                                    cursor: (params.row.SubmitCount == 0) ?  'auto' : "pointer",
+                                    color: (params.row.submitCount == 0) ? "#495060" :"#2d8cf0",
+                                    cursor: (params.row.submitCount == 0) ?  'auto' : "pointer",
                                 },
                                 on: {
                                     click: () => {
-                                        if(params.row.SubmitCount > 0){
-                                            this.studentWorkId = params.row.Id;
+                                        if(params.row.submitCount > 0){
+                                            this.studentWorkId = params.row.id;
                                             this.getStudentWorkDetailList();
                                             this.studentWorkDetailVisible = true;
                                         }
                                     }
                                 }
                             },
-                            params.row.SubmitCount + "次"
+                            params.row.submitCount + "次"
                         )
                     ]);
                 }
             },
-            { title: "作业留言", key: "WorkMessage", align: "center" },
             {
                 title: "查看作业",
                 key: "action",
@@ -60,11 +58,11 @@ function StudentWorkTableModuleJS() {
                                 style: {
                                     color: "#2d8cf0",
                                     cursor: "pointer",
-                                    display: (params.row.IsSubmit == 1) ?"inline":"none"
+                                    display: (params.row.isSubmit == 1) ?"inline":"none"
                                 },
                                 on: {
                                     click: () => {
-                                       window.open(params.row.WorkPath); 
+                                       window.open(params.row.workPath); 
                                     }
                                 }
                             },
@@ -80,7 +78,7 @@ function StudentWorkTableModuleJS() {
                 field:'right',
                 width: 140,
                 render: (h, params) => {
-                    if(params.row.IsSubmit==0){
+                    if(params.row.isSubmit == 0) {
                     return h("div", [
                         h(
                             "span",
@@ -92,7 +90,7 @@ function StudentWorkTableModuleJS() {
                                 },
                                 on: {
                                     click: () => {
-										this.addStudentWorkDetailForm.StudentWorkId = params.row.Id;
+										this.addStudentWorkDetailForm.studentWorkId = params.row.id;
                                         this.$refs['addStudentWorkDetailForm'].resetFields();
                                         this.addStudentWorkDetail = true;
                                     }
@@ -116,15 +114,14 @@ function StudentWorkTableModuleJS() {
                                     click: () => {
                                        
                                        this.editStudentWorkForm={
-                                            Id:params.row.Id,
-                                            ClassRoomWorkId:params.row.ClassRoomWorkId,
-                                            ClassRoomStudentId:params.row.ClassRoomStudentId,
-                                            isScore:1,
-                                            Score:"",
-                                            WorkMessage:params.row.WorkMessage,
-                                            VersionNumber:this.stringToByte(params.row.VersionNumber)
-                                          };
-                                          this.StudentGrade=true;
+                                            id: params.row.id,
+                                            classroomWorkId: params.row.classroomWorkId,
+                                            classroomStudentId: params.row.classroomStudentId,
+                                            isScore: 1,
+                                            score: "",
+                                            workMessage: params.row.workMessage
+                                        };
+                                        this.StudentGrade=true;
                                     }
                                 }
                             },
