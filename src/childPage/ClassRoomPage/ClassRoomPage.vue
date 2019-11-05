@@ -162,7 +162,7 @@
               <Col span="1" style="background-color:#E0E6F8;font-weight:bold;text-align:center;">{{avgScore}}</Col>
             </Row>
             <Row>
-              <Col span="19"><b>作业描述:</b> {{workDescribe}}</Col>
+              <Col span="19"><b>作业描述:</b> {{description}}</Col>
               <Col span="1" style="background-color:#E0E6F8;font-weight:bold;text-align:center;">已评分</Col>
               <Col span="1" style="background-color:#E0E6F8;font-weight:bold;text-align:center;">已提交</Col>
               <Col span="1" style="background-color:#E0E6F8;font-weight:bold;text-align:center;">已布置</Col>
@@ -170,7 +170,7 @@
               <Col span="1" style="background-color:#E0E6F8;font-weight:bold;text-align:center;">平均分</Col>
             </Row>
             <Row style="margin-bottom:10px;">
-              <Col span="24"><b>布置作业时间:</b> {{workLayoutTime}}</Col>
+              <Col span="24"><b>布置作业时间:</b> {{layoutTime}}</Col>
             </Row>
           </div>
           <tableModule :object="studentWorkTableModule" @changePage="swChangePage" @changeSize="swChangeSize"></tableModule>
@@ -633,8 +633,8 @@ export default {
       studentWorkVisible: false,
       classroomWorkId: null,
       workName: "",
-      workDescribe: "",
-      workLayoutTime: "",
+      description: "",
+      layoutTime: "",
       studentWorkTableModule: (StudentWorkTableModuleJS.bind(this))(),
       swNowPage: 1,
       swPageSize: 10,
@@ -1035,12 +1035,12 @@ export default {
      * 打开作业详情
      */
     studentWorkDetailModal: function(row){
+      console.log("row---")
       console.log(row)
       this.classroomWorkId = row.id
       this.workName = row.workName
-      this.workDescribe = row.WorkDescribe
-      // this.workLayoutTime = this.dateFormat(row.LayoutTime);
-      this.workLayoutTime = ""
+      this.description = row.description
+      this.layoutTime = this.dateFormat(row.layoutTime)
       this.getStudentWorkList()
       this.studentWorkVisible = true
     },
@@ -1050,8 +1050,8 @@ export default {
     studentWorkClose: function(){
       this.classroomWorkId = null
       this.workName = ""
-      this.workDescribe = ""
-      this.workLayoutTime = ""
+      this.description = ""
+      this.layoutTime = ""
       this.swNowPage = 1
       this.swPageSize = 10
       this.scoreCount = null
