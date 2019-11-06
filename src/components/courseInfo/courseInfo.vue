@@ -223,21 +223,34 @@
                     ])
                 ]);
             },
-            append (data) {
-// <<<<<<< HEAD
-// =======
-                console.log(this.chapters)
-                console.log(data)
-// >>>>>>> parent of 5b93c800... 201911050937-lhd
-                this.addChapterForm = {
-                    chapterLevel: data.chapterLevel == null ? data.chapterLevel : data.chapterLevel + 1,
-                    courseId:this.courseId,
-                    name:"",
-                    parentId:data.id,
-                    description:""
-                };
-                this.$emit("addChapter", this.addChapterForm)
-            },
+          append (data) {
+            var sort = '';
+            if(data.level == 0){
+              if(this.chapters[0].children){
+                sort = this.chapters[0].children.length<9?'0'+ (this.chapters[0].children.length+1):(this.chapters[0].children.length+1)+'';
+              }
+              else{
+                sort = '01'
+              }
+            }else{
+              if(data.children){
+                sort = data.children.length<9?data.sort + '0' + (data.children.length+1):sort = data.sort + (data.children.length+1)
+              }
+              else{
+                sort = data.sort + '01';
+              }
+
+            }
+            this.addChapterForm = {
+              chapterLevel: data.chapterLevel == null ? data.chapterLevel : data.chapterLevel + 1,
+              courseId:this.courseId,
+              name:"",
+              parentId:data.id,
+              description:"",
+              sort:sort,
+            };
+            this.$emit("addChapter", this.addChapterForm)
+          },
             edit (data){
                 this.editChapterForm = {
                     id: data.id,
