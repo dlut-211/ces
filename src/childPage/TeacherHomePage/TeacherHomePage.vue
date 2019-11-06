@@ -2,14 +2,14 @@
 <template>
   <div class="TeacherHomePage">
     <div>
-    <h3>待办事项</h3>
-        <ul>
+    <h3>教师首页</h3>
+        <!-- <ul>
           <li v-for="(item, index) in InviGilateInfo" :key="index" style="margin:0.5cm 0.5cm 0.5cm 0.5cm"> 
            
             监考科目《{{item.CourseName}}》| 监考教室：{{item.ClassRoom}} | 考试日期：{{dateFormatFinal(item.TestTime)}} | 待确认
           
           </li>
-        </ul>
+        </ul> -->
         <!-- <h4 style="color:red">待确认监考信息</h4>
         <Table stripe height="200"  :columns="columns1" :data="InviGilateInfo"></Table> -->
     </div>

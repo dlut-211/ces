@@ -37,6 +37,8 @@ var API = {
     enableTeacher: apiHost + '/teacher/enable',
     // 禁用教师
     disableTeacher: apiHost + '/teacher/disable',
+    // 重置教师密码 
+    resetTeacherPassWord: apiHost + '/teacher/resetPassWord',
 
 
    // 获取课程列表
@@ -89,6 +91,8 @@ var API = {
     getAllSubjectList: apiHost + '/MySystem/getAllSubjectList',
      //获取学科列表
      getAllSubjectList: apiHost + '/course/getAllSubjectList',
+     //获取学校列表
+     getAllSchoolList: apiHost + '/school/getAllSchoolList',
 
      // 获取章节作业
     getWorkChapterList: apiHost + '/work/list',
@@ -255,6 +259,15 @@ var API = {
 
     //获取作业数据总和
     getAllWorkInfoData: apiHost+'/vstudentworkinfowithstudentcontroller/getallworkinfodata',
+
+    //获取学校列表
+    getSchoolList:apiHost + '/school/list',
+    //增加学校
+    postSchool:apiHost + '/school/add',
+    //删除学校
+    deleteSchool:apiHost + '/school/remove',
+    //编辑学校
+    putSchool:apiHost + '/school/edit',
 
     //验证码校验
     checkImageCode: apiHost+'/imagecode/checkImageCode',
