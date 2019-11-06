@@ -129,6 +129,7 @@
           @addTestPaper="addTestPaperModal"
           @editTestPaper="editTestPaperModal"
           @detailTestPaper="detailTestPaperModal"
+          @showResultAnalysisModal="showResultAnalysisModal"
           ref="classRoomDetail">
         </classRoomInfo>
       </Modal>
@@ -740,6 +741,8 @@ export default {
       courseKnowledgeList:[],
       knowledgeRule:{ validator: validateKnowledgeList, trigger: 'change', type: 'array' },
      //  PerformaceWeightRule:{ validator: validatePerformaceWeightList, trigger: 'change', type: 'array' }//考试成绩规则
+      showResultAnalysis: false
+
     };
   },
   mounted:function(){
@@ -1519,6 +1522,148 @@ export default {
     delTestPaperDetailKnowledge: function(index,kindex){
       this.testPaperDetailForm.testPaperDetailList[index].KnowledgeList.splice(kindex,1);
     },
+    showResultAnalysisModal(showtmp, paperId) {
+      console.log("show res2!");
+      this.showResultAnalysis = showtmp;
+      this.loadDataOfResAnalysis(paperId);
+    },
+    loadDataOfResAnalysis(paperId) {
+      let myChart = this.$echarts.init(
+        document.getElementById("myChart")
+      );
+      let myChart2 = this.$echarts.init(
+        document.getElementById("myChart2")
+      );
+      let resAnalysisKnowledge = [];
+      let resAnalysisLv1 = [];
+      let resAnalysisLv2 = [];
+      let resAnalysisLv3 = [];
+      let resAnalysisScore = [];
+      var params = new URLSearchParams();
+
+      params.append("paperId", paperId);
+
+      axios
+        .post("http://localhost:8443/resultanalysis/analysis", params)
+        .then(res => {
+          if(res.data==null||res.data=='')
+          {
+            this.showResultAnalysis=false;
+            alert("暂时未导入成绩")
+            return;
+          }
+          res.data.forEach(element => {
+            resAnalysisKnowledge.push(element.knowledgeName),
+              resAnalysisLv1.push(element.level_1);
+            resAnalysisLv2.push(element.level_2);
+            resAnalysisLv3.push(element.level_3);
+            resAnalysisScore.push(element.score_sum);
+
+            myChart.setOption({
+              tooltip: {
+                trigger: "axis",
+                axisPointer: {
+                  // 坐标轴指示器，坐标轴触发有效
+                  type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
+                }
+              },
+              color: ["#FF0000", "	#FFFF00", "#008000"],
+              legend: {
+                data: ["得分大于等于80%", "得分在40%到80%之间", "得分小于40%"]
+              },
+              // grid: {
+              //   left: "3%",
+              //   right: "4%",
+              //   bottom: "3%",
+              //   containLabel: true
+              // },
+              xAxis: [
+                {
+                  name: "知识点",
+                  nameLocation: "end",
+                  axisLabel: {
+                    interval: 0,
+                    rotate: -30
+                  },
+                  type: "category",
+                  data: resAnalysisKnowledge
+                }
+              ],
+              yAxis: [
+                {
+                  name: "百分比",
+                  type: "value",
+                  minInterval: 1
+                }
+              ],
+              series: [
+                {
+                  name: "得分大于等于80%",
+                  type: "bar",
+                  stack: "广告",
+                  label: {
+                    normal: {
+                      show: true,
+                      position: 'inside'
+                    }
+                  },
+                  data: resAnalysisLv1
+                },
+                {
+                  name: "得分在40%到80%之间",
+                  type: "bar",
+                  stack: "广告",
+                  label: {
+                    normal: {
+                      show: true,
+                      position: 'inside'
+                    }
+                  },
+                  data: resAnalysisLv2
+                },
+                {
+                  name: "得分小于40%",
+                  type: "bar",
+                  stack: "广告",
+                  label: {
+                    normal: {
+                      show: true,
+                      position: 'inside'
+                    }
+                  },
+                  data: resAnalysisLv3
+                }
+              ]
+            });
+            myChart2.setOption({
+              title: { text: '' },
+              tooltip: {},
+              xAxis: {
+                name:"知识点",
+                data: resAnalysisKnowledge
+              },
+              yAxis: {name:"分数",},
+              series: [{
+                name: '分数',
+                type: 'bar',
+                label: {
+                  normal: {
+                    show: true,
+                    position: 'outside'
+                  }
+                },
+                data: resAnalysisScore
+              }]
+            });
+          });
+        });
+    },
+    ok(){
+
+    },
+    cancel(){
+
+    }
   }
 };
 
