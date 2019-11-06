@@ -62,6 +62,10 @@ export const enableTeacher = (param) =>{
 export const disableTeacher = (param) =>{
     return GET(API.disableTeacher,param);
 }
+// 重置教师密码
+export const resetTeacherPassWord = (param) =>{
+    return PUT(API.resetTeacherPassWord,param);
+}
 
 
 // 获取课程列表
@@ -476,6 +480,27 @@ export const getAllWorkInfoData = (param)=>{
 export const testPort=(param)=>{
     return GET(API.testPort,param);
 }
+
+    // 获取学校列表
+    export const getSchoolList = (param) =>{
+    return GET(API.getSchoolList,param);
+    }
+    // 添加学校
+    export const postSchool = (param) =>{
+    return POST(API.postSchool,param);
+    }
+    // 编辑学校
+    export const putSchool = (param) =>{
+    return PUT(API.putSchool,param);
+    }
+    // 删除学校
+    export const deleteSchool = (param) =>{
+    return DELETE(API.deleteSchool,param);
+    }
+    // 获取学校列表
+    export const getAllSchoolList = (param) =>{
+        return GET(API.getAllSchoolList,param);
+        }
 
 
 //---------------------------------------------------------------------------------------------------

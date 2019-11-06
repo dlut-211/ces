@@ -20,7 +20,24 @@
 						<Input v-model="addTeacherForm.name"></Input>
 					</FormItem>
           </Col>
+           <!--添加学科类型-->
+           <Col span="12">
+					<FormItem label="学科类型" class="forms" prop="subjectId">
+            <Select v-model="addTeacherForm.subjectId" :placeholder="'请选择学科类型'">
+              <Option v-for="item in subjectTypeArr" :value="item.id" :key="item.id">{{item.optionValue}}</Option>
+            </Select> 
+					</FormItem>
+          </Col>
+          <!--添加学校-->
+           <Col span="12">
+					<FormItem label="学校名称" class="forms" prop="schoolId">
+            <Select v-model="addTeacherForm.schoolId" :placeholder="'请选择学校'">
+              <Option v-for="item in schoolTypeArr" :value="item.id" :key="item.id">{{item.name}}</Option>
+            </Select> 
+					</FormItem>
+          </Col>
 		  </Row>
+
         </Form>
 		<div slot="footer">
             <Button type="ghost" size="large"   @click="addTeacher=false">取消</Button>
@@ -42,6 +59,22 @@
           <Col span="12">
 					<FormItem label="姓名" class="forms" prop="name">
 						<Input v-model="editTeacherForm.name"></Input>
+					</FormItem>
+          </Col>
+          <!--添加学科类型-->
+           <Col span="12">
+					<FormItem label="学科类型" class="forms" prop="subjectId">
+            <Select v-model="editTeacherForm.subjectId" :placeholder="'请选择学科类型'">
+              <Option v-for="item in subjectTypeArr" :value="item.id" :key="item.id">{{item.optionValue}}</Option>
+            </Select> 
+					</FormItem>
+          </Col>
+          <!--添加学校-->
+           <Col span="12">
+					<FormItem label="学校名称" class="forms" prop="schoolId">
+            <Select v-model="editTeacherForm.schoolId"  :placeholder="'请选择学校'">
+              <Option v-for="item in schoolTypeArr" :value="item.id" :key="item.id">{{item.name}}</Option>
+            </Select> 
 					</FormItem>
           </Col>
 		  </Row>
@@ -73,14 +106,20 @@ export default {
       addTeacherForm:{
         name:"",
         number:"",
+        subjectId:"",
+        schoolId:"",
       },
 	  editTeacher:false,
       editTeacherForm:{
 			  id:null,
         name:"",
         number:"",
+        subjectId:"",
+        schoolId:"",
 			  versionNumber: null
       },
+      subjectTypeArr:[],
+      schoolTypeArr:[],
 	  nowPage: 1,
       pageSize: 10,
 	  findTeacherForm:{
@@ -89,14 +128,17 @@ export default {
         status:1
       },
 	  rules: {
-        school: [
-          { required: true, message: "学校不能为空", trigger: "blur" }
+        schoolId: [
+          { required: true, message: "学校不能为空", trigger: "change",type: 'number' }
         ],
         name: [
           { required: true, message: "姓名不能为空", trigger: "blur" }
         ],
         number: [
           { required: true, message: "工号不能为空", trigger: "blur" }
+        ],
+        subjectId: [
+          { required: true, message: "学科不能为空", trigger: "change",type: 'number'}
         ],
 	  }
     };
@@ -110,6 +152,8 @@ export default {
     this.$store.commit("changeOpenName", [""]);
     this.$store.commit("changeActiveName", "NetGraphPage");
     this.getTeacherList();
+    this.getAllSubjects();
+    this.getAllSchools();
   },
   components: {
     selectModule: selectModule,
@@ -176,7 +220,9 @@ export default {
                     this.$Message.success(res.message);
                     this.addTeacherForm = {
                       name:"",
-                      number:""
+                      number:"",         
+                      subjectId:"",
+                      schoolId:"",
                     };
                     this.addTeacher = false;
                     this.$refs["addTeacherForm"].resetFields();
@@ -329,6 +375,37 @@ export default {
             }
         })
     },
+    //重置密码
+    resetPasswordAction:function(id){
+      var params = {
+        id:id
+      }
+      Http.resetTeacherPassWord(params).then(res =>{
+        if(res.statusCode==1){
+          this.$Message.success('已重置密码');
+        }
+      })
+    },
+    //添加教师时获取学科列表
+    getAllSubjects:function(){
+     Http.getAllSubjectList().then(res => {
+        if(res.statusCode==1){
+          console.log(res.data);
+            this.subjectTypeArr = res.data;
+             console.log("进来了");
+              console.log(this.subjectTypeArr);
+          }
+      });
+    },
+    //添加教师时获取学校列表
+    getAllSchools:function(){
+      Http.getAllSchoolList().then(res =>{
+        if(res.statusCode==1){
+          this.schoolTypeArr = res.data;
+        }
+      })
+    }
+
   }
 };
 </script>

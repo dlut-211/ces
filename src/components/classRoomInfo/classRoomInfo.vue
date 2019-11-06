@@ -538,7 +538,7 @@ formatDate:function(date, fmt) {
                     else{
                         this.$Message.error(res.message);
                     }
-                })
+                }) 
             },
             // 修改试卷状态
             editTestPaperStatusAction:function(id,status){
