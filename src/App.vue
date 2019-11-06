@@ -17,11 +17,14 @@ export default {
       let username = localStorage.getItem("username");
       let token = localStorage.getItem("token");
       let id = localStorage.getItem("id");
-      let roles=localStorage.getItem("roles")
+      let roles=localStorage.getItem("roles");
+      let classroomId=localStorage.getItem("classroomId");
+      this.$store.state.classroomId=classroomId;
       this.$store.state.username = username;
       this.$store.state.roles=roles;
       this.$store.state.token = token;
       this.$store.state.id = id;
+      this.$store.state.visitedViews=visitedViews;
     }
   },
   mounted: function() {

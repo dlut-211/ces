@@ -8,21 +8,31 @@
           v-model="ShowWorkList"
           title="章节作业"
 		  width="800px"
-		  :mask-closable="false">
+		  :mask-closable="false" style="position:fixed;z-index:99999">
         <Table height="500" :columns="workColumn" :data="workList"></Table>
 		<div slot="footer">
             <Button type="ghost" size="large"   @click="ShowWorkList=false">取消</Button>
             <Button type="primary" size="large" @click="ShowWorkList=false">确定</Button>
         </div>
       </Modal>
+      <!-- 显示完全描述内容 -->
+      <Modal
+          v-model="hided"
+		  width="500px"
+		  :mask-closable="false"
+      style="position:fixed;z-index:99999"
+      >
+      <p style="font-size:15px">{{Describe}}</p>
+      <div slot="footer"></div>
+</Modal>
        <!-- 上传作业 -->
        <Modal
           v-model="SubmitWork"
-          title="上传作业"
+          title="上传作业（仅支持上传:war、zip、rar类型的文件）"
 		  width="800px"
 		  :mask-closable="false"
       style="position:fixed;z-index:99999"
-      >  
+      >
         <Form :model="SubmitWorkForm" label-position="left" :label-width="100"  >
 		  <Row>
           <Col span="12">
@@ -31,28 +41,30 @@
               <Button type="ghost" icon="ios-cloud-upload-outline">点击上传文件</Button>
             </Upload>
             <div v-if="SubmitWorkForm.WorkPath">
-              <a :href="SubmitWorkForm.WorkPath" target="blank"></a>
+              <a :href="SubmitWorkForm.WorkPath" target="blank">{{SubmitWorkForm.Syllabus}}</a>
             </div>
 					</FormItem>
           </Col>
+          
 		  </Row>
         </Form>
 		<div slot="footer">
             <Button type="ghost" size="large"   @click="SubmitWork=false">取消</Button>
-            <Button type="primary" size="large" @click="SubmitWorkAction()">确定</Button>
+            <Button v-if="SubmitWorkForm.WorkPath" type="primary" size="large" @click="SubmitWorkAction()">确定</Button>
+            <Button v-if="!SubmitWorkForm.WorkPath" type="primary" disabled size="large" @click="SubmitWorkAction()">确定</Button>
         </div>
       </Modal>
-    <div style="text-align:right">
+    <!-- <div style="text-align:right">
         <Button type="primary" style="height:30px;" size="large" @click="getEchartsTestPaper()">饼图</Button>
-        <Button type="primary" style="height:30px;" size="large" @click="huanbiDia()">环比图</Button>
-        <Button type="primary" style="height:30px;" size="large" @click="leidaDia()">雷达图</Button>
-    </div>
+        <Button type="primary" style="height:30px;" size="large" @click="huanbiDia(FatherClassRoomId)">环比图</Button>
+        <Button type="primary" style="height:30px;" size="large" @click="leidaDia(FatherClassRoomId)">雷达图</Button>
+    </div> -->
       <tableModule :object="tableModule" @changePage="changePage" @changeSize="changeSize" @addStudentWork="addStudentWork=true;$refs['addStudentWorkForm'].resetFields();"></tableModule>
    <Modal
           v-model="huanbi"
           title="课程环比图"
 		  width="800px"
-		  :mask-closable="false">
+		  :mask-closable="false" style="position:fixed;z-index:99999">
   <div id="echarts1" :style="{width: '750px', height: '500px'}"></div>
    <div slot="footer"></div>
    </Modal>
@@ -60,7 +72,7 @@
           v-model="leida"
           title="雷达图"
 		  width="800px"
-		  :mask-closable="false">
+		  :mask-closable="false" style="position:fixed;z-index:99999">
   <div id="echarts2" :style="{width: '1000px', height: '500px'}"></div>
    <div slot="footer"></div>
     </Modal>
@@ -68,10 +80,11 @@
           v-model="bingtu"
           title="饼图"
 		  width="800px"
-		  :mask-closable="false">
+		  :mask-closable="false" style="position:fixed;z-index:99999">
       <div id="EchartsTestPaper" style="width: 600px;height:400px;"></div>
       <div slot="footer"></div>
       </Modal>
+    
   </div> 
   
 </template>
@@ -92,6 +105,8 @@ import {StudentWorkTableModuleJS} from "./StudentWorkTableModuleJS.js";
 import * as Http from "@/api/HttpService.js";
 import { API } from "@/api/HttpConfig";
 export default {
+  //name:"StudentWorkChild",
+  props: ["FatherClassRoomId"],
    computed: {
       uploadFile: function() {
         return API.uploadFile+'?filesname=Syllabus';
@@ -99,6 +114,7 @@ export default {
       },
   data: function() {
     return {
+      classroomId:null,
       selectModule: (StudentWorkSelectModuleJS.bind(this))(),
       tableModule: (StudentWorkTableModuleJS.bind(this))(),
       addStudentWork:false,
@@ -108,6 +124,7 @@ export default {
         WorkMessage:"",
         ClassRoomWorkId:""
       },
+      isHide:true,
       huanbi:false,
       bingtu:false,
       leida:false,
@@ -115,10 +132,12 @@ export default {
       ClassRoomWorkCount:"",
       workList:[],
       findWorkList:{
-        StudentId: null,
+        studentId: null,
         chapterId : null,
-        ClassRoomId:null     
+        classroomId:null,  
       },
+      Describe:"",
+      hided:false,
        SubmitWorkForm: 
       {
         StudentWorkScore:null,
@@ -129,7 +148,7 @@ export default {
        WorkPath:"",
        SubmitTime:"",
        UseTime:"",
-       StudentWorkId:'',
+       studentWorkId:'',
       },
           editStudentWorkForm:{
         Id:"",
@@ -161,53 +180,52 @@ export default {
        workColumn:[
                     { 
                         title: "作业名称", 
-                        key: "WorkName",
-                        render: (h, params) => {
-                            return h("div", [
-                                h(
-                                    "span",
-                                    {
-                                        style: {
-                                            color: (params.row.Status == 1) ? "#495060" :"#2d8cf0",
-                                            cursor: (params.row.Status == 1) ?  'auto' : "pointer",
-                                            margin: "0 5px",
-                                        },
-                                        on: {
-                                            click: () => {
-                                                if(params.row.Status == 2){
-                                                    this.openStudentWorkDetailAction(params.row);
-                                                }
-                                            }
-                                        }
-                                    },
-                                    params.row.WorkName
-                                )
-                            ]);
-                        }
+                        key: "workName",
                     },
-                    { title: "描述", key: "Description"},
-                    {title:"发布时间",key:"LayoutTime",
+                    { title: "描述", key: "description",
                       render:(h,params)=>{
-                        return h("div",this.dateFormatFinal(params.row.LayoutTime))
+                        if(this.isHide==true){
+                          return h('div',[
+                            h(
+                              "p",
+                              {
+                               class:'summary',
+                               on:{
+                                 click:()=>{
+                                   this.hided=true;
+                                   this.Describe=params.row.Description
+                                   console.log("turetruetrue")
+                                 }
+                               }
+                              },
+                              params.row.Description
+                            )
+                          ])
+                        }
+                      }
+                    },
+                    {title:"发布时间",key:"layoutTime",
+                      render:(h,params)=>{
+                        return h("div",this.dateFormatFinal(params.row.layoutTime))
                       }},
-                    {title:"截止时间",key:"EndTime",
+                    {title:"截止时间",key:"endTime",
                       render:(h,params)=>{
-                        return h("div",this.dateFormatFinal(params.row.EndTime))
+                        return h("div",this.dateFormatFinal(params.row.endTime))
                       }},
 
-                    { title: "成绩", key: "Score" ,field:'right',width:100,
+                    { title: "成绩", key: "score" ,field:'right',width:100,
                      render: (h, params) => {
                        var mydate=new Date();
                        //console.log("mydate"+mydate)
                        
                    
-                       if(params.row.IsSubmit==0){
+                       if(params.row.isSubmit==0){
                          return h("div", [
                             h(
                                 "span",
                                 {
                                     style: {
-                                        color: "#d50000",
+                                        color: "red",
                                         margin: "0 5px"
                                     },
                                     on: {
@@ -219,7 +237,7 @@ export default {
                             )
                         ]);
                        }
-                      if(params.row.isScore==0){
+                      if(params.row.isScored==0){
                          return h("div", [
                             h(
                                 "span",
@@ -248,7 +266,7 @@ export default {
                                         }
                                     }
                                 },
-                                params.row.Score
+                                params.row.score
                             )
                         ]);
                        }
@@ -263,8 +281,9 @@ export default {
                         field:'right',
                         width: 140,
                         render: (h, params) => {
+                          if(params.row.status!=4){
                           var mydate=new Date()
-                          if(this.dateFormatFinal(mydate)>=this.dateFormatFinal(params.row.EndTime)){
+                          if(this.dateFormatFinal(mydate)>=this.dateFormatFinal(params.row.endTime)){
                          return h("div",[
                            h(
                               "span",
@@ -296,14 +315,14 @@ export default {
                                         on: {
                                             click: () => {
                                               this.editStudentWorkForm={
-                                                Id:params.row.StudentWorkId, 
+                                                Id:params.row.studentWorkId, 
                                               ClassRoomStudentId:"",
                                                ClassRoomWorkId:"",
                                               Score:"",
                                               WorkMessage:"",
                                               VersionNumber:""
                                               };
-                                              this.layouttime=params.row.LayoutTime;
+                                              this.layouttime=params.row.layoutTime;
                                                this.SubmitWorkForm={
                                                  
                                                  StudentWorkScore:"",
@@ -314,7 +333,7 @@ export default {
                                                      WorkPath:"",
                                                      SubmitTime:"",
                                                      UseTime:"",
-                                                   StudentWorkId:params.row.StudentWorkId,
+                                                   studentWorkId:params.row.studentWorkId,
 
                                                }
                                                 this.SubmitWork=true;
@@ -328,55 +347,131 @@ export default {
                             ]);
                        }
                         }
-                    }
+                        else{
+                          return h("div",[
+                            h(
+                              "span",
+                              {
+                                style:{
+                                        color: "#808080",
+                                        margin: "0 5px"
+                                },
+                              },
+                              "已结课"
+                            )
+                          ])
+                        }
+                        }
+                    },
+                    { 
+                        title: "下载作业", 
+                        key: "workPath",
+                        align: "center",
+                        field:'right',
+                        width: 140,
+                        render: (h, params) => {
+                          if(params.row.workPath==null){
+                            return h("div",
+                              {
+                                style:{
+                                        color: "#808080",
+                                        margin: "0 5px"
+                                },
+                              },
+                              "下载附件" 
+                            )
+                          }
+                          else{
+                            return h("A",
+                              {
+                                attrs:{
+                                  href:params.row.workPath
+                                },
+                                style:{
+                                        color: "#04B404",
+                                        cursor: "pointer",
+                                        margin: "0 5px"
+                                },
+                                // on:{
+                                //   click:()=>{
+
+                                //   }
+                                // }
+                            
+                              },
+                              "下载附件" 
+                            )
+                          }
+                        }
+                    },
                 ],
 	 
     };
   },
   mounted:function(){
-	this.$store.commit("changeBreadCrumb", [
-      "首页",
-      "",
-      "学生作业管理"
-    ]);
-    this.$store.commit("changeOpenName", [""]);
-    this.$store.commit("changeActiveName", "NetGraphPage");
+	// this.$store.commit("changeBreadCrumb", [
+  //     "首页",
+  //     "",
+  //     "学生作业管理"
+  //   ]);
+  //   this.$store.commit("changeOpenName", [""]);
+  //   this.$store.commit("changeActiveName", "NetGraphPage");
     this.getchapterWorkList();
-    this.getClassRoomWork();
-    this.getStudentWorkCount();
-    //this.drawLine();
+    //this.getClassRoomWork();
+    //this.getStudentWorkCount();
+    
   },
   components: {
     selectModule: selectModule,
     tableModule: tableModule
   },
   methods: {
+        //日期格式化
+formatDate:function(date, fmt) {
+    var o = { 
+        "M+" : date.getMonth()+1,                 //月份 
+        "d+" : date.getDate(),                    //日 
+        "h+" : date.getHours(),                   //小时 
+        "m+" : date.getMinutes(),                 //分 
+        "s+" : date.getSeconds(),                 //秒 
+        "q+" : Math.floor((date.getMonth()+3)/3), //季度 
+        "S"  : date.getMilliseconds()             //毫秒 
+    }; 
+    if(/(y+)/.test(fmt)) {
+            fmt=fmt.replace(RegExp.$1, (date.getFullYear()+"").substr(4 - RegExp.$1.length)); 
+    }
+     for(var k in o) {
+        if(new RegExp("("+ k +")").test(fmt)){
+             fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+         }
+     }
+    return fmt; 
+},
 //提交作业
  SubmitWorkAction:function(){
    
    console.log("我在这里"+this.Score)
-     this.SubmitWorkForm.SubmitTime=this.dateFormatFinal(new Date());
+     this.SubmitWorkForm.SubmitTime=this.formatDate(new Date(),"yyyy/MM/dd hh:mm:ss");
     var submitTime=new Date().getTime();
-    var laytime=new Date(this.layouttime).getTime()
+    var laytime=new Date(this.layouttime).getTime();
      this.SubmitWorkForm.UseTime=parseInt((submitTime-laytime)/1000);
-
       var params={
-        isSubmit:1,
-        StudentWorkScore:null,
-        StudentWorkMessage:this.editStudentWorkForm.WorkMessage,
-        CasePassCount:"",
-        CodeRowNumber:"",
-        Cpmplexity: "",
-       WorkPath: this.SubmitWorkForm.WorkPath,
-       SubmitTime: this.SubmitWorkForm.SubmitTime,
-       UseTime:this.SubmitWorkForm.UseTime,
-       StudentWorkId:this.SubmitWorkForm.StudentWorkId,
+        createdBy:this.$store.state.id,
+        casePassCount:"",
+        lineOfCode:"",
+        cpmplexity: "",
+        workPath: this.SubmitWorkForm.WorkPath,
+        submitTime: this.SubmitWorkForm.SubmitTime,
+        useTime:this.SubmitWorkForm.UseTime,
+        studentWorkId:this.SubmitWorkForm.studentWorkId,
+        modifiedBy:this.$store.state.id,
+        modifiedOn:this.SubmitWorkForm.SubmitTime,
       }
-      console.log(" isSubmit"+params.isSubmit)
+      console.log(" Submittime"+params.submitTime)
     console.log("秒数："+this.SubmitWorkForm.UseTime);
     Http.postStudentWorkDetail(params).then(res=>{
-      if(res.StatusCode==1){
-        this.$Message.success(res.Message);
+      if(res.statusCode==1){
+        
       this. SubmitWorkForm=
       {
         StudentWorkScore:"",
@@ -387,13 +482,14 @@ export default {
        WorkPath:"",
        SubmitTime:"",
        UseTime:"",
-       StudentWorkId:'',
+       studentWorkId:'',
       }
       this.SubmitWork=false;
+      this.$Message.success(res.message);
       this.getWorkByChapter();
-      this.getchapterWorkList();
-      this.getClassRoomWork();
-    this.getStudentWorkCount();
+      this.getchapterWorkList(this.findWorkList.ClassRoomId);
+      this.getClassRoomWork(this.findWorkList.ClassRoomId);
+    this.getStudentWorkCount(this.findWorkList.ClassRoomId);
      // 
       }
     })
@@ -406,10 +502,10 @@ export default {
     getWorkByChapter:function(){
                 var params = this.findWorkList;
                 Http.getWorkByChapter(params).then(res => {
-                    if(res.StatusCode==1){
+                    if(res.statusCode==1){
                         
-                        this.TestScore=res.Data.List[0].Score;
-                        this.workList = res.Data.List;
+                        //this.TestScore=res.Data.List[0].Score;
+                        this.workList = res.data.content;
                         
                     }
                 });
@@ -417,17 +513,21 @@ export default {
             },
 
              handleAddSyllabusSuccess: async function(res, file) {
-        if (res.StatusCode == 1) {
-          this.SubmitWorkForm.WorkPath = res.Data;
-          this.SubmitWorkForm.Syllabus = res.FileName;
+        if (res.statusCode == 1) {
+          this.$Message.success("上传成功");
+          this.SubmitWorkForm.WorkPath = res.data.path;
+          this.SubmitWorkForm.Syllabus = res.data.fileName;   
         }
+        else{
+            this.$Message.error("请选择指定类型的文件上传")
+          }
     },
     // 编辑上传成功钩子 异步方法
     handleEditSyllabusSuccess: async function(res, file) {
         console.log(res)
         if (res.StatusCode == 1) {
-          this.editCourseForm.WorkPath = res.Data;
-          this.editCourseForm.Syllabus = res.FileName;
+          this.editCourseForm.WorkPath = res.data;
+          this.editCourseForm.Syllabus = res.fileName;
           console.log(this.editCourseForm)
         }
     },
@@ -495,29 +595,37 @@ export default {
     },
     // 查询学生作业s
     getchapterWorkList: function() {
+      // if(e!=null){
+      //   this.nowPage=1;
+      //   this.classroomId=e;
+      // }
       var params = {
-        page: this.nowPage,
-        limit: this.pageSize,
-        ClassRoomId: this.$route.params.ClassRoomId,
-        StudentId:this.$store.state.id
+        nowPage: this.nowPage,
+        pageSize: this.pageSize,
+        classroomId: this.$store.state.classroomId,
+        studentId:this.$store.state.id
       };
       Http.getchapterWorkList(params).then(res => {
         console.log(res)
-        if(res.StatusCode==1){
-          this.tableModule.tableContent = res.Data.List1;
-            this.tableModule.count = res.Data.Total;
+        if(res.statusCode==1){
+          // this.classroomId=params.classroomId;
+          this.tableModule.tableContent = res.data.content;
+            this.tableModule.count = res.data.totalRecode;
         }
       });
     },
  
- huanbiDia:function(){
+ huanbiDia:function(e){
+this.bingtu=false;
+this.leida=false;
 this.huanbi=true;
+
  let myChart1 = this.$echarts.init(document.getElementById('echarts1'));
    // 绘制图表
     var params = {
         page: this.nowPage,
         limit: this.pageSize,
-        ClassRoomId: this.$route.params.ClassRoomId,
+        ClassRoomId: e,
         StudentId:this.$store.state.id
       };
     Http.getknowledgeScoreList(params).then(res => {
@@ -578,14 +686,14 @@ this.huanbi=true;
         }
     });
  },
- leidaDia:function(){
+ leidaDia:function(e){
    this.leida=true;
        let myChart2 = this.$echarts.init(document.getElementById('echarts2'));
 
    var params = {
         page: this.nowPage,
         limit: this.pageSize,
-        ClassRoomId: this.$route.params.ClassRoomId,
+        ClassRoomId: e,
         StudentId:this.$store.state.id
       };
       Http.getabilityScoreList(params).then(res => {
@@ -637,10 +745,10 @@ this.huanbi=true;
       });
  },
 //获取学生完成的作业数量
-  getStudentWorkCount:function(){
+  getStudentWorkCount:function(e){
       var params={
        StudentId: this.$store.state.id,        
-       ClassRoomId:this.$route.params.ClassRoomId
+       ClassRoomId:e
       }
       Http.getStudentCompletedWork(params).then(res=>{
         if(res.StatusCode==1){
@@ -650,9 +758,9 @@ this.huanbi=true;
       })
     },
     //获取课堂作业总数
-     getClassRoomWork:function(){
+     getClassRoomWork:function(e){
       var params={
-        ClassRoomId:this.$route.params.ClassRoomId
+        ClassRoomId:e
       }
       Http.getClassRoomWork(params).then(res=>{
         if(res.StatusCode==1){
@@ -706,6 +814,28 @@ title: {
 }
 };
 </script>
-<style lang="scss" scoped>
-@import "./StudentWorkPage.scss";
+<style>
+.summary {
+    overflow: hidden;    /* 隐藏溢出内容 */
+    text-overflow: clip;    /* 修剪文本 */
+    display: -webkit-box;    /* 弹性布局 */
+    -webkit-box-orient: vertical;    /* 从上向下垂直排列子元素 */
+    -webkit-line-clamp: 3;    /* 限制文本仅显示前三行 */
+    color: forestgreen;
+    cursor: pointer;
+}
+.showBtn {
+    width: 50%;
+    height: 3rem;
+    position: absolute;    /*相对父元素定位*/
+    top: 3rem;    /* 刚好遮挡在最后两行 */
+    left: 3rem;
+    z-index: 0;    /* 正序堆叠，覆盖在p元素上方 */
+    text-align: center;
+    /* background: linear-gradient(rgba(233,236,239,.5), white);    背景色半透明到白色的渐变层 */
+    /* background: black; */
+
+    padding-top: 3rem;
+}
+
 </style>

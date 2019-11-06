@@ -269,6 +269,11 @@ var API = {
     //编辑学校
     putSchool:apiHost + '/school/edit',
 
+    //验证码校验
+    checkImageCode: apiHost+'/imagecode/checkImageCode',
+
+    //创建验证码
+    createImageCode:apiHost+'/imagecode/createImageCode'
 }
 
 export {

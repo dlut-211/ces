@@ -181,12 +181,11 @@
                 <ROW>
                   <Col span="16">
                     <FormItem label="验证码">
-                      <Input  size="large"  style="width: 50%" placeholder="Code">
-
+                      <Input  size="large" v-model="form.inputImageCode"  style="width: 50%" placeholder="Code">
                       </Input>
                     </FormItem>
                   </Col>
-                  <Col span="8"><img src="../../assets/code1.png" width="90px"  height="40px"></Col>
+                  <Col span="8"><img id="img" src="/api/imagecode/createImageCode" width="90px"  height="40px" onclick="this.src='/api/imagecode/createImageCode?d='+new Date()*1"></Col>
                 </ROW>
                 </br></br>
                 <FormItem>
@@ -211,7 +210,8 @@
               return {
                   form: {
                       account: "",
-                      password: ""
+                      password: "",
+                      inputImageCode:""
                   },
                   rememberPassword: false,
               }
@@ -231,9 +231,12 @@
               login: function() {
                   var params = {
                       number: this.form.account,
-                      password: this.form.password
+                      password: this.form.password,
+                      inputImageCode:this.form.inputImageCode
                   };
-                  Http.studentLogin(params).then(res => {
+                  Http.checkImageCode(params).then(res=>{
+                    if(res.code==='200'){
+                      Http.studentLogin(params).then(res => {
                       if (res.data != null) {
                           this.$Message.success('登录成功');
                           this.$store.state.username = res.data.name;
@@ -253,6 +256,13 @@
                           this.$Message.error('账号或密码不存在');
                       }
                   })
+                    }
+                    else{
+                        document.getElementById("img").src="/api/imagecode/createImageCode?d='+new Date()*1"; //这里的图片是更换后的图片
+                        this.$Message.error("验证码错误");
+                    }
+                  })
+                  
               }
           },
           mounted: function() {

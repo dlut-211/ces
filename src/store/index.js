@@ -15,6 +15,7 @@ const state = {
     activeName:"",  //左侧导航二级页面的选中状态  固定写法 如:1-1
     openName:[''],     //左侧导航一级页面的选中状态  固定写法 格式为数组 如 ['1']
     customService:false,  //客服组件是否显示
+    classroomId:"",//存储课堂的id
     actionList: {},
     visitedviews:[]
 }

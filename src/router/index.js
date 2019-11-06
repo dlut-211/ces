@@ -19,11 +19,13 @@ import SubjectManagePage from "@/childPage/SubjectManagePage/SubjectManagePage.v
 import AdminHomePage from "@/childPage/AdminHomePage/AdminHomePage.vue";
 import TeacherHomePage from "@/childPage/TeacherHomePage/TeacherHomePage.vue";
 import StudentHomePage from "@/childPage/StudentHomePage/StudentHomePage.vue";
-import TestPage from "@/childPage/TestPage/TestPage.vue"
-import AdminLoginPage from "@/childPage/AdminLoginPage/AdminLoginPage.vue"
-import StudentLoginPage from "@/childPage/StudentLoginPage/StudentLoginPage.vue"
-import TeacherLoginPage from "@/childPage/TeacherLoginPage/TeacherLoginPage.vue"
-import SchoolPage from "@/childPage/SchoolPage/SchoolPage.vue"
+import TestPage from "@/childPage/TestPage/TestPage.vue";
+import AdminLoginPage from "@/childPage/AdminLoginPage/AdminLoginPage.vue";
+import StudentLoginPage from "@/childPage/StudentLoginPage/StudentLoginPage.vue";
+import TeacherLoginPage from "@/childPage/TeacherLoginPage/TeacherLoginPage.vue";
+import courseInfo from "@/childPage/courseInfo/courseInfo.vue";
+
+import SchoolPage from "@/childPage/SchoolPage/SchoolPage.vue";
 Vue.use(Router);
 
 export default new Router({
@@ -93,6 +95,14 @@ export default new Router({
                 }
             },
             {
+                path:'courseInfo',
+                name:'courseInfo',
+                component:courseInfo,
+                meta:{
+                    title:"课程详情"
+                }
+            },
+            {
                 path: 'ClassRoomPage',
                 name: 'ClassRoomPage',
                 component: ClassRoomPage,
@@ -104,7 +114,10 @@ export default new Router({
             {
                 path: 'StudentWorkPage',
                 name: 'StudentWorkPage',
-                component: StudentWorkPage
+                component: StudentWorkPage,
+                meta:{
+                    title:"章节作业"
+                }
             },
             {
                 path: 'SubjectPage',

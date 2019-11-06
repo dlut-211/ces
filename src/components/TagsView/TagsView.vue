@@ -27,11 +27,16 @@
                 return route.path == this.$route.path
             },
             addViewTags(){//路由改变时执行的方法
+            console.log("在这呢"+localStorage.getItem("visitedviews"))
+            console.log("id",localStorage.getItem("id"))
                 if(this.$route.name){
                     const route = this.$route
                     this.$store.dispatch('addVisitedViews',route);
                 }
+                localStorage.setItem("visitedViews",this.visitedViews);
+                this.visitedViews=localStorage.getItem("visitedViews")
                 console.log(this.visitedViews)
+                //console.log("里面的"+)
             },
             delSelectTag(route){//先提交删除数据的方法,数组删除出掉数据后，如果关闭的是当前打开的路由需要将路由改为数组最后一次push进去的路由
                 this.$store.dispatch('delVisitedViews',route).then((views)=>{
