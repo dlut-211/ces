@@ -617,7 +617,6 @@ export default {
     // 添加章节
     addChapterModal:function(a){
       this.addChapterForm = a;
-      console.log(a)
       this.$refs['addChapterForm'].resetFields();
       this.addChapter=true;
     },

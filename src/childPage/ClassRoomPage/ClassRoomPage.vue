@@ -42,7 +42,7 @@
 					<FormItem label="上课截止日期" class="forms" prop="EndDate">
             <DatePicker type="date" placeholder="请选择截止日期" style="width: 265px" v-model="addClassRoomForm.EndDate"></DatePicker>
 					</FormItem>
-          </Col>
+          </Col>    <!-- :prop="'testPaperDetailList.' + index + '.KnowledgeList.' + kindex + '.Weight'" -->
           <Col span="12">
            <FormItem   label="平时成绩权重"  class="forms" prop="dailyPerformanceWeight" >
             <InputNumber  :min="0.0" :max="1"  style="width: 100%" v-model="addClassRoomForm.dailyPerformanceWeight"></InputNumber>
@@ -159,7 +159,7 @@
               <Col span="1" style="background-color:#E0E6F8;font-weight:bold;text-align:center;">{{submitCount}}</Col>
               <Col span="1" style="background-color:#E0E6F8;font-weight:bold;text-align:center;">{{layoutCount}}</Col>
               <Col span="1" style="background-color:#E0E6F8;font-weight:bold;text-align:center;">{{completionRate}}%</Col>
-              <Col span="1" style="background-color:#E0E6F8;font-weight:bold;text-align:center;">{{avgScore}}</Col>
+              <Col span="1" style="background-color:#E0E6F8;font-weight:bold;text-align:center;">{{averageScore}}</Col>
             </Row>
             <Row>
               <Col span="19"><b>作业描述:</b> {{workDescribe}}</Col>
@@ -199,7 +199,7 @@
             <Form :model="addStudentWorkDetailForm" label-position="left" :label-width="100" :rules="studentWorkDetailRules" ref="addStudentWorkDetailForm">
           <Row>
               <Col span="24">
-              <FormItem label="作业" class="forms" prop="workPath">
+              <FormItem label="作业" class="forms" prop="WorkPath">
                 <Upload :action="uploadWorkFile" :headers="{Authorization:$store.state.token}" style="float: left; margin-right: 20px;" :show-upload-list="false" 
                 :on-success="handleWorkSuccess"  
                 :on-format-error="handleFormatError">
@@ -207,32 +207,37 @@
                     <Button type="ghost" icon="ios-cloud-upload-outline" >点击上传作业</Button>
                   </div>
                 </Upload>
-                <div v-if="!addStudentWorkDetailForm.workPath" v-model="addStudentWorkDetailForm.workPath">
+                <div v-if="!addStudentWorkDetailForm.WorkPath" v-model="addStudentWorkDetailForm.WorkPath">
                   <div>如果作业文件过多，请先压缩成一个文件再上传</div>
                 </div>
-                <div v-if="addStudentWorkDetailForm.workPath" v-model="addStudentWorkDetailForm.workPath">
-                  <a :href="addStudentWorkDetailForm.workPath" target="blank">查看作业</a>
+                <div v-if="addStudentWorkDetailForm.WorkPath" v-model="addStudentWorkDetailForm.WorkPath">
+                  <a :href="addStudentWorkDetailForm.WorkPath" target="blank">查看作业</a>
                 </div>
               </FormItem>
               </Col>
               <Col span="12">
-              <FormItem label="分数" class="forms" prop="studentWorkScore">
-                <InputNumber :min="0" :max="100" :precision="0" style="width: 100%" v-model="addStudentWorkDetailForm.studentWorkScore"></InputNumber>
+              <FormItem label="分数" class="forms" prop="StudentWorkScore">
+                <InputNumber :min="0" :max="100" :precision="0" style="width: 100%" v-model="addStudentWorkDetailForm.StudentWorkScore"></InputNumber>
               </FormItem>
               </Col>
               <Col span="12">
-              <FormItem label="代码行数" class="forms" prop="lineOfCode">
-                <InputNumber :min="1" :precision="0" style="width: 100%" v-model="addStudentWorkDetailForm.lineOfCode"></InputNumber>
+              <FormItem label="代码行数" class="forms" prop="CodeRowNumber">
+                <InputNumber :min="1" :precision="0" style="width: 100%" v-model="addStudentWorkDetailForm.CodeRowNumber"></InputNumber>
               </FormItem>
               </Col>
               <Col span="12">
-              <FormItem label="用例通过数" class="forms" prop="casePassedCount">
-                <InputNumber :min="1" :precision="0" style="width: 100%" v-model="addStudentWorkDetailForm.casePassedCount"></InputNumber>
+              <FormItem label="用例通过数" class="forms" prop="CasePassCount">
+                <InputNumber :min="1" :precision="0" style="width: 100%" v-model="addStudentWorkDetailForm.CasePassCount"></InputNumber>
               </FormItem>
               </Col>
               <Col span="12">
-              <FormItem label="圈复杂度" class="forms" prop="complexity">
-                <InputNumber :min="0.1" :max="10" style="width: 100%" :step="0.1"  v-model="addStudentWorkDetailForm.complexity"></InputNumber>
+              <FormItem label="圈复杂度" class="forms" prop="Complexity">
+                <InputNumber :min="0.1" :max="10" style="width: 100%" :step="0.1"  v-model="addStudentWorkDetailForm.Complexity"></InputNumber>
+              </FormItem>
+              </Col>
+              <Col span="24">
+              <FormItem label="作业留言" class="forms" prop="StudentWorkMessage">
+                <Input type="textarea" v-model="addStudentWorkDetailForm.StudentWorkMessage" :autosize="{minRows: 5,maxRows: 5}"></Input>
               </FormItem>
               </Col>
           </Row>
@@ -480,14 +485,14 @@
               <Button type="primary" size="large" @click="testPaperDetailHandleSubmit('testPaperDetailForm')">确定</Button>
           </div>
       </Modal>
-    <!-- <Modal v-model="showResultAnalysis" title="试卷结果分析" @on-ok="ok" @on-cancel="cancel" width="1000px">
+    <Modal v-model="showResultAnalysis" title="试卷结果分析" @on-ok="ok" @on-cancel="cancel" width="1000px">
       <div>
         <div id="myChart" :style="{width: '600px', height: '400px'}"></div>
       </div>
       <div>
         <div id="myChart2" :style="{width: '600px', height: '400px'}"></div>
       </div>
-    </Modal> -->
+    </Modal>
   </div>
 </template>
 <script>
@@ -537,6 +542,8 @@ export default {
         }
     };
     
+    
+    
     return {
       uploadStudentTestPaperFileUrl:'',
       detailTestPaperId:'',
@@ -559,7 +566,7 @@ export default {
       StudentGrade:false,
       editStudentWorkForm:{
         Id:null,
-        classroomWorkId:null,
+        ClassRoomWorkId:null,
         ClassRoomStudentId:null,
         isScore:"",
         Score:null,
@@ -631,35 +638,35 @@ export default {
       nowClassRoomId:null,
       // 作业============================
       studentWorkVisible: false,
-      classroomWorkId: null,
-      workName: "",
-      workDescribe: "",
-      workLayoutTime: "",
+      classRoomWorkId: null,
+      workName:"",
+      workDescribe:"",
+      workLayoutTime:"",
       studentWorkTableModule: (StudentWorkTableModuleJS.bind(this))(),
-      swNowPage: 1,
+      swNowPage:1,
       swPageSize: 10,
-      scoreCount: null,
-      submitCount: null,
-      layoutCount: null,
-      completionRate: null,
-      avgScore: null,
+      scoreCount:null,
+      submitCount:null,
+      layoutCount:null,
+      completionRate:null,
+      averageScore:null,
       // 提交作业
       addStudentWorkDetail:false,
       addStudentWorkDetailForm:{
-        workName: "",
-        workPath: "",
-        casePassedCount: null,
-        complexity: null,
-        lineOfCode: null,
-        studentWorkId: "",
-        studentWorkScore: null,
-        studentWorkMessage: null
+        WorkName:"",
+        WorkPath:"",
+        CasePassCount:null,
+        Complexity:null,
+        CodeRowNumber:null,
+        StudentWorkId:"",
+        StudentWorkScore:null,
+        StudentWorkMessage:null
       },
       studentWorkDetailRules: {
-        workPath: [
+        WorkPath: [
           { required: true, message: "作业不能为空", trigger: "blur" }
         ],
-        studentWorkScore: [
+        StudentWorkScore: [
           { required: true, message: "分数不能为空", trigger: "change", type:'number' }
         ]
 	    },
@@ -770,10 +777,10 @@ export default {
       this.editStudentWorkForm.isScore=true;
       let params=this.editStudentWorkForm;
       Http.putStudentWork(params).then(res=>{
-        if(res.statusCode==1){
+        if(res.StatusCode==1){
           this.editStudentWorkForm={
             Id:null,
-            classroomWorkId:null,
+            ClassRoomWorkId:null,
             ClassRoomStudentId:null,
             isScore:"",
             Score:null,
@@ -1031,36 +1038,30 @@ export default {
         console.log(res)
         this.$Message.error("文件格式不正确");
     },
-    /**
-     * 打开作业详情
-     */
-    studentWorkDetailModal: function(row){
-      console.log(row)
-      this.classroomWorkId = row.id
-      this.workName = row.workName
-      this.workDescribe = row.WorkDescribe
-      // this.workLayoutTime = this.dateFormat(row.LayoutTime);
-      this.workLayoutTime = ""
-      this.getStudentWorkList()
-      this.studentWorkVisible = true
+    // 作业=====================================================================
+    // 打开作业详情
+    studentWorkDetailModal:function(row){
+      this.classRoomWorkId = row.Id;
+      this.workName = row.WorkName;
+      this.workDescribe = row.WorkDescribe;
+      this.workLayoutTime = this.dateFormat(row.LayoutTime);
+      this.getStudentWorkList();
+      this.studentWorkVisible = true;
     },
-    /**
-     * 关闭作业详情
-     */
-    studentWorkClose: function(){
-      this.classroomWorkId = null
-      this.workName = ""
-      this.workDescribe = ""
-      this.workLayoutTime = ""
-      this.swNowPage = 1
-      this.swPageSize = 10
-      this.scoreCount = null
-      this.submitCount = null
-      this.layoutCount = null
-      this.completionRate = null
-      this.avgScore = null
-      this.studentWorkTableModule.tableContent = []
-      this.studentWorkTableModule.count = 0
+    studentWorkClose:function(){
+      this.classRoomWorkId = null;
+      this.workName = "";
+      this.workDescribe = "";
+      this.workLayoutTime = "";
+      this.swNowPage = 1;
+      this.swPageSize = 10;
+      this.scoreCount = null;
+      this.submitCount = null;
+      this.layoutCount = null;
+      this.completionRate = null;
+      this.averageScore = null;
+      this.studentWorkTableModule.tableContent = [];
+      this.studentWorkTableModule.count = 0;
     },
 	  // 改变页码
     swChangePage:function(page){
@@ -1072,27 +1073,23 @@ export default {
       this.swPageSize = size;
       this.getStudentWorkList();
     },
-
-    /**
-     * 获取学生作业列表
-     */
     getStudentWorkList:function(){
       var params = {
         page: this.swNowPage,
         limit: this.swPageSize,
-        classroomWorkId: this.classroomWorkId,
-      }
-      Http.getClassroomWorkDetail(params).then(res => {
-        if (res.statusCode == 1) {
-          this.studentWorkTableModule.tableContent = res.data.vstudentWorkDTOList
-          this.studentWorkTableModule.count = res.data.total
-          this.scoreCount = res.data.scoreCount
-          this.submitCount = res.data.submitCount
-          this.layoutCount = res.data.total
-          this.completionRate = res.data.completionRate.toFixed(1)
-          this.avgScore = res.data.avgScore.toFixed(1)
+        ClassRoomWorkId: this.classRoomWorkId,
+      };
+      Http.getClassRoomWorkDetail(params).then(res => {
+        if(res.StatusCode==1){
+            this.studentWorkTableModule.tableContent = res.Data.List;
+            this.studentWorkTableModule.count = res.Data.Total;
+            this.scoreCount = res.Data.ScoreCount;
+            this.submitCount = res.Data.SubmitCount;
+            this.layoutCount = res.Data.Total;
+            this.completionRate = res.Data.CompletionRate.toFixed(1);
+            this.averageScore = res.Data.AverageScore.toFixed(1);
         }
-      })
+      });
     },
     // 提交作业===================================================
     addStudentWorkDetailHandleSubmit: function(name) {
@@ -1109,17 +1106,17 @@ export default {
     addStudentWorkDetailAction: function() {
       var params = this.addStudentWorkDetailForm;
       Http.postStudentWorkDetail(params).then(res => {
-        if (res.statusCode == 1) {
+        if (res.StatusCode == 1) {
           this.$Message.success(res.Message);
           this.addStudentWorkDetailForm = {
-            workName:"",
-            workPath:"",
-            casePassedCount:null,
-            complexity:null,
-            lineOfCode:null,
-            studentWorkId:"",
-            studentWorkScore:null,
-            studentWorkMessage:null
+            WorkName:"",
+            WorkPath:"",
+            CasePassCount:null,
+            Complexity:null,
+            CodeRowNumber:null,
+            StudentWorkId:"",
+            StudentWorkScore:null,
+            StudentWorkMessage:null
           };
 		      this.addStudentWorkDetail = false;
 		      this.$refs["addStudentWorkDetailForm"].resetFields();
@@ -1132,9 +1129,9 @@ export default {
     },
     // 上传成功钩子 异步方法
     handleWorkSuccess: async function(res, file) {
-        if (res.statusCode == 1) {
-          this.addStudentWorkDetailForm.workPath = res.Data;
-          this.addStudentWorkDetailForm.workName = res.FileName;
+        if (res.StatusCode == 1) {
+          this.addStudentWorkDetailForm.WorkPath = res.Data;
+          this.addStudentWorkDetailForm.WorkName = res.FileName;
         }
     },
     // 文件格式验证失败钩子
@@ -1163,14 +1160,14 @@ export default {
       var params = {
         page: this.swNowPage,
         limit: this.swPageSize,
-        studentWorkId: this.studentWorkId,
+        StudentWorkId: this.studentWorkId,
       };
       Http.getStudentWorkDetailList(params).then(res => {
-        if(res.statusCode == 1){
-            this.studentWorkDetailTableModule.tableContent = res.data.content
-            // this.studentWorkDetailTableModule.count = res.Data.Total
+        if(res.StatusCode==1){
+            this.studentWorkDetailTableModule.tableContent = res.Data.List;
+            this.studentWorkDetailTableModule.count = res.Data.Total;
         }
-      })
+      });
     },
     // 试卷 ==============================================================================================
     addTestPaperModal:function(classRoomId,knowledgeList){
@@ -1180,6 +1177,8 @@ export default {
       this.$refs["addTestPaperForm"].resetFields();
     },
     editTestPaperModal:function(form,knowledgeList){
+      console.log(form);
+      console.log(knowledgeList)
       this.courseKnowledgeList = knowledgeList;
       this.editTestPaperForm = {
 			  Id:form.id,
@@ -1191,6 +1190,7 @@ export default {
         // B: form.TestPaperType == 1 ? [] : form.B,
 			  // VersionNumber: this.stringToByte(form.VersionNumber)
       };
+      console.log("valuevaluevalue")
       if(form.TestPaperType == 1){
         this.testPaperrules.B = [{ validator: function(rule, value, callback) {
                                                   callback();
@@ -1215,7 +1215,8 @@ export default {
         vlassRoomId:form.vlassRoomId,
         testPaperType:form.testPaperType,
         testPaperTypeName: form.testPaperTypeName,
-        status:form.status
+        status:form.status,
+			  //versionNumber: this.stringToByte(form.versionNumber)
       };
       this.getDetailTestPaperDetailList(this.detailTestPaperForm.id);
       
@@ -1352,7 +1353,7 @@ export default {
     addTestPaperAction: function() {
       var params = this.addTestPaperForm;
       Http.postTestPaper(params).then(res => {
-        if (res.statusCode == 1) {
+        if (res.StatusCode == 1) {
           this.$Message.success(res.Message);
           this.addTestPaperForm = {
             Name:"",
@@ -1377,7 +1378,7 @@ export default {
     editTestPaperAction: function() {
         var params = this.editTestPaperForm;
         Http.putTestPaper(params).then(res=>{
-            if(res.statusCode==1){
+            if(res.StatusCode==1){
                 this.$Message.success(res.Message);
 				        this.editTestPaperForm = {
                   Id:null,

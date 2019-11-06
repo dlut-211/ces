@@ -88,7 +88,7 @@ var API = {
   //获取学科列表
     getAllSubjectList: apiHost + '/MySystem/getAllSubjectList',
      //获取学科列表
-     getAllSubjectList: apiHost + '/course/getAllSubjectList',
+    getAllSubjectList: apiHost + '/course/getAllSubjectList',
 
      // 获取章节作业
     getWorkChapterList: apiHost + '/work/list',
@@ -135,7 +135,7 @@ var API = {
     // 撤销布置作业
     revokeLayoutClassRoomWork: apiHost + '/classroomwork/revokelayout',
     // 获取作业情况
-    getClassroomWorkDetail: apiHost + '/studentwork/worklist',
+    getClassRoomWorkDetail: apiHost + '/studentwork/worklist',
 
     // 获取学生作业明细列表
     getStudentWorkDetailList: apiHost + '/studentworkdetail/list',

@@ -172,8 +172,8 @@
                 chooseChapterId:null,
                 // 主章节
                 mainChpterColumn:[
-                    { 
-                        title: "主章节", 
+                    {
+                        title: "主章节",
                         key: "name",
                         render: (h, params) => {
                             return h("div", [
@@ -194,8 +194,8 @@
                 ],
                 // 作业
                 workColumn:[
-                    { 
-                        title: "作业名称", 
+                    {
+                        title: "作业名称",
                         key: "workName",
                         render: (h, params) => {
                             return h("div", [
@@ -234,7 +234,7 @@
                                         },
                                         "未布置"
                                     )
-                                ]);                                
+                                ]);
                             } else if(params.row.status == 2) {
                                 return h("div", [
                                     h(
@@ -246,7 +246,7 @@
                                         },
                                         "已布置"
                                     )
-                                ]);                                
+                                ]);
                             }
                         }
                     },
@@ -295,7 +295,7 @@
                                                     },
                                                     onCancel: () => {
                                                     }
-                                                }) 
+                                                })
                                             }
                                         }
                                     },
@@ -424,9 +424,9 @@
             selectChapter:function(now,old){
                 if(now.parentId){
                     this.chooseChapter = true;
-                    this.chooseChapterId = now.id;   
-                    this.getWorkByChapter();     
-                }           
+                    this.chooseChapterId = now.id;
+                    this.getWorkByChapter();
+                }
             },
             getWorkByChapter:function(){
                 var params = {
@@ -441,27 +441,27 @@
             },
     //日期格式化
 formatDate:function(date, fmt) {
-    var o = { 
-        "M+" : date.getMonth()+1,                 //月份 
-        "d+" : date.getDate(),                    //日 
-        "h+" : date.getHours(),                   //小时 
-        "m+" : date.getMinutes(),                 //分 
-        "s+" : date.getSeconds(),                 //秒 
-        "q+" : Math.floor((date.getMonth()+3)/3), //季度 
-        "S"  : date.getMilliseconds()             //毫秒 
-    }; 
+    var o = {
+        "M+" : date.getMonth()+1,                 //月份
+        "d+" : date.getDate(),                    //日
+        "h+" : date.getHours(),                   //小时
+        "m+" : date.getMinutes(),                 //分
+        "s+" : date.getSeconds(),                 //秒
+        "q+" : Math.floor((date.getMonth()+3)/3), //季度
+        "S"  : date.getMilliseconds()             //毫秒
+    };
     if(/(y+)/.test(fmt)) {
-            fmt=fmt.replace(RegExp.$1, (date.getFullYear()+"").substr(4 - RegExp.$1.length)); 
+            fmt=fmt.replace(RegExp.$1, (date.getFullYear()+"").substr(4 - RegExp.$1.length));
     }
      for(var k in o) {
         if(new RegExp("("+ k +")").test(fmt)){
              fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
          }
      }
-    return fmt; 
-},            
+    return fmt;
+},
             layoutWorkAction:function(id){
-                
+
                 var params = {
                     userId:this.$store.state.id,
                     classroomWorkId: id,
