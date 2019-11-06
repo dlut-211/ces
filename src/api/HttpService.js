@@ -477,6 +477,14 @@ export const testPort=(param)=>{
     return GET(API.testPort,param);
 }
 
+export const checkImageCode=(param)=>{
+    return GET(API.checkImageCode,param);
+}
+
+export const createImageCode=(param)=>{
+    return GET(API.createImageCode,param)
+}
+
 
 //---------------------------------------------------------------------------------------------------
 // 定义4种请求

@@ -1,0 +1,53 @@
+.courseInfo{
+    width: 100%;
+    margin-bottom: 20px;
+    overflow: hidden;
+    .title{
+        font-size: 20px;
+        font-weight: bold;
+        text-align: center;
+    }
+    .info{
+        text-align: right;
+        margin-right: 30px;
+    }
+    .describe{
+        text-indent:2em;
+        line-height: 22px;
+        margin-left: 30px;
+        margin-right:30px;
+    }
+}
+.forms{
+    padding: 0 10px;
+}
+.workdiv{
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    .card{
+        width:200px;
+        height: 70px;
+        float:left;
+        margin-right:10px;
+        margin-bottom:10px;
+        .content{
+            text-align:left;
+            font-size:10px;
+            .title{
+                float:left;
+                width:173px;
+                font-weight:bold;
+                overflow:hidden;
+                white-space:nowrap;
+                text-overflow:ellipsis;
+                .icon{
+                    color:#3399ff;
+                }
+                .span{
+                    margin-left:5px;
+                }
+            }
+        }
+    }
+}

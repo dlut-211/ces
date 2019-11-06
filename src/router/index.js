@@ -23,6 +23,7 @@ import TestPage from "@/childPage/TestPage/TestPage.vue"
 import AdminLoginPage from "@/childPage/AdminLoginPage/AdminLoginPage.vue"
 import StudentLoginPage from "@/childPage/StudentLoginPage/StudentLoginPage.vue"
 import TeacherLoginPage from "@/childPage/TeacherLoginPage/TeacherLoginPage.vue"
+import courseInfo from "@/childPage/courseInfo/courseInfo.vue"
 
 Vue.use(Router);
 
@@ -93,6 +94,14 @@ export default new Router({
                 }
             },
             {
+                path:'courseInfo',
+                name:'courseInfo',
+                component:courseInfo,
+                meta:{
+                    title:"课程详情"
+                }
+            },
+            {
                 path: 'ClassRoomPage',
                 name: 'ClassRoomPage',
                 component: ClassRoomPage,
@@ -104,7 +113,10 @@ export default new Router({
             {
                 path: 'StudentWorkPage',
                 name: 'StudentWorkPage',
-                component: StudentWorkPage
+                component: StudentWorkPage,
+                meta:{
+                    title:"章节作业"
+                }
             },
             {
                 path: 'SubjectPage',

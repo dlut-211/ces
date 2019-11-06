@@ -254,8 +254,13 @@ var API = {
     getStudentAbilityInfo:apiHost+'/vstudentclroabilityrscontroller/pageresult',
 
     //获取作业数据总和
-    getAllWorkInfoData: apiHost+'/vstudentworkinfowithstudentcontroller/getallworkinfodata'
+    getAllWorkInfoData: apiHost+'/vstudentworkinfowithstudentcontroller/getallworkinfodata',
 
+    //验证码校验
+    checkImageCode: apiHost+'/imagecode/checkImageCode',
+
+    //创建验证码
+    createImageCode:apiHost+'/imagecode/createImageCode'
 }
 
 export {

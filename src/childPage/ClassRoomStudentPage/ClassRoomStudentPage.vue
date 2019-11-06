@@ -86,8 +86,13 @@ export default {
                             },
                             on: {
                                 click: () => {
+                                  this.$store.state.classroomId=params.row.classroomId;
+                                  localStorage.setItem("classroomId",params.row.classroomId);
+                                this.$router.replace({
+                                name: 'StudentWorkPage'
+                                });
                                 this.LocalClassRoomId=params.row.classroomId;
-                                this.GetData()
+                                //this.GetData()
                                 }
                             }
                         },
@@ -193,13 +198,13 @@ export default {
     };
   },
   mounted:function(){
-	this.$store.commit("changeBreadCrumb", [
-      "首页",
-      "",
-      "课堂学员管理"
-    ]);
-    this.$store.commit("changeOpenName", [""]);
-    this.$store.commit("changeActiveName", "NetGraphPage");
+	// this.$store.commit("changeBreadCrumb", [
+  //     "首页",
+  //     "",
+  //     "课堂学员管理"
+  //   ]);
+  //   this.$store.commit("changeOpenName", [""]);
+  //   this.$store.commit("changeActiveName", "NetGraphPage");
     this.getClassRoomStudentList1();
    
   },

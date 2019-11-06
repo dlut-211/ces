@@ -118,14 +118,13 @@
           </Input>
         </FormItem>
         <ROW>
-          <Col span="19">
+          <Col span="16">
             <FormItem label="验证码">
-              <Input  size="large"  style="width: 70%" placeholder="Code">
-
+              <Input  size="large" v-model="form.inputImageCode" style="width: 70%" placeholder="Code">
               </Input>
             </FormItem>
           </Col>
-          <Col span="5"><img src="../../assets/code1.png"  width="90px" height="40px"></Col>
+                <Col span="8"><img id="img" src="/api/imagecode/createImageCode" width="90px"  height="40px" onclick="this.src='/api/imagecode/createImageCode?d='+new Date()*1"></Col>
         </ROW>
         </br></br></br></br></br>
         <FormItem>
@@ -144,6 +143,7 @@
         form: {
           account: "",
           password: "",
+          inputImageCode:""
         },
         rememberPassword: false,
       }
@@ -161,32 +161,42 @@
           }
         }
       },
-      login: function() {
-        var params = {
-          number: this.form.account,
-          password: this.form.password
-        };
-        Http.teacherLogin(params).then(res => {
-          if (res.data != null) {
-            this.$Message.success('登录成功');
-            this.$store.state.username = res.data.name;
-            this.$store.state.token = res.data.token;
-            this.$store.state.id = res.data.id;
-            this.$store.state.roles = 2;
-            this.$store.state.home = 'TeacherHomePage';
-            localStorage.setItem('username', this.$store.getters.username);
-            localStorage.setItem('token', this.$store.getters.token);
-            localStorage.setItem('id', this.$store.state.id);
-            localStorage.setItem("roles",this.$store.state.roles);
+              login: function() {
+                  var params = {
+                      number: this.form.account,
+                      password: this.form.password,
+                      inputImageCode:this.form.inputImageCode
+                  };
+                  Http.checkImageCode(params).then(res=>{
+                    if(res.code==='200'){
+                      Http.teacherLogin(params).then(res => {
+                      if (res.data != null) {
+                          this.$Message.success('登录成功');
+                          this.$store.state.username = res.data.name;
+                          this.$store.state.token = res.data.token;
+                          this.$store.state.id = res.data.id;
+                          this.$store.state.roles = 3;
+                          this.$store.state.home = 'StudentHomePage';
+                          localStorage.setItem('username', this.$store.getters.username);
+                          localStorage.setItem('token', this.$store.getters.token);
+                          localStorage.setItem('id', this.$store.state.id);
+                          localStorage.setItem("roles",this.$store.state.roles);
 
-            this.$router.replace({
-              name: 'DashboardPage'
-            })
-          } else {
-            this.$Message.error('账号或密码不存在');
-          }
-        })
-      }
+                          this.$router.replace({
+                              name: 'DashboardPage'
+                          })
+                      } else {
+                          this.$Message.error('账号或密码不存在');
+                      }
+                  })
+                    }
+                    else{
+                        document.getElementById("img").src="/api/imagecode/createImageCode?d='+new Date()*1"; //这里的图片是更换后的图片
+                        this.$Message.error("验证码错误");
+                    }
+                  })
+                  
+              }
     },
     mounted: function() {
 
