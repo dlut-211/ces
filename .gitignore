@@ -14,7 +14,4 @@ yarn-error.log*
 *.sln
 *.zip
 node_modules
-<<<<<<< Updated upstream
 node_modules
-=======
->>>>>>> Stashed changes

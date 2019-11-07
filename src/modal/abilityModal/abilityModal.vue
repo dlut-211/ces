@@ -206,9 +206,7 @@ export default {
         })
     },
     // 查询能力点
-    getAbilityList: function() { 
-      console.log(this.subjectData)
-      console.log("这里有鲜花，这里有绿叶！！！！！")
+    getAbilityList: function() {
       var params = {
         page: this.nowPage,
         limit: this.pageSize,

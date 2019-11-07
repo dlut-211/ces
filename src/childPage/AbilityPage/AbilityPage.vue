@@ -159,7 +159,7 @@ export default {
 	    // 改变每页显示的条数
     changeSize: function(size) {
       this.pageSize = size;
-      this.getAbilityList(); 
+      this.getAbilityList();
     },
     // 添加能力点
     addAbilityAction: function() {

@@ -253,7 +253,7 @@
                           localStorage.setItem("roles",this.$store.state.roles);
 
                           this.$router.replace({
-                              name: 'AdminLoginPage'
+                              name: 'DashboardPage'
                           })
                       } else {
                           this.$Message.error('账号或密码不存在');

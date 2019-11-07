@@ -254,13 +254,13 @@
                           if(res.statusCode==1){
                             this.$store.state.subjectId=res.data;
                              this.$router.replace({
-                              name: 'StudentHomePage'
+                              name: 'DashboardPage'
                           })
                           }
                           else{
                             this.$Message.error('学科不存在');
                              this.$router.replace({
-                              name: 'StudentHomePage'
+                              name: 'DashboardPage'
                           })
                           }
                         })

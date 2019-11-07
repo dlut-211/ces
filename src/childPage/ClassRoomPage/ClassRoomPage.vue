@@ -369,7 +369,7 @@
                 </TabPane>
               </Tabs>
             </TabPane>
-            <TabPane v-if="detailTestPaperForm.Status == 2" label="考试详情">
+              <TabPane v-if="detailTestPaperForm.status == 2" label="考试详情">
               <Row style="margin-bottom:10px;">
                 <Col span="4">
                   <a  :href='downloadStudentTestPaperTemplateUrl'  download="muban" style="color:white;display:inline-block;width:100px;
@@ -584,7 +584,7 @@ export default {
       findClassRoomForm:{
         TermType:null,
         name:'',
-        Status:null,
+        status:null,
         BeginDateStart:'',
         BeginDateEnd:'',
         EndDateStart:'',
@@ -690,7 +690,7 @@ export default {
         name:"",
         classroomId:null,
         testPaperType:null,
-        Status:null,
+        status:null,
         a: [],
         b: []
       },
@@ -853,8 +853,8 @@ export default {
         a.TermType : null;
       this.findClassRoomForm.name = a.name ?
         a.name : "";
-      this.findClassRoomForm.Status = a.Status ?
-        a.Status : null;
+      this.findClassRoomForm.status = a.status ?
+        a.status : null;
       if(a.BeginDate.length > 0){
         this.findClassRoomForm.BeginDateStart = a.BeginDate[0];
         this.findClassRoomForm.BeginDateEnd = a.BeginDate[1];
@@ -937,23 +937,23 @@ export default {
         EndDateEnd: this.findClassRoomForm.EndDateEnd,
         TermType: this.findClassRoomForm.TermType,
         name: this.findClassRoomForm.name,
-        Status: this.findClassRoomForm.Status
+        status: this.findClassRoomForm.status
       };
       Http.getClassRoomList(params).then(res => {
         if(res.statusCode==1){
             let valueList = res.data.list;
             for (let i = 0; i < valueList.length; i++) {
-              if (valueList[i].Status == 1) {
+              if (valueList[i].status == 1) {
                 valueList[i].cellClassName = {
-                  StatusName: 'Status-column-yellow'
+                  StatusName: 'status-column-yellow'
                 };
-              } else if (valueList[i].Status == 2) {
+              } else if (valueList[i].status == 2) {
                 valueList[i].cellClassName = {
-                  StatusName: 'Status-column-blue-new'
+                  StatusName: 'status-column-blue-new'
                 };
-              } else if (valueList[i].Status == 4) {
+              } else if (valueList[i].status == 4) {
                 valueList[i].cellClassName = {
-                  StatusName: 'Status-column-orange'
+                  StatusName: 'status-column-orange'
                 };
               } 
             }
@@ -978,10 +978,10 @@ export default {
         })
     },
     // 修改课堂状态
-    editClassRoomStatusAction:function(id,Status){
+    editClassRoomStatusAction:function(id,status){
         var params = {
             id:id,
-            Status:Status
+            status:status
         }
         Http.editClassRoomStatus(params).then(res=>{
             if(res.statusCode==1){
@@ -1228,7 +1228,7 @@ export default {
         name:form.name,
         classroomId:form.classroomId,
         testPaperType:form.testPaperType,
-        Status:form.Status
+        status:form.status
       }
       if(form.testPaperType == 1){
         this.testPaperrules.a = [
@@ -1260,7 +1260,7 @@ export default {
         vlassRoomId:form.vlassRoomId,
         testPaperType:form.testPaperType,
         testPaperTypeName: form.testPaperTypeName,
-        Status:form.Status
+        status:form.status
       }
       this.getDetailTestPaperDetailList(this.detailTestPaperForm.id)
     },
@@ -1279,7 +1279,7 @@ export default {
             this.detailTabIndex = 0
             this.detailTPDTabIndex = 0
 
-            if(this.detailTestPaperForm.Status == 2){
+            if(this.detailTestPaperForm.status == 2){
               this.studentTestPaperColumn = [
                 { title: "学号", key: "studentNumber", align: "center", width:100, fixed: 'left' },
                 { title: "姓名", key: "studentName", align: "center", width:100, fixed: 'left' }
@@ -1430,7 +1430,7 @@ export default {
                   name: "",
                   classroomId: null,
                   testPaperType: null,
-                  Status: null,
+                  status: null,
                   a: [],
                   b: []
                 }

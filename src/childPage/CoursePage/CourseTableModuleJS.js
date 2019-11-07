@@ -77,16 +77,16 @@ function CourseTableModuleJS() {
                                             subjectName:params.row.subjectName,
                                             createdOn: this.dateFormatFirst(params.row.createdOn)
                                         };
-                                        this.$router.push(
-                                            {
-                                                name:"courseInfo",
-                                                params:{"showForm":this.showForm}
-                                            }
-                                        )
+                                        // this.$router.push(
+                                        //     {
+                                        //         name:"courseInfo",
+                                        //         params:{"showForm":this.showForm}
+                                        //     }
+                                        // )
                                         this.LocalSubjectId=params.row.subjectId;
 
-                                        // this.$refs.CourseDetail.infoInit(this.showForm);
-                                        // this.courseInfo = true;
+                                        this.$refs.CourseDetail.infoInit(this.showForm);
+                                        this.courseInfo = true;
                                     }
                                 }
                             },

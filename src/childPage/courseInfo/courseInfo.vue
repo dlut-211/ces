@@ -2,7 +2,7 @@
     <div>
     <Tabs v-model="tabIndex">
         <TabPane label="课程信息">
-            <!-- <div class="courseInfo">
+            <div class="courseInfo">
                 <div class="title">{{courseData.name}} ({{courseData.code}})</div>
                 <div class="info">课程学科： {{courseData.subjectName}}</div>
                 <div class="info">建课老师： {{courseData.createdByName}}</div>
@@ -12,22 +12,22 @@
                 
                 <div style="font-size:14px;font-weight:bold;margin-top:10px;margin-left: 30px;">课程简介：</div>
                 <div class="describe"><p>{{courseData.description}}</p></div>
-            </div> -->
+            </div>
         </TabPane>
         <TabPane label="课程章节">
-            <!-- <div>
+            <div>
                 <Scroll height="500">
                     <Tree :data="chapters" :render="renderContent"></Tree>
                 </Scroll>
-            </div> -->
+            </div>
         </TabPane>
         <TabPane label="课程知识点">
-            <!-- <div>
+            <div>
                 <tableModule :object="tableModule" @changePage="changePage" @changeSize="changeSize" @addKnowledge="addKnowledgeTo();"></tableModule>
-            </div> -->
+            </div>
         </TabPane>
         <TabPane label="课程作业">
-            <!-- <div>
+            <div>
                 <Row>
                     <Col span="6">
                         <Table height="500" highlight-row :columns="chapterColumn" :data="mainChapters" @on-current-change=selectChapter></Table>
@@ -54,10 +54,9 @@
                         </div>
                     </Col>
                 </Row>
-            </div> -->
+            </div>
         </TabPane>
     </Tabs>
-
     </div>
 </template>
 <script>
@@ -334,7 +333,6 @@
                 ];
             },
             infoInit :function(){
-                console.log("form");
                 var form=this.$route.params.showForm;
                 console.log("form"+form);
                 this.tabIndex = 0;
