@@ -30,7 +30,7 @@
                     </Row>
                     <Row>
                          <Col span="2" style="text-align:right;">考试权重：</Col>
-                        <Col span="22">{{classRoomData.TestPerformaceWeight*100}}%</Col>
+                        <Col span="22">{{classRoomData.testPerformanceWeight*100}}%</Col>
                     </Row>
                     <Row v-if="classRoomData.CourseSyllabusPath">
                         <Col span="2" style="text-align:right;">教学大纲：</Col>
@@ -119,7 +119,7 @@
                     CourseDescribe: "",
                     CourseSyllabusPath: "",
                     dailyPerformanceWeight:null,//添加权重
-                    TestPerformaceWeight:null
+                    testPerformanceWeight:null
                 },
                 ShowEndTime:false,
                 //截止时间
@@ -573,14 +573,14 @@ formatDate:function(date, fmt) {
                 })
             },
             // 获取课程知识点列表
-            getCourseKnowledgeList:function(){
+            getCourseKnowledgeList: function() {
                 this.courseKnowledgeList = [];
                 var params = {
                     courseId : this.classRoomData.CourseId
-                };
+                }
                 Http.getKnowledgeAllList(params).then(res => {
-                    if(res.StatusCode==1){
-                        this.courseKnowledgeList = res.Data.List;
+                    if(res.statusCode == 1){
+                        this.courseKnowledgeList = res.data
                     }
                 });
             }

@@ -22,8 +22,8 @@
 					</FormItem>
           </Col>
           <Col span="12">
-					<FormItem label="课堂名称" class="forms" prop="Name">
-						<Input v-model="addClassRoomForm.Name"></Input>
+					<FormItem label="课堂名称" class="forms" prop="name">
+						<Input v-model="addClassRoomForm.name"></Input>
 					</FormItem>
           </Col>
           <Col span="12">
@@ -49,8 +49,8 @@
                     </FormItem>
              </Col>
               <Col span="12">
-           <FormItem  label="考试成绩权重"  class="forms"  prop="TestPerformaceWeight">
-                      <InputNumber  :min="0.0" :max="1"  style="width: 100%" v-model="addClassRoomForm.TestPerformaceWeight"></InputNumber>
+           <FormItem  label="考试成绩权重"  class="forms"  prop="testPerformanceWeight">
+                      <InputNumber  :min="0.0" :max="1"  style="width: 100%" v-model="addClassRoomForm.testPerformanceWeight"></InputNumber>
                     </FormItem>
              </Col>
              
@@ -81,8 +81,8 @@
 					</FormItem>
           </Col>
           <Col span="12">
-					<FormItem label="课堂名称" class="forms" prop="Name">
-						<Input v-model="editClassRoomForm.Name"></Input>
+					<FormItem label="课堂名称" class="forms" prop="name">
+						<Input v-model="editClassRoomForm.name"></Input>
 					</FormItem>
           </Col>
           <Col span="12">
@@ -109,8 +109,8 @@
           </FormItem>
             </Col>
               <Col span="12">
-           <FormItem  label="考试成绩权重"  class="forms" prop="TestPerformaceWeight" >
-              <InputNumber  :min="0.0" :max="1"  style="width: 100%" v-model="editClassRoomForm.TestPerformaceWeight "></InputNumber>
+           <FormItem  label="考试成绩权重"  class="forms" prop="testPerformanceWeight" >
+              <InputNumber  :min="0.0" :max="1"  style="width: 100%" v-model="editClassRoomForm.testPerformanceWeight "></InputNumber>
               </FormItem>
              </Col>
               
@@ -183,7 +183,7 @@
           width="600px"
           :mask-closable="false">
           
-                <InputNumber :min="0" :max="100" :precision="0" style="width: 100%" v-model="editStudentWorkForm.Score"></InputNumber>
+                <InputNumber :min="0" :max="100" :precision="0" style="width: 100%" v-model="editStudentWorkForm.score"></InputNumber>
         
           <div slot="footer">
             <Button type="ghost" size="large"   @click="StudentGrade=false">取消</Button>
@@ -256,21 +256,21 @@
             <Form :model="addTestPaperForm" label-position="left" :label-width="100" :rules="testPaperrules" ref="addTestPaperForm">
             <Row>
                 <Col span="12">
-                <FormItem label="试卷名称" class="forms" prop="Name">
-                  <Input v-model="addTestPaperForm.Name"></Input>
+                <FormItem label="试卷名称" class="forms" prop="name">
+                  <Input v-model="addTestPaperForm.name"></Input>
                 </FormItem>
                 </Col>
                 <Col span="12">
-                <FormItem label="试卷类型" class="forms" prop="TestPaperType">
-                  <Select v-model="addTestPaperForm.TestPaperType" :placeholder="'请选择试卷类型'" @on-change="testPaperTypeChange">
+                <FormItem label="试卷类型" class="forms" prop="testPaperType">
+                  <Select v-model="addTestPaperForm.testPaperType" :placeholder="'请选择试卷类型'" @on-change="testPaperTypeChange">
                     <Option v-for="item in testPaperTypeArr" :value="item.value" :key="item.value">{{item.name}}</Option>
                   </Select>
                 </FormItem>
                 </Col>
                 <Col span="12">
-                <FormItem class="forms" prop="A">
-                  <div v-model="addTestPaperForm.A" style="height:64px;">
-                    <Card  class="paperCardDefault" v-if="addTestPaperForm.A.length == 0" @click.native="addPaperDetail(1,'addTestPaperForm',addTestPaperForm)">
+                <FormItem class="forms" prop="a">
+                  <div v-model="addTestPaperForm.a" style="height:64px;">
+                    <Card  class="paperCardDefault" v-if="addTestPaperForm.a.length == 0" @click.native="addPaperDetail(1,'addTestPaperForm', addTestPaperForm)">
                       <div style="color:#A4A4A4"><Icon type="plus"></Icon> A卷</div>
                     </Card>
                     <Card class="paperCardA" v-else @click.native="editPaperDetail(1,'addTestPaperForm',addTestPaperForm)">
@@ -280,12 +280,12 @@
                 </FormItem>
                 </Col>
                 <Col span="12">
-                <FormItem class="forms" prop="B">
-                  <div v-model="addTestPaperForm.B" style="height:64px;">
-                    <Card class="paperCardDefault" v-if="addTestPaperForm.TestPaperType == 2 && addTestPaperForm.B.length == 0" @click.native="addPaperDetail(2,'addTestPaperForm',addTestPaperForm)">
+                <FormItem class="forms" prop="b">
+                  <div v-model="addTestPaperForm.b" style="height:64px;">
+                    <Card class="paperCardDefault" v-if="addTestPaperForm.testPaperType == 2 && addTestPaperForm.b.length == 0" @click.native="addPaperDetail(2,'addTestPaperForm', addTestPaperForm)">
                       <div style="color:#A4A4A4"><Icon type="plus"></Icon> B卷</div>
                     </Card>
-                    <Card class="paperCardB" v-if="addTestPaperForm.TestPaperType == 2 && addTestPaperForm.B.length > 0" @click.native="editPaperDetail(2,'addTestPaperForm',addTestPaperForm)">
+                    <Card class="paperCardB" v-if="addTestPaperForm.testPaperType == 2 && addTestPaperForm.b.length > 0" @click.native="editPaperDetail(2,'addTestPaperForm', addTestPaperForm)">
                       <div> B卷</div>
                     </Card>
                   </div>
@@ -306,21 +306,21 @@
           <Form :model="editTestPaperForm" label-position="left" :label-width="100" :rules="testPaperrules" ref="editTestPaperForm">
           <Row>
                 <Col span="12">
-                <FormItem label="试卷名称" class="forms" prop="Name">
-                  <Input v-model="editTestPaperForm.Name"></Input>
+                <FormItem label="试卷名称" class="forms" prop="name">
+                  <Input v-model="editTestPaperForm.name"></Input>
                 </FormItem>
                 </Col>
                 <Col span="12">
-                <FormItem label="试卷类型" class="forms" prop="TestPaperType">
-                  <Select v-model="editTestPaperForm.TestPaperType" :placeholder="'请选择试卷类型'" @on-change="testPaperTypeChange">
+                <FormItem label="试卷类型" class="forms" prop="testPaperType">
+                  <Select v-model="editTestPaperForm.testPaperType" :placeholder="'请选择试卷类型'" @on-change="testPaperTypeChange">
                     <Option v-for="item in testPaperTypeArr" :value="item.value" :key="item.value">{{item.name}}</Option>
                   </Select>
                 </FormItem>
                 </Col>
                 <Col span="12">
-                <FormItem class="forms" prop="A">
-                  <div v-model="editTestPaperForm.A" style="height:64px;">
-                    <Card  class="paperCardDefault" v-if="editTestPaperForm.A.length == 0" @click.native="addPaperDetail(1,'editTestPaperForm',editTestPaperForm)">
+                <FormItem class="forms" prop="a">
+                  <div v-model="editTestPaperForm.a" style="height:64px;">
+                    <Card  class="paperCardDefault" v-if="editTestPaperForm.a.length == 0" @click.native="addPaperDetail(1,'editTestPaperForm',editTestPaperForm)">
                       <div style="color:#A4A4A4"><Icon type="plus"></Icon> A卷</div>
                     </Card>
                     <Card class="paperCardA" v-else @click.native="editPaperDetail(1,'editTestPaperForm',editTestPaperForm)">
@@ -330,12 +330,12 @@
                 </FormItem>
                 </Col>
                 <Col span="12">
-                <FormItem class="forms" prop="B">
-                  <div v-model="editTestPaperForm.B" style="height:64px;">
-                    <Card class="paperCardDefault" v-if="editTestPaperForm.TestPaperType == 2 && editTestPaperForm.B.length == 0" @click.native="addPaperDetail(2,'editTestPaperForm',editTestPaperForm)">
+                <FormItem class="forms" prop="b">
+                  <div v-model="editTestPaperForm.b" style="height:64px;">
+                    <Card class="paperCardDefault" v-if="editTestPaperForm.testPaperType == 2 && editTestPaperForm.b.length == 0" @click.native="addPaperDetail(2,'editTestPaperForm',editTestPaperForm)">
                       <div style="color:#A4A4A4"><Icon type="plus"></Icon> B卷</div>
                     </Card>
-                    <Card class="paperCardB" v-if="editTestPaperForm.TestPaperType == 2 && editTestPaperForm.B.length > 0" @click.native="editPaperDetail(2,'editTestPaperForm',editTestPaperForm)">
+                    <Card class="paperCardB" v-if="editTestPaperForm.testPaperType == 2 && editTestPaperForm.b.length > 0" @click.native="editPaperDetail(2,'editTestPaperForm',editTestPaperForm)">
                       <div> B卷</div>
                     </Card>
                   </div>
@@ -357,19 +357,19 @@
           <Tabs v-model="detailTabIndex">
             <TabPane label="试卷信息">
               <Row style="margin-left:10px;font-weight:bold;font-size:14px;margin-bottom:10px;">
-                <Col span="20" style="margin-bottom:5px;">试卷名称：{{detailTestPaperForm.Name}}</Col>
+                <Col span="20" style="margin-bottom:5px;">试卷名称：{{detailTestPaperForm.name}}</Col>
                 <Col span="24">试卷类型：{{detailTestPaperForm.TestPaperTypeName}}</Col>
               </Row>
               <Tabs v-model="detailTPDTabIndex">
                 <TabPane label="A卷">
-                  <Table height="400" :columns="testPaperDetailColumn" :data="detailTestPaperForm.A"></Table>
+                  <Table height="400" :columns="testPaperDetailColumn" :data="detailTestPaperForm.a"></Table>
                 </TabPane>
-                <TabPane v-if="detailTestPaperForm.TestPaperType == 2" label="B卷">
-                  <Table height="400" :columns="testPaperDetailColumn" :data="detailTestPaperForm.B"></Table>
+                <TabPane v-if="detailTestPaperForm.testPaperType == 2" label="B卷">
+                  <Table height="400" :columns="testPaperDetailColumn" :data="detailTestPaperForm.b"></Table>
                 </TabPane>
               </Tabs>
             </TabPane>
-            <TabPane v-if="detailTestPaperForm.status == 2" label="考试详情">
+            <TabPane v-if="detailTestPaperForm.Status == 2" label="考试详情">
               <Row style="margin-bottom:10px;">
                 <Col span="4">
                   <a  :href='downloadStudentTestPaperTemplateUrl'  download="muban" style="color:white;display:inline-block;width:100px;
@@ -411,7 +411,7 @@
             <Form :model="testPaperDetailForm" label-position="left" :label-width="100" ref="testPaperDetailForm">
               <div v-for="(item,index) in testPaperDetailForm.testPaperDetailList" :key="index">
                 <Row style="margin-bottom:5px;background-color:#EFF5FB;height:35px;line-height:36px;vertical-align:middle;">
-                  <Col span="12" style="font-size:14px;font-weight:bold;padding-left:10px;float:left;">第{{NumberToChinese(item.DetailNumber)}}题</Col>
+                  <Col span="12" style="font-size:14px;font-weight:bold;padding-left:10px;float:left;">第{{NumberToChinese(item.detailNumber)}}题</Col>
                   <Col span="12">
                     <Button type="error" style="float:right;height:30px;margin-top:3px;" @click="delTestPaperDetail(index)" v-if="nowEditTestPaperType == 1">删除</Button>
                     <Button type="info" style="float:right;height:30px;margin-top:3px;margin-right:5px;" @click="downTestPaperDetail(index)">下移</Button>
@@ -423,30 +423,30 @@
                     <FormItem 
                       label="试题标题" 
                       class="forms" 
-                      :prop="'testPaperDetailList.' + index + '.Title'"
+                      :prop="'testPaperDetailList.' + index + '.title'"
                       :rules="{required: true, message: '试题标题不能为空', trigger: 'blur'}">
-                      <Input :disabled="nowEditTestPaperType == 2" v-model="item.Title"></Input>
+                      <Input :disabled="nowEditTestPaperType == 2" v-model="item.title"></Input>
                     </FormItem>
                   </Col>
                   <Col span="8">
                     <FormItem 
                       label="分数" 
                       class="forms"  
-                      :prop="'testPaperDetailList.' + index + '.Score'"
+                      :prop="'testPaperDetailList.' + index + '.score'"
                       :rules="{required: true, message: '分数不能为空', trigger: 'change', type:'number'}">
-                      <InputNumber :disabled="nowEditTestPaperType == 2" :min="1" :max="100" :precision="0" style="width: 100%" v-model="item.Score"></InputNumber>
+                      <InputNumber :disabled="nowEditTestPaperType == 2" :min="1" :max="100" :precision="0" style="width: 100%" v-model="item.score"></InputNumber>
                     </FormItem>
                   </Col>
                 </Row>
-                <Row v-for="(kitem,kindex) in item.KnowledgeList" :key="kindex">
+                <Row v-for="(kitem,kindex) in item.knowledgeList" :key="kindex">
                   <Col span="12">
                     <FormItem 
                       :label="'知识点'+(kindex+1)" 
                       class="forms" 
-                      :prop="'testPaperDetailList.' + index + '.KnowledgeList.' + kindex + '.KnowledgeId'"
+                      :prop="'testPaperDetailList.' + index + '.knowledgeList.' + kindex + '.knowledgeId'"
                       :rules="{required: true, message: '知识点不能为空', trigger: 'change', type: 'number'}">
-                      <Select :disabled="nowEditTestPaperType == 2" v-model="kitem.KnowledgeId" :placeholder="'请选择知识点'">
-                          <Option v-for="ckitem in courseKnowledgeList" :value="ckitem.Id" :key="ckitem.Id">{{ ckitem.Name }}</Option>
+                      <Select :disabled="nowEditTestPaperType == 2" v-model="kitem.knowledgeId" :placeholder="'请选择知识点'">
+                          <Option v-for="ckitem in courseKnowledgeList" :value="ckitem.id" :key="ckitem.id">{{ ckitem.name }}</Option>
                       </Select>
                     </FormItem>
                   </Col>
@@ -454,9 +454,9 @@
                     <FormItem 
                       :label="'权重'+(kindex+1)" 
                       class="forms" 
-                      :prop="'testPaperDetailList.' + index + '.KnowledgeList.' + kindex + '.Weight'"
+                      :prop="'testPaperDetailList.' + index + '.knowledgeList.' + kindex + '.weight'"
                       :rules="{required: true, message: '权重不能为空', trigger: 'change', type: 'number'}">
-                      <InputNumber :disabled="nowEditTestPaperType == 2" :min="0.1" :max="1"  style="width: 100%" v-model="kitem.Weight"></InputNumber>
+                      <InputNumber :disabled="nowEditTestPaperType == 2" :min="0.1" :max="1"  style="width: 100%" v-model="kitem.weight"></InputNumber>
                     </FormItem>
                   </Col>
                   <Col span="4">
@@ -465,11 +465,11 @@
                 </Row>
                 <FormItem
                   class="forms"
-                  :prop="'testPaperDetailList.' + index + '.KnowledgeList'"
+                  :prop="'testPaperDetailList.' + index + '.knowledgeList'"
                   :rules="knowledgeRule">
                     <Row>
                         <Col span="12">
-                            <Button v-if="nowEditTestPaperType == 1" v-model="item.KnowledgeList" type="dashed" @click="handleAddKnowledge(index)" icon="android-add">添加知识点</Button>
+                            <Button v-if="nowEditTestPaperType == 1" v-model="item.knowledgeList" type="dashed" @click="handleAddKnowledge(index)" icon="android-add">添加知识点</Button>
                         </Col>
                     </Row>
                 </FormItem>
@@ -529,7 +529,7 @@ export default {
     var validateKnowledgeList = function(rule, value, callback) {
         var sumWeight = 0;
         for(let i = 0;i<value.length;i++){
-          sumWeight += value[i].Weight;
+          sumWeight += value[i].weight;
         }
         if (sumWeight != 1) {
             callback(new Error("知识点权重之和必须为1"));
@@ -551,41 +551,39 @@ export default {
         CourseId:"",
         EndDate:"",
         TermType:"",
-        Name:"",
+        name:"",
         CourseCode:"",
         CourseName:"",
         dailyPerformanceWeight:null,//添加权重
-        TestPerformaceWeight:null
+        testPerformanceWeight:null
       },
       StudentGrade:false,
       editStudentWorkForm:{
-        Id:null,
+        id:null,
         classroomWorkId:null,
         ClassRoomStudentId:null,
         isScore:"",
-        Score:null,
-        WorkMessage:"",
-        VersionNumber:null
+        score:null,
+        WorkMessage:""
       },
       editClassRoom:false,
       editClassRoomForm:{
-          Id:null,
+          id:null,
           BeginDate:"",
           CourseId:"",
           EndDate:"",
           TermType:"",
-          Name:"",
+          name:"",
           CourseCode:"",
           CourseName:"",
-           dailyPerformanceWeight:null,//添加权重
-        TestPerformaceWeight:null,
-          VersionNumber: null,
+          dailyPerformanceWeight:null,//添加权重
+          testPerformanceWeight:null
         },
       nowPage: 1,
       pageSize: 10,
       findClassRoomForm:{
         TermType:null,
-        Name:'',
+        name:'',
         Status:null,
         BeginDateStart:'',
         BeginDateEnd:'',
@@ -605,14 +603,14 @@ export default {
           TermType: [
             { required: true, message: "学期类型不能为空", trigger: "change", type: 'number' }
           ],
-          Name: [
+          name: [
             { required: true, message: "课堂名称不能为空", trigger: "blur" }
           ],
           //---验证
           dailyPerformanceWeight:[{
             required: true, message: "平时成绩权重不能为空", trigger: "change", type: 'number'
           }],
-          TestPerformaceWeight:[{
+          testPerformanceWeight:[{
             required: true, message: "平时成绩权重不能为空", trigger: "change", type: 'number'
           }],
           
@@ -667,40 +665,46 @@ export default {
       // 学生作业明细
       studentWorkDetailVisible:false,
       studentWorkDetailTableModule: (StudentWorkDetailTableModuleJS.bind(this))(),
-      swdNowPage:1,
+      swdNowPage: 1,
       swdPageSize: 10,
-      studentWorkId:null,
-      // 试卷===============================================================
-      addTestPaper:false,
-      addTestPaperForm:{
-        Name:"",
-        ClassRoomId:null,
-        TestPaperType:1,
-        A:[],
-        B:[]
+      studentWorkId: null,
+
+      /**
+       * 添加试卷
+       */
+      addTestPaper: false,
+      addTestPaperForm: {
+        name: "",
+        classroomId: null,
+        testPaperType: 1,
+        a: [],
+        b: []
       },
+
+      /**
+       * 编辑试卷
+       */
 	    editTestPaper:false,
       editTestPaperForm:{
-			  Id:null,
-        Name:"",
-        ClassRoomId:null,
-        TestPaperType:null,
+			  id:null,
+        name:"",
+        classroomId:null,
+        testPaperType:null,
         Status:null,
-        A: [],
-        B: [],
-			  VersionNumber: null
+        a: [],
+        b: []
       },
 	    testPaperrules: {
-          Name: [
+          name: [
             { required: true, message: "试卷名称不能为空", trigger: "blur" }
           ],
-          TestPaperType: [
+          testPaperType: [
             { required: true, message: "试卷类型不能为空", trigger: "change", type: 'number' }
           ],
-          A: [
+          a: [
             { required: true, message: "A卷不能为空", trigger: 'blur',trigger: "change", type: 'array' }
           ],
-          B: [
+          b: [
             { validator: function(rule, value, callback) {
                               callback();
                           }, trigger: 'blur',trigger: "change", type: 'array' }
@@ -739,22 +743,19 @@ export default {
       nowFormName:'',
       nowForm:null,
       courseKnowledgeList:[],
-      knowledgeRule:{ validator: validateKnowledgeList, trigger: 'change', type: 'array' },
-     //  PerformaceWeightRule:{ validator: validatePerformaceWeightList, trigger: 'change', type: 'array' }//考试成绩规则
-      showResultAnalysis: false,
-
+      knowledgeRule:{ validator: validateKnowledgeList, trigger: 'change', type: 'array' }
     };
   },
   mounted:function(){
-    this.getClassRoomStudentTemplateUrl();
-	this.$store.commit("changeBreadCrumb", [
+    this.getClassRoomStudentTemplateUrl()
+	  this.$store.commit("changeBreadCrumb", [
       "首页",
       "教学管理",
       "我的课堂"
-    ]);
-    this.$store.commit("changeOpenName", [""]);
-    this.$store.commit("changeActiveName", "NetGraphPage");
-    this.getClassRoomList();
+    ])
+    this.$store.commit("changeOpenName", [""])
+    this.$store.commit("changeActiveName", "NetGraphPage")
+    this.getClassRoomList()
   },
   components: {
     selectModule: selectModule,
@@ -775,17 +776,16 @@ export default {
       Http.putStudentWork(params).then(res=>{
         if(res.statusCode==1){
           this.editStudentWorkForm={
-            Id:null,
+            id:null,
             classroomWorkId:null,
             ClassRoomStudentId:null,
             isScore:"",
-            Score:null,
-            WorkMessage:"",
-            VersionNumber:null
-          };
-          this.StudentGrade=false;
-           this.$Message.success(res.Message);
-           this.getStudentWorkList();
+            score:null,
+            WorkMessage:""
+          }
+          this.StudentGrade=false
+          this.$Message.success(res.Message)
+          this.getStudentWorkList()
         }
         else{
           this.$Message.error(res.Message);
@@ -805,20 +805,19 @@ export default {
       }
       this.courseModalVisible = false;
     },
+
 	//   添加货源表单验证方法
     addClassRoomHandleSubmit: function(name) {
-      console.log(this.addClassRoomForm)
-       console.log(this.addClassRoomForm.dailyPerformanceWeight+this.addClassRoomForm.TestPerformaceWeight)
       var result = this.$refs[name].validate(valid => {
         if (valid) {
-          var sum = this.addClassRoomForm.dailyPerformanceWeight+this.addClassRoomForm.TestPerformaceWeight
+          var sum = this.addClassRoomForm.dailyPerformanceWeight+this.addClassRoomForm.testPerformanceWeight
           if(sum!=1){
               this.$Message.error("知识点权重之和为1!");
           }else
           {this.addClassRoomAction();}
         } else {
           //权重必须和为1
-          var sum = this.addClassRoomForm.dailyPerformanceWeight+this.addClassRoomForm.TestPerformaceWeight
+          var sum = this.addClassRoomForm.dailyPerformanceWeight+this.addClassRoomForm.testPerformanceWeight
           if(sum!=1){
               this.$Message.error("知识点权重之和为1!");
           }else if(sum == 1)
@@ -829,12 +828,10 @@ export default {
     },
     // 修改货源表单验证方法
     editClassRoomHandleSubmit: async function(name) {
-      console.log("编辑部分")
-      console.log(this.addClassRoomForm)
       var result = await this.$refs.editClassRoomForm.validate(valid => {});
       if (result) {
         console.log(this);
-         var sum = this.editClassRoomForm.dailyPerformanceWeight+this.editClassRoomForm.TestPerformaceWeight
+         var sum = this.editClassRoomForm.dailyPerformanceWeight+this.editClassRoomForm.testPerformanceWeight
           if(sum!=1){
               this.$Message.error("知识点权重之和为1!");
           }else
@@ -842,7 +839,7 @@ export default {
         
       } else {
           //权重必须和为1
-          var sum = this.editClassRoomForm.dailyPerformanceWeight+this.editClassRoomForm.TestPerformaceWeight
+          var sum = this.editClassRoomForm.dailyPerformanceWeight+this.editClassRoomForm.testPerformanceWeight
           if(sum!=1){
               this.$Message.error("知识点权重之和为1!");
           }else if(sum == 1)
@@ -854,8 +851,8 @@ export default {
     find: function(a) {
       this.findClassRoomForm.TermType = a.TermType ?
         a.TermType : null;
-      this.findClassRoomForm.Name = a.Name ?
-        a.Name : "";
+      this.findClassRoomForm.name = a.name ?
+        a.name : "";
       this.findClassRoomForm.Status = a.Status ?
         a.Status : null;
       if(a.BeginDate.length > 0){
@@ -891,9 +888,9 @@ export default {
             CourseId:"",
             EndDate:"",
             TermType:"",
-            Name:"",//权重
+            name:"",//权重
             dailyPerformanceWeight:null,
-            TestPerformaceWeight:null
+            testPerformanceWeight:null
           };
 		  this.addClassRoom = false;
 		  this.$refs["addClassRoomForm"].resetFields();
@@ -907,21 +904,18 @@ export default {
     // 编辑课堂
     editClassRoomAction: function() {
         var params = this.editClassRoomForm;
-       
-        console.log("params.CourseId"+params.CourseId)
         Http.putClassRoom(params).then(res=>{
             if(res.statusCode==1){
                 this.$Message.success(res.message);
 				this.editClassRoomForm = {
-					Id:null,
+					id:null,
             BeginDate:"",
             CourseId:"",
             EndDate:"",
             TermType:"",
-            Name:"",
-             dailyPerformanceWeight:null,
-            TestPerformaceWeight:null,
-					VersionNumber: null
+            name:"",
+            dailyPerformanceWeight:null,
+            testPerformanceWeight:null
 				};
 				this.editClassRoom = false;
 				this.$refs["editClassRoomForm"].resetFields();
@@ -942,24 +936,24 @@ export default {
         EndDateStart: this.findClassRoomForm.EndDateStart,
         EndDateEnd: this.findClassRoomForm.EndDateEnd,
         TermType: this.findClassRoomForm.TermType,
-        Name: this.findClassRoomForm.Name,
+        name: this.findClassRoomForm.name,
         Status: this.findClassRoomForm.Status
       };
       Http.getClassRoomList(params).then(res => {
         if(res.statusCode==1){
             let valueList = res.data.list;
             for (let i = 0; i < valueList.length; i++) {
-              if (valueList[i].status == 1) {
+              if (valueList[i].Status == 1) {
                 valueList[i].cellClassName = {
-                  StatusName: 'status-column-yellow'
+                  StatusName: 'Status-column-yellow'
                 };
-              } else if (valueList[i].status == 2) {
+              } else if (valueList[i].Status == 2) {
                 valueList[i].cellClassName = {
-                  StatusName: 'status-column-blue-new'
+                  StatusName: 'Status-column-blue-new'
                 };
-              } else if (valueList[i].status == 4) {
+              } else if (valueList[i].Status == 4) {
                 valueList[i].cellClassName = {
-                  StatusName: 'status-column-orange'
+                  StatusName: 'Status-column-orange'
                 };
               } 
             }
@@ -984,10 +978,10 @@ export default {
         })
     },
     // 修改课堂状态
-    editClassRoomStatusAction:function(id,status){
+    editClassRoomStatusAction:function(id,Status){
         var params = {
-            Id:id,
-            Status:status
+            id:id,
+            Status:Status
         }
         Http.editClassRoomStatus(params).then(res=>{
             if(res.statusCode==1){
@@ -1017,29 +1011,32 @@ export default {
         })
         
     },
-    //test by yu 
 
-    // 编辑上传成功钩子 异步方法
+    /**
+     * 编辑上传成功钩子 异步方法
+     */
     handleImportStudentSuccess: async function(res, file) {
         if (res.statusCode == 1) {
-          this.$Message.success(res.message);
-          this.$refs.classRoomDetail.getClassRoomStudentList();
-          this.importStudentVisible = false;
+          this.$Message.success(res.message)
+          this.$refs.classRoomDetail.getClassRoomStudentList()
+          this.importStudentVisible = false
         }else{
-          this.$Message.error(res.message);
+          this.$Message.error(res.message)
         }
     },
-    // 文件格式验证失败钩子
+
+    /**
+     * 文件格式验证失败钩子
+     */
     handleFormatError: function(res, file) {
         console.log(res)
-        this.$Message.error("文件格式不正确");
+        this.$Message.error("文件格式不正确")
     },
+
     /**
      * 打开作业详情
      */
     studentWorkDetailModal: function(row){
-      console.log("row---")
-      console.log(row)
       this.classroomWorkId = row.id
       this.workName = row.workName
       this.description = row.description
@@ -1047,6 +1044,7 @@ export default {
       this.getStudentWorkList()
       this.studentWorkVisible = true
     },
+
     /**
      * 关闭作业详情
      */
@@ -1065,12 +1063,20 @@ export default {
       this.studentWorkTableModule.tableContent = []
       this.studentWorkTableModule.count = 0
     },
-	  // 改变页码
+
+	  /**
+     * StudentWork 学生作业
+     * 改变页码
+     */
     swChangePage:function(page){
       this.swNowPage = page;
       this.getStudentWorkList();
     },
-	    // 改变每页显示的条数
+
+    /**
+     * StudentWork 学生作业
+     * 改变每页显示的条数
+     */
     swChangeSize: function(size) {
       this.swPageSize = size;
       this.getStudentWorkList();
@@ -1097,23 +1103,29 @@ export default {
         }
       })
     },
-    // 提交作业===================================================
+
+    /**
+     * 提交作业
+     */
     addStudentWorkDetailHandleSubmit: function(name) {
       var result = this.$refs[name].validate(valid => {
         if (valid) {
-          this.addStudentWorkDetailAction();
+          this.addStudentWorkDetailAction()
         } else {
-          this.$Message.error("表单信息不正确!");
+          this.$Message.error("表单信息不正确!")
         }
-      });
-      return result;
+      })
+      return result
     },
-    // 提交学生作业
+
+    /**
+     * 提交学生作业
+     */
     addStudentWorkDetailAction: function() {
-      var params = this.addStudentWorkDetailForm;
+      var params = this.addStudentWorkDetailForm
       Http.postStudentWorkDetail(params).then(res => {
         if (res.statusCode == 1) {
-          this.$Message.success(res.Message);
+          this.$Message.success(res.Message)
           this.addStudentWorkDetailForm = {
             workName:"",
             workPath:"",
@@ -1123,51 +1135,71 @@ export default {
             studentWorkId:"",
             studentWorkScore:null,
             studentWorkMessage:null
-          };
-		      this.addStudentWorkDetail = false;
-		      this.$refs["addStudentWorkDetailForm"].resetFields();
+          }
+		      this.addStudentWorkDetail = false
+		      this.$refs["addStudentWorkDetailForm"].resetFields()
           this.getStudentWorkList();
+        } else {
+            this.$Message.error(res.Message)
         }
-        else{
-            this.$Message.error(res.Message);
-        }
-      });
+      })
     },
-    // 上传成功钩子 异步方法
+    
+    /**
+     * 上传成功钩子 异步方法
+     */
     handleWorkSuccess: async function(res, file) {
         if (res.statusCode == 1) {
-          this.addStudentWorkDetailForm.workPath = res.Data;
-          this.addStudentWorkDetailForm.workName = res.FileName;
+          this.addStudentWorkDetailForm.workPath = res.Data
+          this.addStudentWorkDetailForm.workName = res.FileName
         }
     },
-    // 文件格式验证失败钩子
+
+    /**
+     * 文件格式验证失败钩子
+     */
     handleFormatError: function(res, file) {
-        this.$Message.error("文件格式不正确");
+        this.$Message.error("文件格式不正确")
     },
-    // 学生作业明细===================================================================================
-    studentWorkDetailClose:function(){
+    
+    /**
+     * 关闭学生作业
+     */
+    studentWorkDetailClose: function() {
       this.studentWorkId = null;
       this.swdNowPage = 1;
       this.swdPageSize = 10;
       this.studentWorkDetailTableModule.tableContent = [];
       this.studentWorkDetailTableModule.count = 0;
     },
-	  // 改变页码
+
+	  /**
+     * StudentWorkDetail 学生作业详情
+     * 改变当前页面
+     */
     swdChangePage:function(page){
       this.swdNowPage = page;
       this.getStudentWorkDetailList();
     },
-	    // 改变每页显示的条数
+    
+    /**
+     * StudentWorkDetail 学生作业详情
+     * 改变每页显示的条数
+     */
     swdChangeSize: function(size) {
       this.swdPageSize = size;
       this.getStudentWorkDetailList();
     },
-    getStudentWorkDetailList:function(){
+
+    /**
+     * 获取学生作业详情列表
+     */
+    getStudentWorkDetailList: function() {
       var params = {
         page: this.swNowPage,
         limit: this.swPageSize,
-        studentWorkId: this.studentWorkId,
-      };
+        studentWorkId: this.studentWorkId
+      }
       Http.getStudentWorkDetailList(params).then(res => {
         if(res.statusCode == 1){
             this.studentWorkDetailTableModule.tableContent = res.data.content
@@ -1175,45 +1207,52 @@ export default {
         }
       })
     },
-    // 试卷 ==============================================================================================
-    addTestPaperModal:function(classRoomId,knowledgeList){
-      this.addTestPaperForm.ClassRoomId = classRoomId;
-      this.courseKnowledgeList = knowledgeList;
-      this.addTestPaper = true;
-      this.$refs["addTestPaperForm"].resetFields();
+    
+    /**
+     * 添加试卷模态框
+     */
+    addTestPaperModal: function (classRoomId, knowledgeList) {
+      this.addTestPaperForm.classroomId = classRoomId
+      this.courseKnowledgeList = knowledgeList
+      this.addTestPaper = true
+      this.$refs["addTestPaperForm"].resetFields()
     },
-    editTestPaperModal:function(form,knowledgeList){
+
+    /**
+     * 编辑试卷模态框
+     */
+    editTestPaperModal:function(form, knowledgeList){
       this.courseKnowledgeList = knowledgeList;
       this.editTestPaperForm = {
-			  Id:form.id,
-        Name:form.name,
-        ClassRoomId:form.classroomId,
-        TestPaperType:form.testPaperType,
-        Status:form.status,
-        // A: form.A,
-        // B: form.TestPaperType == 1 ? [] : form.B,
-			  // VersionNumber: this.stringToByte(form.VersionNumber)
-      };
-      console.log("valuevaluevalue")
-      if(form.testPaperType == 1){
-        console.log(this.testPaperrules.A)
-        this.testPaperrules.A = [{ validator: function(rule, value, callback) {
-                                                  callback();
-                                              }, trigger: 'blur',trigger: "change", type: 'array' }];
-        console.log(this.testPaperrules.A)
-      } else{
-        this.testPaperrules.B = [{ validator: function(rule, value, callback) {
-          
-                                                  if(value.length == 0){
-                                                    callback(new Error("B卷不能为空"));
-                                                  } else {
-                                                    callback();
-                                                  }
-                                              }, trigger: 'blur',trigger: "change", type: 'array' }];
+			  id:form.id,
+        name:form.name,
+        classroomId:form.classroomId,
+        testPaperType:form.testPaperType,
+        Status:form.Status
       }
-      this.editTestPaper = true;
+      if(form.testPaperType == 1){
+        this.testPaperrules.a = [
+          { 
+            validator: function(rule, value, callback) { callback() }, trigger: 'blur',trigger: "change", type: 'array' 
+          }
+        ]
+      } else {
+        this.testPaperrules.b = [
+          { validator: function(rule, value, callback) {
+            if(value.length == 0){
+              callback(new Error("B卷不能为空"));
+            } else {
+              callback();
+            }
+          }, trigger: 'blur',trigger: "change", type: 'array' }
+        ]
+      }
+      this.editTestPaper = true
     },
-    // 试卷详情
+    
+    /**
+     * 试卷详情模态框
+     */
     detailTestPaperModal:function(form){
       this.detailTestPaperForm = {
 			  id:form.id,
@@ -1221,306 +1260,362 @@ export default {
         vlassRoomId:form.vlassRoomId,
         testPaperType:form.testPaperType,
         testPaperTypeName: form.testPaperTypeName,
-        status:form.status
-      };
-      this.getDetailTestPaperDetailList(this.detailTestPaperForm.id);
-      
+        Status:form.Status
+      }
+      this.getDetailTestPaperDetailList(this.detailTestPaperForm.id)
     },
+
+    /**
+     * 获取试卷详情列表
+     */
     getDetailTestPaperDetailList:function(id){
       var params = {
-        testPaperId:id
-      };
+        testPaperId: id
+      }
       Http.TestPaperDetailList(params).then(res => {
-        console.log(res)
-        if(res.statusCode==1){
-            this.detailTestPaperForm.A = res.data.a;
-            console.log(res.data.a)
-            this.detailTestPaperForm.B = res.data.b;
-            this.detailTabIndex = 0;
-            this.detailTPDTabIndex = 0;
-            if(this.detailTestPaperForm.status == 2){
+        if(res.statusCode == 1){
+            this.detailTestPaperForm.a = res.data.a
+            this.detailTestPaperForm.b = res.data.b
+            this.detailTabIndex = 0
+            this.detailTPDTabIndex = 0
+
+            if(this.detailTestPaperForm.Status == 2){
               this.studentTestPaperColumn = [
-                { title: "学号", key: "studentNumber", align: "center",width:100, fixed: 'left'},
-                { title: "姓名", key: "studentName", align: "center",width:100, fixed: 'left'}
-              ];
-              if(this.detailTestPaperForm.TestPaperType == 2){
-                this.studentTestPaperColumn.push(
-                  {
-                    title: "试卷类型",
-                    key: "detailType",
-                    align: "center",
-                    width: 85,
-                    fixed: 'left',
-                    render: (h, params) => {
-                        return h("div", [params.row.detailType == 1 ? 'A卷' : 'B卷'])
-                    }
-                  }
-                );
-              }
-              var totalScoreColumn =  {
-                  title: "总分",
-                  key: "totalScore",
+                { title: "学号", key: "studentNumber", align: "center", width:100, fixed: 'left' },
+                { title: "姓名", key: "studentName", align: "center", width:100, fixed: 'left' }
+            ]
+
+            if(this.detailTestPaperForm.testPaperType == 2){
+              this.studentTestPaperColumn.push(
+                {
+                  title: "试卷类型",
+                  key: "detailType",
                   align: "center",
+                  width: 85,
                   fixed: 'left',
-                  width:80
-              };
-              this.studentTestPaperColumn.push(totalScoreColumn);
-              for(let i = 1;i<=this.detailTestPaperForm.A.length;i++){
+                  render: (h, params) => {
+                      return h("div", [params.row.detailType == 1 ? 'A卷' : 'B卷'])
+                  }
+                }
+              )
+            }
+            var totalScoreColumn =  {
+                title: "总分",
+                key: "totalScore",
+                align: "center",
+                fixed: 'left',
+                width:80
+            }
+            this.studentTestPaperColumn.push(totalScoreColumn)
+              for (let i = 1; i<=this.detailTestPaperForm.a.length; i++) {
                 var column = { 
                   title: '第' + this.NumberToChinese(i) + '题',
                   key: i.toString(), 
                   align: "center",
                   width:85
-                };
-                this.studentTestPaperColumn.push(column);
+                }
+                this.studentTestPaperColumn.push(column)
               }
-              this.getStudentTestPaperList();
+              this.getStudentTestPaperList()
             }
-
-          this.uploadStudentTestPaperFileUrl = API.importStudentTestPaper+'?filesname=StudentTestPaper&testPaperId='+id;
-          this.downloadStudentTestPaperTemplateUrl = API.getStudentTestPaperTemplate+"?testPaperId="+id;
-          this.detailTestPaper = true;
+            this.uploadStudentTestPaperFileUrl = API.importStudentTestPaper + '?filesname=StudentTestPaper&testPaperId=' + id
+            this.downloadStudentTestPaperTemplateUrl = API.getStudentTestPaperTemplate + "?testPaperId=" + id
+            this.detailTestPaper = true
         }
-      });
+      })
     },
+
+    /**
+     * 获取学生试卷列表
+     */
     getStudentTestPaperList:function(){
       var params = {
         testPaperId:this.detailTestPaperForm.id
-      };
+      }
       Http.studentTestPaperList(params).then(res => {
-        console.log("res")
-        console.log(res)
-        if(res.statusCode==1){
-            this.studentTestPaperList = res.data.list;
-            for(let i=0;i<this.studentTestPaperList.length;i++){
-              var detailTotalScore = 0;
-              console.log(this.detailTestPaperForm.A.length)
-              console.log(this.detailTestPaperForm.A)
-              for(let k=0;k<this.detailTestPaperForm.A.length;k++){
-                //console.log(this.studentTestPaperList[i].detailType)
-                if(this.studentTestPaperList[i].detailType == 1){
-                  this.studentTestPaperList[i][k+1] = this.studentTestPaperList[i][k+1] + '/' + this.detailTestPaperForm.A[k].score;
-                }else {
-                  this.studentTestPaperList[i][k+1] = this.studentTestPaperList[i][k+1] + '/' + this.detailTestPaperForm.B[k].score;
-                }
-                console.log(this.detailTestPaperForm.A[k])
-                detailTotalScore = detailTotalScore + this.detailTestPaperForm.A[k].score;
+        if(res.statusCode == 1){
+          this.studentTestPaperList = res.data.list
+          for(let i=0; i<this.studentTestPaperList.length; i++){
+            var detailTotalScore = 0
+            for (let k=0; k<this.detailTestPaperForm.a.length; k++) {
+              if (this.studentTestPaperList[i].detailType == 1) {
+                this.studentTestPaperList[i][k+1] = this.studentTestPaperList[i][k+1] + '/' + this.detailTestPaperForm.a[k].score
+              } else {
+                this.studentTestPaperList[i][k+1] = this.studentTestPaperList[i][k+1] + '/' + this.detailTestPaperForm.b[k].score
               }
-              this.studentTestPaperList[i].totalScore = this.studentTestPaperList[i].totalScore + '/' + detailTotalScore;
+              detailTotalScore = detailTotalScore + this.detailTestPaperForm.a[k].score
             }
+            this.studentTestPaperList[i].totalScore = this.studentTestPaperList[i].totalScore + '/' + detailTotalScore
+          }
         }
-      });
+      })
     },
-    downloadStudentTestPaperTemplate:function(){
-      var params = {
-          testPaperId:this.detailTestPaperForm.id
-        }
-        Http.getStudentTestPaperTemplate(params).then(res=>{
-            if(res.statusCode==1){
-                window.open(res.data);
-            }
-            else{
-                this.$Message.error("获取模板错误");
-            }
-        })
-    },
-    // 编辑上传成功钩子 异步方法
-    handleImportStudentTestPaperSuccess: async function(res, file) {
-        if (res.statusCode == 1) {
-          this.$Message.success(res.message);
-          this.getStudentTestPaperList();
-        }else{
-          this.$Message.error(res.message);
-        }
-    },
-    // 添加试卷表单验证方法
+
+    /**
+     * 添加试卷表单验证方法
+     */
     addTestPaperHandleSubmit: function(name) {
       var result = this.$refs[name].validate(valid => {
         if (valid) {
-          this.addTestPaperAction();
+          this.addTestPaperAction()
         } else {
-          this.$Message.error("表单信息不正确!");
+          this.$Message.error("表单信息不正确!")
         }
-      });
-      return result;
+      })
+      return result
     },
-    // 修改试卷表单验证方法
+
+    /**
+     * 修改试卷表单验证方法
+     */
     editTestPaperHandleSubmit: async function(name) {
-      var result = await this.$refs.editTestPaperForm.validate(valid => {});
+      var result = await this.$refs.editTestPaperForm.validate(valid => {})
       if (result) {
-        console.log(this);
-        this.editTestPaperAction();
+        this.editTestPaperAction()
       } else {
-        this.$Message.error("表单信息不正确!");
+        this.$Message.error("表单信息不正确!")
       }
     },
-    // 添加试卷
+
+    /**
+     * 添加试卷方法
+     * 因为后端接收参数需要 '@ReqeustBody' 注解 只能接收'Content-Type':'application/json;charset=UTF-8' 此处重写headers
+     * 如果传输数据不含有 数组 则可以利用默认的 URL 编码
+     */
     addTestPaperAction: function() {
-      var params = this.addTestPaperForm;
-      Http.postTestPaper(params).then(res => {
+      var params = this.addTestPaperForm
+      axios.post('/api/test_paper/add', params, {
+        headers: {
+          'Content-Type':'application/json;charset=UTF-8'
+        }
+      }).then(res => {
         if (res.statusCode == 1) {
-          this.$Message.success(res.Message);
+          this.$Message.success(res.Message)
           this.addTestPaperForm = {
-            Name:"",
-            ClassRoomId:null,
-            TestPaperType:1,
-            A: [],
-            B: []
+            name: "",
+            classroomId: null,
+            testPaperType: 1,
+            a: [],
+            b: []
           };
           this.addTestPaper = false;
-          this.testPaperrules.B = [{ validator: function(rule, value, callback) {
-                                                  callback();
-                                              }, trigger: 'blur',trigger: "change", type: 'array' }];
-          this.$refs["addTestPaperForm"].resetFields();
-          this.$refs.classRoomDetail.getTestPaperList();
-        }
-        else{
-            this.$Message.error(res.Message);
-        }
-      });
-    },
-    // 编辑试卷
-    editTestPaperAction: function() {
-        var params = this.editTestPaperForm;
-        Http.putTestPaper(params).then(res=>{
-            if(res.statusCode==1){
-                this.$Message.success(res.Message);
-				        this.editTestPaperForm = {
-                  Id:null,
-                  Name:"",
-                  ClassRoomId:null,
-                  TestPaperType:null,
-                  Status:null,
-                  A: [],
-                  B: [],
-                  VersionNumber: null
-                };
-                this.editTestPaper = false;
-                this.$refs["editTestPaperForm"].resetFields();
-                this.$refs.classRoomDetail.getTestPaperList();
+          this.testPaperrules.b = [
+            { 
+              validator: function(rule, value, callback) {
+                  callback()
+              }, 
+              trigger: 'blur',
+              trigger: "change",
+              type: 'array' 
             }
-            else{
-                this.$Message.error(res.Message);
+          ]
+          this.$refs["addTestPaperForm"].resetFields()
+          this.$refs.classRoomDetail.getTestPaperList()
+        } else {
+          this.$Message.error(res.Message)
+        }
+      })
+    },
+
+    /**
+     * 编辑试卷
+     */
+    editTestPaperAction: function() {
+        var params = this.editTestPaperForm
+        Http.putTestPaper(params).then(res=>{
+            if(res.statusCode == 1) {
+                this.$Message.success(res.Message)
+				        this.editTestPaperForm = {
+                  id: null,
+                  name: "",
+                  classroomId: null,
+                  testPaperType: null,
+                  Status: null,
+                  a: [],
+                  b: []
+                }
+                this.editTestPaper = false
+                this.$refs["editTestPaperForm"].resetFields()
+                this.$refs.classRoomDetail.getTestPaperList()
+            } else {
+                this.$Message.error(res.Message)
             }
         })
     },
-    // 添加试卷
+    
+    /**
+     * 添加试题
+     */
     addPaperDetail:function(type,formName,form){
-      this.nowEditTestPaperType = type;
-      this.nowFormName = formName;
-      this.nowForm = form;
+      this.nowEditTestPaperType = type
+      this.nowFormName = formName
+      this.nowForm = form
       this.testPaperDetailForm = {
-        testPaperDetailList: JSON.parse(JSON.stringify(form.A))
-      };
+        testPaperDetailList: JSON.parse(JSON.stringify(form.a))
+      }
       if (type == 2){
-        if(this.addTestPaperForm.A.length == 0){
-          this.$Message.error("请先添加A卷试题!");
-          return;
-        } else{
-          for(let i = 0;i<this.testPaperDetailForm.testPaperDetailList.length; i++){
-            this.testPaperDetailForm.testPaperDetailList[i].DetailType = 2;
+        if(this.addTestPaperForm.a.length == 0){
+          this.$Message.error("请先添加A卷试题!")
+          return
+        } else {
+          for(let i = 0; i < this.testPaperDetailForm.testPaperDetailList.length; i++){
+            this.testPaperDetailForm.testPaperDetailList[i].detailType = 2
           }
         }
       }
-      this.testPaperDetail = true;
+      this.testPaperDetail = true
     },
+
+    /**
+     * 编辑试题
+     */
     editPaperDetail:function(type,formName,form){
-      this.nowEditTestPaperType = type;
-      this.nowFormName = formName;
-      this.nowForm = form;
-      if(type == 1){
+      this.nowEditTestPaperType = type
+      this.nowFormName = formName
+      this.nowForm = form
+      if (type == 1) {
         this.testPaperDetailForm = {
-          testPaperDetailList: JSON.parse(JSON.stringify(form.A))
-        };
-      } else{
+          testPaperDetailList: JSON.parse(JSON.stringify(form.a))
+        }
+      } else {
         this.testPaperDetailForm = {
-          testPaperDetailList: JSON.parse(JSON.stringify(form.B))
-        };
+          testPaperDetailList: JSON.parse(JSON.stringify(form.b))
+        }
       }
-      this.testPaperDetail = true;
+      this.testPaperDetail = true
     },
+
+    /**
+     * 选择试卷类型 A卷 B卷
+     */
     testPaperTypeChange: function(value){
       if(value == 1){
-        this.testPaperrules.B = [{ validator: function(rule, value, callback) {
-                                                  callback();
-                                              }, trigger: 'blur',trigger: "change", type: 'array' }];
+        this.testPaperrules.b = [
+          { 
+            validator: function(rule, value, callback) {
+              callback()
+            }, trigger: 'blur', trigger: "change", type: 'array' 
+          }
+        ]
       } else {
-        this.testPaperrules.B = [{ validator: function(rule, value, callback) {
-                                                  if(value.length == 0){
-                                                    callback(new Error("B卷不能为空"));
-                                                  } else {
-                                                    callback();
-                                                  }
-                                              }, trigger: 'blur',trigger: "change", type: 'array' }];
+        this.testPaperrules.b = [
+          { 
+            validator: function(rule, value, callback) {
+                if(value.length == 0){
+                  callback(new Error("B卷不能为空"));
+                } else {
+                  callback();
+                }
+            }, trigger: 'blur',trigger: "change", type: 'array' }
+        ]
       }
     },
-    // 试题==========================================================================================
-    // 添加新试题
+
+    /**
+     * 添加试卷新试题
+     */
     addNewDetail:function(){
       let newDetail = {
-        Title: "",
-        DetailNumber: this.testPaperDetailForm.testPaperDetailList.length + 1,
-        DetailType : 1,
-        Score : null,
-        KnowledgeList:[{ KnowledgeId: null, Weight: null}],
-      };
+        title: "",
+        detailNumber: this.testPaperDetailForm.testPaperDetailList.length + 1,
+        detailType : 1,
+        score : null,
+        knowledgeList:[
+          { 
+            knowledgeId: null,
+            weight: null 
+          }
+        ],
+      }
       this.testPaperDetailForm.testPaperDetailList.push(newDetail);
     },
-    // 添加试题表单验证方法
+    /**
+     * 添加试题表单验证方法
+     */
     testPaperDetailHandleSubmit: function(name) {
       var result = this.$refs[name].validate(valid => {
         if (valid) {
-          if(this.nowEditTestPaperType == 1){
-            this.nowForm.A = JSON.parse(JSON.stringify(this.testPaperDetailForm.testPaperDetailList));
-            this.nowForm.B = [];
-          }else{
-            this.nowForm.B = JSON.parse(JSON.stringify(this.testPaperDetailForm.testPaperDetailList));
+          if (this.nowEditTestPaperType == 1) {
+            this.nowForm.a = JSON.parse(JSON.stringify(this.testPaperDetailForm.testPaperDetailList))
+            this.nowForm.b = []
+          } else {
+            this.nowForm.b = JSON.parse(JSON.stringify(this.testPaperDetailForm.testPaperDetailList))
           }
-          this.$refs[this.nowFormName].validate();
-          this.testPaperDetailForm.testPaperDetailList = [];
-          this.testPaperDetail = false;
+          this.$refs[this.nowFormName].validate()
+          this.testPaperDetailForm.testPaperDetailList = []
+          this.testPaperDetail = false
         } else {
-          this.$Message.error("表单信息不正确!");
+          this.$Message.error("表单信息不正确!")
         }
-      });
-      return result;
+      })
+      return result
     },
-    // 删除
+    
+    /**
+     * 删除试题详情
+     */
     delTestPaperDetail: function(index){
       this.testPaperDetailForm.testPaperDetailList.splice(index,1);
       for(let i = index; i < this.testPaperDetailForm.testPaperDetailList.length; i++){
-        this.testPaperDetailForm.testPaperDetailList[i].DetailNumber--;
+        this.testPaperDetailForm.testPaperDetailList[i].detailNumber--;
       }
     },
-    // 上移
+    /**
+     * 上移试题
+     */
     upTestPaperDetail: function(index){
       if(index != 0){
         let now = this.testPaperDetailForm.testPaperDetailList[index];
         let old = this.testPaperDetailForm.testPaperDetailList[index-1];
-        now.DetailNumber = now.DetailNumber - 1;
-        old.DetailNumber = old.DetailNumber + 1;
+        now.detailNumber = now.detailNumber - 1;
+        old.detailNumber = old.detailNumber + 1;
         this.testPaperDetailForm.testPaperDetailList[index] = old;
         this.testPaperDetailForm.testPaperDetailList[index - 1] = now;
       }
     },
-    // 下移
+    
+    /**
+     * 下移试题
+     */
     downTestPaperDetail: function(index){
       if(index != this.testPaperDetailForm.testPaperDetailList.length - 1){
         let now = this.testPaperDetailForm.testPaperDetailList[index];
         let old = this.testPaperDetailForm.testPaperDetailList[index + 1];
-        now.DetailNumber = now.DetailNumber + 1;
-        old.DetailNumber = old.DetailNumber - 1;
+        now.detailNumber = now.detailNumber + 1;
+        old.detailNumber = old.detailNumber - 1;
         this.testPaperDetailForm.testPaperDetailList[index] = old;
         this.testPaperDetailForm.testPaperDetailList[index + 1] = now;
       }
     },
-    // 添加知识点
+    
+    /**
+     * 添加知识点
+     */
     handleAddKnowledge: function(index){
-      this.testPaperDetailForm.testPaperDetailList[index].KnowledgeList.push({ KnowledgeId: null, Weight: null});
+      this.testPaperDetailForm.testPaperDetailList[index].knowledgeList.push({ knowledgeId: null, weight: null});
     },
-    // 删除知识点
+    
+    /**
+     * 删除知识点
+     */
     delTestPaperDetailKnowledge: function(index,kindex){
-      this.testPaperDetailForm.testPaperDetailList[index].KnowledgeList.splice(kindex,1);
+      this.testPaperDetailForm.testPaperDetailList[index].knowledgeList.splice(kindex,1);
+    },
+
+    /**
+     * 下载学生试卷模板
+     */
+    downloadStudentTestPaperTemplate: function() {
+      var params = {
+          testPaperId:this.detailTestPaperForm.id
+        }
+        Http.getStudentTestPaperTemplate(params).then(res=>{
+            if(res.statusCode == 1){
+                window.open(res.data)
+            } else {
+                this.$Message.error("获取模板错误")
+            }
+        })
     },
     showResultAnalysisModal(showtmp, paperId) {
       console.log("show res2!");
