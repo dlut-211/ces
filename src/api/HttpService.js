@@ -507,8 +507,11 @@ export const createImageCode=(param)=>{
     // 获取学校列表
     export const getAllSchoolList = (param) =>{
         return GET(API.getAllSchoolList,param);
-        }
+        };
 
+    export const selectByStudentId=(param)=>{
+        return GET(API.selectByStudentId,param);
+    }
 
 //---------------------------------------------------------------------------------------------------
 // 定义4种请求

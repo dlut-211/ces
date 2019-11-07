@@ -37,7 +37,7 @@
 		  <Row>
           <Col span="12">
 					<FormItem label="作业" class="forms" prop="WorkPath">
-						<Upload :action="uploadFile" :headers="{Authorization:$store.state.token}" style="float: left; margin-right: 20px;" :show-upload-list="false" :on-success="handleAddSyllabusSuccess" :on-format-error="handleFormatError">
+						<Upload :action="uploadFile" :format="['zip','war','rar']" :headers="{Authorization:$store.state.token}" style="float: left; margin-right: 20px;" :show-upload-list="false" :on-success="handleAddSyllabusSuccess" :on-format-error="handleFormatError">
               <Button type="ghost" icon="ios-cloud-upload-outline">点击上传文件</Button>
             </Upload>
             <div v-if="SubmitWorkForm.WorkPath">

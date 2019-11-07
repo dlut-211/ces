@@ -273,7 +273,10 @@ var API = {
     checkImageCode: apiHost+'/imagecode/checkImageCode',
 
     //创建验证码
-    createImageCode:apiHost+'/imagecode/createImageCode'
+    createImageCode:apiHost+'/imagecode/createImageCode',
+
+    //选择学生学科
+    selectByStudentId:apiHost+'/studentcontroller/selectByStudentId'
 }
 
 export {

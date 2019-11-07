@@ -28,7 +28,7 @@ import * as Http from "@/api/HttpService.js";
 export default {
   data: function() {
     return {
-      SubjectId: 1,
+      SubjectId: this.$store.state.subjectId,
       SubjectName:"",
       selectModule: (SubjectGradeSelectModuleJS.bind(this))(),
       tableModule: (SubjectGradeTableModuleJS.bind(this))(),

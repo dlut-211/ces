@@ -17,12 +17,16 @@ const state = {
     customService:false,  //客服组件是否显示
     classroomId:"",//存储课堂的id
     actionList: {},
-    visitedviews:[]
+    visitedviews:[],
+    subjectId:"",
 }
 
 const getters = {
     roles:function(state){
         return state.roles;
+    },
+    subjectId:function(state){
+        return state.subjectId;
     },
     username:function(state){
         return state.username;

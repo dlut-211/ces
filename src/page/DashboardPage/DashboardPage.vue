@@ -228,6 +228,11 @@
             if(this.$store.getters.home != ''){
                 this.$router.push({name:this.$store.getters.home});
             }
+            if(this.$store.getters.token==null||this.$store.getters.token==""){
+                this.$router.replace({
+                    name:"LoginPage"
+                })
+            }
             // var result = await Http.getPermission();
             // if (result.statusCode == 1) {
             //     this.actionList = result.Data;
@@ -248,7 +253,7 @@
             //         }
             //     }
             // }
-            // // this.initLocalStorage()
+            // this.initLocalStorage()
             // this.$nextTick(function() {
             //     this.$refs.Menu.updateOpened();
             //     this.$refs.Menu.updateActiveName();

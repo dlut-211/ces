@@ -234,7 +234,7 @@ export default {
   data: function() {
     return {
       StudentAbility:[],
-      SubjectId:1,
+      SubjectId:this.$store.state.subjectId,
       legendInfo:[],
       items:[3],
       ClassRoomNameList:[],

@@ -5,7 +5,7 @@
       <tableModule :object="tableModule" @changePage="changePage" @changeSize="changeSize" @addCourse="addCourse=true;$refs['addCourseForm'].resetFields();"></tableModule>
       <Modal
           v-model="addCourse"
-          title="添加课程"
+          title="添加课程(教学大纲只支持doc,dox文件)"
 		  width="800px"
 		  :mask-closable="false">
         <Form :model="addCourseForm" label-position="left" :label-width="100" :rules="rules" ref="addCourseForm">
@@ -35,7 +35,7 @@
           </Col>
           <Col span="12">
 					<FormItem label="教学大纲" class="forms" prop="syllabusPath">
-						<Upload :action="uploadFile" :headers="{Authorization:$store.state.token}" style="float: left; margin-right: 20px;" :show-upload-list="false" :on-success="handleAddSyllabusSuccess" :on-format-error="handleFormatError">
+						<Upload :action="uploadFile" :format="['doc','docx']" :headers="{Authorization:$store.state.token}" style="float: left; margin-right: 20px;" :show-upload-list="false" :on-success="handleAddSyllabusSuccess" :on-format-error="handleFormatError">
               <Button type="ghost" icon="ios-cloud-upload-outline">点击上传文件</Button>
             </Upload>
             <div v-if="addCourseForm.syllabusPath">

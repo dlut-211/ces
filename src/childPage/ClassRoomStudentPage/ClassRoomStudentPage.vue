@@ -187,7 +187,7 @@ export default {
       ShowChapterWorkList:false,
       LocalClassRoomId:null,
       StudentAbility:[],
-      SubjectId:1, 
+      SubjectId:this.$store.state.subjectId, 
 	  nowPage: 1,
     pageSize: 5,
 	  findClassRoomStudentForm:{

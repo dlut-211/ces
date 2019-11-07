@@ -248,10 +248,20 @@
                           localStorage.setItem('token', this.$store.getters.token);
                           localStorage.setItem('id', this.$store.state.id);
                           localStorage.setItem("roles",this.$store.state.roles);
-
-                          this.$router.replace({
+                          var params=
+                          {studentId:res.data.id}
+                        Http.selectByStudentId(params).then(res=>{
+                          if(res.statusCode==1){
+                            this.$store.state.subjectId=res.data;
+                             this.$router.replace({
                               name: 'DashboardPage'
                           })
+                          }
+                          else{
+                            this.$Message.error('学科不存在');
+                          }
+                        })
+                         
                       } else {
                           this.$Message.error('账号或密码不存在');
                       }

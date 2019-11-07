@@ -158,7 +158,7 @@ export default {
   methods: {
     getAblilty: function() {
       var params = {
-        SubjectId: 1
+        SubjectId: this.$store.state.subjectId
       };
       Http.getAbilityList(params).then(res => {
         if (res.StatusCode == 1) {

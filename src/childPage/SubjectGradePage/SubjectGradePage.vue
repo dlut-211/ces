@@ -30,7 +30,7 @@ import * as Http from "@/api/HttpService.js";
 export default {
   data: function() {
     return {
-      subjectId: 1,
+      subjectId: this.$store.state.subjectId,
       subjectName:"",
       selectModule: (SubjectGradeSelectModuleJS.bind(this))(),
       tableModule: (SubjectGradeTableModuleJS.bind(this))(),
