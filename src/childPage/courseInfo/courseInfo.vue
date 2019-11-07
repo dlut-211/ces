@@ -260,6 +260,7 @@
                     name:data.name,
                     parentId:data.parentId,
                     description:data.description,
+                    sort: data.sort
                 };
                 this.$emit("editChapter", this.editChapterForm)
             },
@@ -354,6 +355,7 @@
                 Http.getChapterCourse(params).then(res => {
                     if(res.statusCode == 1){
                         this.mainChapters = res.data;
+                        console.log(this.mainChapters)
                     }
                 });
             },
@@ -366,6 +368,7 @@
                     if(res.statusCode == 1){
                         this.setChapters(res.data);
                         this.getMainChaperts();
+                        console.log("fdsfds")
                     }
                 });
             },
