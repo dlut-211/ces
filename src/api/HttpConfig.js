@@ -37,7 +37,7 @@ var API = {
     enableTeacher: apiHost + '/teacher/enable',
     // 禁用教师
     disableTeacher: apiHost + '/teacher/disable',
-    // 重置教师密码 
+    // 重置教师密码
     resetTeacherPassWord: apiHost + '/teacher/resetPassWord',
 
 

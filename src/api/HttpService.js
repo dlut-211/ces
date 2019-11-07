@@ -246,8 +246,8 @@ export const revokeLayoutClassRoomWork = (param) =>{
     return GET(API.revokeLayoutClassRoomWork,param);
 }
 // 获取作业情况
-export const getClassroomWorkDetail = (param) =>{
-    return GET(API.getClassroomWorkDetail,param);
+export const getClassRoomWorkDetail = (param) =>{
+    return GET(API.getClassRoomWorkDetail,param);
 }
 
 // 获取学生作业明细列表

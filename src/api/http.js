@@ -1,6 +1,6 @@
 import axios from 'axios';
-//axios配置
-axios.defaults.timeout = 500000;
+// axios配置
+axios.defaults.timeout = 500000
 var qs = require('qs');
 
 const handleStatus = ({status,data={}}) =>{

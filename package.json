@@ -13,6 +13,7 @@
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
     "echarts": "^4.2.1",
+    "errors": "^0.3.0",
     "iview": "^2.11.0",
     "node-sass": "^4.13.0",
     "sass": "^1.23.3",

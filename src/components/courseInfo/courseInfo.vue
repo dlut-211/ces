@@ -223,34 +223,34 @@
                     ])
                 ]);
             },
-            append (data) {
-                var sort = '';
-                if(data.level == 0){
-                    if(this.chapters[0].children){
-                        sort = this.chapters[0].children.length<9?'0'+ (this.chapters[0].children.length+1):(this.chapters[0].children.length+1)+'';
-                    }
-                    else{
-                        sort = '01'
-                    }
-                }else{
-                    if(data.children){
-                        sort = data.children.length<9?data.sort + '0' + (data.children.length+1):sort = data.sort + (data.children.length+1)
-                    }
-                    else{
-                        sort = data.sort + '01';
-                    }
-                    
-                }
-                this.addChapterForm = {
-                    chapterLevel: data.chapterLevel == null ? data.chapterLevel : data.chapterLevel + 1,
-                    courseId:this.courseId,
-                    name:"",
-                    parentId:data.id,
-                    description:"",
-                    sort:sort,
-                };
-                this.$emit("addChapter", this.addChapterForm)
-            },
+          append (data) {
+            var sort = '';
+            if(data.level == 0){
+              if(this.chapters[0].children){
+                sort = this.chapters[0].children.length<9?'0'+ (this.chapters[0].children.length+1):(this.chapters[0].children.length+1)+'';
+              }
+              else{
+                sort = '01'
+              }
+            }else{
+              if(data.children){
+                sort = data.children.length<9?data.sort + '0' + (data.children.length+1):sort = data.sort + (data.children.length+1)
+              }
+              else{
+                sort = data.sort + '01';
+              }
+
+            }
+            this.addChapterForm = {
+              chapterLevel: data.chapterLevel == null ? data.chapterLevel : data.chapterLevel + 1,
+              courseId:this.courseId,
+              name:"",
+              parentId:data.id,
+              description:"",
+              sort:sort,
+            };
+            this.$emit("addChapter", this.addChapterForm)
+          },
             edit (data){
                 this.editChapterForm = {
                     id: data.id,
@@ -348,7 +348,7 @@
                 var params = {
                     id : this.courseId
                 };
-                Http.getChapterCourse(params).then(res => {
+                Http.getChapterMain(params).then(res => {
                     if(res.statusCode == 1){
                         this.mainChapters = res.data;
                     }
@@ -406,7 +406,7 @@
             },
             // 作业==============
             selectChapter:function(now,old){
-                if(now.parentId){
+                if(now){
                     this.chooseChapter = true;
                     this.chooseChapterId = now.id;   
                     this.getWorkByChapter();     
