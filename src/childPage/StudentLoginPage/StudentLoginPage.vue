@@ -259,6 +259,9 @@
                           }
                           else{
                             this.$Message.error('学科不存在');
+                             this.$router.replace({
+                              name: 'DashboardPage'
+                          })
                           }
                         })
                          

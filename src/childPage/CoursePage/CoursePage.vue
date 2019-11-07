@@ -5,7 +5,7 @@
       <tableModule :object="tableModule" @changePage="changePage" @changeSize="changeSize" @addCourse="addCourse=true;$refs['addCourseForm'].resetFields();"></tableModule>
       <Modal
           v-model="addCourse"
-          title="添加课程(教学大纲只支持doc,dox文件)"
+          title="添加课程(教学大纲只支持doc,docx文件)"
 		  width="800px"
 		  :mask-closable="false">
         <Form :model="addCourseForm" label-position="left" :label-width="100" :rules="rules" ref="addCourseForm">
@@ -50,7 +50,7 @@
             <Button type="primary" size="large" @click="addCourseHandleSubmit('addCourseForm')">确定</Button>
         </div>
       </Modal>
-	  <Modal v-model="editCourse" title="编辑课程" width="800px" :mask-closable="false">
+	  <Modal v-model="editCourse" title="编辑课程(教学大纲只支持doc,docx文件)" width="800px" :mask-closable="false">
 		  <Form :model="editCourseForm" label-position="left" :label-width="100" :rules="rules" ref="editCourseForm">
 		  <Row>
           <Col span="12">
@@ -78,7 +78,7 @@
           </Col>
           <Col span="12">
 					<FormItem label="教学大纲" class="forms" prop="syllabusPath">
-            <Upload :action="uploadFile" :headers="{Authorization:$store.state.token}" style="float: left; margin-right: 20px;" :show-upload-list="false" :on-success="handleEditSyllabusSuccess"  :on-format-error="handleFormatError">
+            <Upload :action="uploadFile" :format="['doc','docx']" :headers="{Authorization:$store.state.token}" style="float: left; margin-right: 20px;" :show-upload-list="false" :on-success="handleEditSyllabusSuccess"  :on-format-error="handleFormatError">
               <Button type="ghost" icon="ios-cloud-upload-outline">点击上传文件</Button>
             </Upload>
             <div v-if="editCourseForm.syllabusPath">
