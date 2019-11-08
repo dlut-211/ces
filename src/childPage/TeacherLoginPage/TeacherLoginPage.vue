@@ -176,6 +176,7 @@
                           this.$store.state.token = res.data.token;
                           this.$store.state.id = res.data.id;
                           this.$store.state.roles = 2;
+                          this.$store.state.subjectId = res.data.subjectId;
                           this.$store.state.home = 'TeacherHomePage';
                           localStorage.setItem('username', this.$store.getters.username);
                           localStorage.setItem('token', this.$store.getters.token);

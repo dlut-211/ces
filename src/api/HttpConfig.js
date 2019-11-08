@@ -87,8 +87,8 @@ var API = {
     postAbility: apiHost + '/ability/add',
     // 编辑能力点
     putAbility: apiHost + '/ability/edit',
-  //获取学科列表
-    getAllSubjectList: apiHost + '/MySystem/getAllSubjectList',
+    //获取学科列表
+    //getAllSubjectList: apiHost + '/MySystem/getAllSubjectList',
      //获取学科列表
      getAllSubjectList: apiHost + '/course/getAllSubjectList',
      //获取学校列表

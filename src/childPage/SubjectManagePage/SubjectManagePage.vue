@@ -3,7 +3,7 @@
   <div class="SubjectManagePage">
     <div>
       <Row>
-        <Col span="6">
+        <Col span="10">
           <Table
             height="500"
             highlight-row
@@ -12,7 +12,7 @@
             @on-current-change="selectChapter"
           ></Table>
         </Col>
-        <Col span="18">
+        <Col span="14">
           <Table height="500" :columns="AbilityColumn" :data="AbilityList"></Table>
         </Col>
       </Row>
@@ -43,10 +43,11 @@ export default {
       selectModule: SubjectManageSelectModuleJS.bind(this)(),
       tableModule: SubjectManageTableModuleJS.bind(this)(),
       addSubjectManage: false,
+      subjectId: this.$store.state.subjectId,
       SubjectColumn: [
         {
           title: "学科代码",
-          key: "OptionCode",
+          key: "optionCode",
           align: "center",
           render: (h, params) => {
             return h("div", [
@@ -60,14 +61,14 @@ export default {
                     paddingLeft: this.paddingValue(params.row.ChapterLevel)
                   }
                 },
-                params.row.OptionCode
+                params.row.optionCode
               )
             ]);
           }
         },
         {
           title: "学科",
-          key: "OptionValue",
+          key: "optionValue",
           align: "center",
           render: (h, params) => {
             return h("div", [
@@ -81,7 +82,7 @@ export default {
                     paddingLeft: this.paddingValue(params.row.ChapterLevel)
                   }
                 },
-                params.row.OptionValue
+                params.row.optionValue
               )
             ]);
           }
@@ -112,7 +113,7 @@ export default {
                     }
                   }
                 },
-                params.row.Name
+                params.row.name
               )
             ]);
           }
@@ -139,7 +140,7 @@ export default {
                     }
                   }
                 },
-                params.row.Describe
+                params.row.description
               )
             ]);
           }
@@ -158,12 +159,12 @@ export default {
   methods: {
     getAblilty: function() {
       var params = {
-        SubjectId: this.$store.state.subjectId
+        subjectId: this.$store.state.subjectId
       };
       Http.getAbilityList(params).then(res => {
-        if (res.StatusCode == 1) {
-          this.AbilityCount = res.Data.Total;
-          console.log(res.Data.List)
+        console.log(res)
+        if (res.statusCode == 1) {
+          this.AbilityCount = res.data.content;
         }
       });
     },
@@ -182,13 +183,11 @@ export default {
       this.chooseChapter = false;
       this.SubjectList = [];
       this.AbilityList = [];
-      var params = {
-        id:1
-      };
-      Http.getAllSubjectList(params).then(res => {
-        if (res.StatusCode == 1) {
-          this.SubjectList = res.Data.List;
-          console.log(res.Data.List)
+
+      Http.getAllSubjectList().then(res => {
+        if (res.statusCode == 1) {
+          this.SubjectList = res.data;
+          console.log(this.SubjectList)
         }
       });
     },
@@ -196,21 +195,34 @@ export default {
     selectChapter: function(now, old) {
       if (now) {
         this.chooseSubject = true;
-        this.chooseSubjectId = now.Id;
+        this.chooseSubjectId = now.id;
         this.getAbilityBySubject();
       }
     },
 
-    getAbilityBySubject: function() {
+
+    getAblilty: function(){
       var params = {
-        SubjectId: this.chooseSubjectId,
+        subjectId: this.subjectId,
       };
 
       Http.getAbilityList(params).then(res => {
-        if (res.StatusCode == 1) {
-          this.AbilityCount = res.Data.Total;
+        console.log(res)
+        if (res.statusCode == 1) {
+          this.AbilityList = res.data.content;
+        }
+      });
+    },
+    getAbilityBySubject: function() {
+      var params = {
+        subjectId: this.chooseSubjectId,
+      };
 
-          this.AbilityList = res.Data.List;
+      Http.getAbilityList(params).then(res => {
+        console.log(res)
+        if (res.statusCode == 1) {
+
+          this.AbilityList = res.data.content;
         }
       });
     },
