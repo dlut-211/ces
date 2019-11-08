@@ -11,7 +11,7 @@ function ClassRoomTableModuleJS() {
         },
         count: 50,
         tableHead: [
-            { 
+            {
                 title: "课堂名称",
                 key: "name",
                 align: "center",
@@ -85,7 +85,7 @@ function ClassRoomTableModuleJS() {
                                             },
                                             onCancel: () => {
                                             }
-                                        }) 
+                                        })
                                     }
                                 }
                             },
@@ -113,7 +113,6 @@ function ClassRoomTableModuleJS() {
                                             Name: params.row.name,
                                             dailyPerformanceWeight:params.row.dailyPerformanceWeight,//权重
                                             TestPerformaceWeight:params.row.testPerformaceWeight,//权重
-											// VersionNumber: this.stringToByte(params.row.VersionNumber)
                                         };
                                         console.log(params.row.dailyPerformanceWeight+params.row.Id);
                                         this.editClassRoom = true;
@@ -141,7 +140,7 @@ function ClassRoomTableModuleJS() {
                                             },
                                             onCancel: () => {
                                             }
-                                        }) 
+                                        })
                                     }
                                 }
                             },
@@ -154,7 +153,7 @@ function ClassRoomTableModuleJS() {
                                     color: "#FF9933",
                                     cursor: "pointer",
                                     margin: "0 5px",
-                                    display: (params.row.status == 2) ?"inline":"none"
+                                    display: (params.row.status === 2) ?"inline":"none"
                                 },
                                 on: {
                                     click: () => {
@@ -166,7 +165,7 @@ function ClassRoomTableModuleJS() {
                                             },
                                             onCancel: () => {
                                             }
-                                        }) 
+                                        })
                                     }
                                 }
                             },

@@ -1,6 +1,6 @@
 <template>
     <div>
-        
+
     <Tabs v-model="tabIndex">
         <TabPane label="课堂信息">
             <div class="courseInfo">
@@ -133,8 +133,8 @@
                     ]
                 },
                 chapterColumn:[
-                    { 
-                        title: "章节", 
+                    {
+                        title: "章节",
                         key: "name",
                         render: (h, params) => {
                             return h("div", [
@@ -476,7 +476,7 @@ formatDate:function(date, fmt) {
                     }else{
                         this.$Message.error(res.message);
                     }
-                    
+
                 });
             },
             revokeLayoutWorkAction:function(id){
@@ -491,7 +491,7 @@ formatDate:function(date, fmt) {
                     }else{
                         this.$Message.error(res.message);
                     }
-                    
+
                 });
             },
             openStudentWorkDetailAction:function(row){
@@ -508,28 +508,30 @@ formatDate:function(date, fmt) {
                 this.testPaperPageSize = size;
                 this.getTestPaperList();
             },
-            // 查询试卷
+            /**
+             * 试卷列表
+             */
             getTestPaperList: function() {
-                var params = {
+                const params = {
                     page: this.testPaperNowPage,
                     pageSize: this.testPaperPageSize,
                     classroomId: this.classRoomData.Id
                 };
                 Http.getTestPaperList(params).then(res => {
-                    if(res.statusCode==1){
+                    if(res.statusCode === 1) {
                         this.testPaperTableModule.tableContent = res.data.content;
-                        this.testPaperTableModule.count = res.data.numberOfElements;
+                        this.testPaperTableModule.count = res.data.totalElements;
                     }
                 });
             },
-            addTestPaperAction:function(){
+            addTestPaperAction: function() {
                 this.$emit("addTestPaper",this.classRoomData.Id,this.courseKnowledgeList);
             },
             // 删除试卷
             deleteTestPaperAction:function(id){
-                var params = {
-                    testPaperId:id
-                }
+                const params = {
+                    testPaperId: id
+                };
                 Http.deleteTestPaper(params).then(res=>{
                     if(res.statusCode==1){
                         this.$Message.success("删除成功");
@@ -538,16 +540,16 @@ formatDate:function(date, fmt) {
                     else{
                         this.$Message.error(res.message);
                     }
-                }) 
+                })
             },
             // 修改试卷状态
             editTestPaperStatusAction:function(id,status){
-                var params = {
-                    id:id,
-                    status:status
-                }
+                const params = {
+                    id: id,
+                    status: status
+                };
                 Http.editTestPaperStatus(params).then(res=>{
-                    if(res.statusCode==1){
+                    if (res.statusCode==1) {
                         this.getTestPaperList();
                         this.$Message.success(res.message);
                     }
@@ -558,12 +560,12 @@ formatDate:function(date, fmt) {
             },
             // 撤销试卷
             editTestPaperStatusAction1:function(id,status){
-                var params = {
-                    id:id,
-                    status:status
-                }
+                const params = {
+                    id: id,
+                    status: status
+                };
                 Http.editTestPaperStatus1(params).then(res=>{
-                    if(res.statusCode==1){
+                    if(res.statusCode == 1){
                         this.getTestPaperList();
                         this.$Message.success(res.message);
                     }
@@ -575,9 +577,9 @@ formatDate:function(date, fmt) {
             // 获取课程知识点列表
             getCourseKnowledgeList: function() {
                 this.courseKnowledgeList = [];
-                var params = {
-                    courseId : this.classRoomData.CourseId
-                }
+                const params = {
+                    courseId: this.classRoomData.CourseId
+                };
                 Http.getKnowledgeAllList(params).then(res => {
                     if(res.statusCode == 1){
                         this.courseKnowledgeList = res.data

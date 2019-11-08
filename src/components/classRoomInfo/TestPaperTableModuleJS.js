@@ -11,8 +11,8 @@ function TestPaperTableModuleJS() {
         },
         count: 0,
         tableHead: [
-            { 
-                title: "试卷名称", 
+            {
+                title: "试卷名称",
                 key: "name",
                 render: (h, params) => {
                     return h("div", [
@@ -26,7 +26,6 @@ function TestPaperTableModuleJS() {
                                 },
                                 on: {
                                     click: () => {
-                                        console.log("行号 ++++"+params.row)
                                         this.$emit("detailTestPaper",params.row);
                                     }
                                 }
@@ -78,8 +77,7 @@ function TestPaperTableModuleJS() {
                         "A卷"
                         )
                     ])
-                    }
-                    else if(params.row.testPaperType==2){
+                    } else if (params.row.testPaperType==2){
                     return h("div",[
                         h(
                         "span",
@@ -139,7 +137,7 @@ function TestPaperTableModuleJS() {
                                             },
                                             onCancel: () => {
                                             }
-                                        }) 
+                                        })
                                     }
                                 }
                             },
@@ -152,12 +150,11 @@ function TestPaperTableModuleJS() {
                                     color: "#2d8cf0",
                                     cursor: "pointer",
                                     margin: "0 5px",
-                                    display: (params.row.status == 1) ?"inline":"none"
+                                    display: (params.row.status == 1) ? "inline" : "none"
                                 },
                                 on: {
                                     click: () => {
-                                        console.log("zzzzzzzzzzzzz");
-                                        this.$emit("editTestPaper",params.row,this.courseKnowledgeList);
+                                        this.$emit("editTestPaper", params.row, this.courseKnowledgeList);
                                     }
                                 }
                             },
@@ -182,7 +179,7 @@ function TestPaperTableModuleJS() {
                                             },
                                             onCancel: () => {
                                             }
-                                        }) 
+                                        })
                                     }
                                 }
                             },
@@ -207,7 +204,7 @@ function TestPaperTableModuleJS() {
                                             },
                                             onCancel: () => {
                                             }
-                                        }) 
+                                        })
                                     }
                                 }
                             },

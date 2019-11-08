@@ -90,7 +90,7 @@ var API = {
     //获取学科列表
     //getAllSubjectList: apiHost + '/MySystem/getAllSubjectList',
      //获取学科列表
-     getAllSubjectList: apiHost + '/course/getAllSubjectList',
+    getAllSubjectList: apiHost + '/course/getAllSubjectList',
      //获取学校列表
      getAllSchoolList: apiHost + '/school/getAllSchoolList',
 
@@ -205,7 +205,7 @@ var API = {
     postStu_StudentWork: apiHost + '/stu_studentwork/add',
     // 编辑学生作业
     putStu_StudentWork: apiHost + '/stu_studentwork/edit',
-    
+
     //获取学生完成的作业数量
     getStudentCompletedWork: apiHost + '/studentwork/studentcompletedwork',
     //获取某门课堂下所有的作业
@@ -237,7 +237,7 @@ var API = {
      putInviGilateInfo: apiHost + '/invigilateinfo/edit',
     //获取课程知识点名称
     getCKname : apiHost + '/knowledge/Kname',
-    
+
     //根据时间来选择学生未提交的作业
     getStudentWorkByTime: apiHost+'/studentwork/studentworkbyTime',
     //根据时间来选择教师未提交的监考
