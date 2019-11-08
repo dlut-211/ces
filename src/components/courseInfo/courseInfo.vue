@@ -286,11 +286,9 @@
             setChapters:function(chaptersData){
                 // this.chapters = [];
                 if(this.chapters.length > 0){
-                    console.log(this.chapters[0])
                     if(this.chapters[0].children != null){
-                                            this.compareChapterTree(this.chapters[0].children,chaptersData);
+                        this.compareChapterTree(this.chapters[0].children,chaptersData);
                     }
-                    //this.compareChapterTree(this.chapters[0].children,chaptersData);
                 }
                 this.chapters = [
                     {
