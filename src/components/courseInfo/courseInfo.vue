@@ -268,6 +268,7 @@
             },
             // 章节对比
             compareChapterTree:function(o,n){
+                console.log(o)
                 for(let i = 0; i < o.length; i++){
                     if(n){
                         var obj=n.find(function (obj) {
@@ -285,7 +286,11 @@
             setChapters:function(chaptersData){
                 // this.chapters = [];
                 if(this.chapters.length > 0){
-                    this.compareChapterTree(this.chapters[0].children,chaptersData);
+                    console.log(this.chapters[0])
+                    if(this.chapters[0].children != null){
+                                            this.compareChapterTree(this.chapters[0].children,chaptersData);
+                    }
+                    //this.compareChapterTree(this.chapters[0].children,chaptersData);
                 }
                 this.chapters = [
                     {
