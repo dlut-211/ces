@@ -208,7 +208,7 @@ function TestPaperTableModuleJS() {
                                     }
                                 }
                             },
-                            "撤销试卷"
+                            "撤销考试"
                         ),
                     ]);
                 }

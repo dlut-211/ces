@@ -1414,7 +1414,7 @@ export default {
         }
       }).then(res => {
         if (res.status === 200) {
-          this.$Message.success(res.data.data.message);
+          this.$Message.success("添加成功");
           this.addTestPaperForm = {
             name: "",
             classroomId: null,
@@ -1436,7 +1436,7 @@ export default {
           this.$refs["addTestPaperForm"].resetFields();
           this.$refs.classRoomDetail.getTestPaperList()
         } else {
-          this.$Message.error(res.data.data.message)
+          this.$Message.error("添加失败")
         }
       })
     },
@@ -1506,7 +1506,7 @@ export default {
         testPaperDetailList: JSON.parse(JSON.stringify(form.a))
       };
       if (type === 2){
-        if(this.editTestPaperForm.a.length === 0) {
+        if(this.addTestPaperForm.a.length === 0) {
           this.$Message.error("请先添加A卷试题!");
           return
         } else {
