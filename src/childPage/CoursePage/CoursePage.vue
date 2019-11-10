@@ -215,7 +215,7 @@
           </Col>
           <Col span="24">
 					<FormItem label="知识点" class="forms" prop="knowledgeIdList">
-            <Select v-model="addWorkForm.knowledgeIdList" multiple :placeholder="'请选择知识点'" transfer>
+            <Select filterable v-model="addWorkForm.knowledgeIdList" multiple :placeholder="'请选择知识点'" transfer>
                 <Option v-for="item in KnowledgeList" :value="item.id" :key="item.id">{{ item.name }}</Option>
             </Select>
 					</FormItem>
@@ -247,7 +247,7 @@
           </Col>
           <Col span="24">
 					<FormItem label="知识点" class="forms" prop="Knowledges">
-            <Select v-model="editWorkForm.knowledgeIdList" multiple :placeholder="'请选择知识点'" transfer>
+            <Select filterable v-model="editWorkForm.knowledgeIdList" multiple :placeholder="'请选择知识点'" transfer>
                 <Option v-for="item in KnowledgeList" :value="item.selectId" :key="item.selectId">{{ item.name }}</Option>
             </Select>
 					</FormItem>
