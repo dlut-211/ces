@@ -78,7 +78,7 @@ export const postCourse = (param) =>{
 }
 // 编辑课程
 export const putCourse = (param) =>{
-    return PUT(API.putCourse,param);
+    return POST(API.putCourse,param);
 }
 // 删除课程
 export const deleteCourse = (param) =>{
