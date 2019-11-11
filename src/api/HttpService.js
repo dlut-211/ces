@@ -246,13 +246,16 @@ export const revokeLayoutClassRoomWork = (param) =>{
     return GET(API.revokeLayoutClassRoomWork,param);
 }
 // 获取作业情况
-export const getClassRoomWorkDetail = (param) =>{
-    return GET(API.getClassRoomWorkDetail,param);
+export const getClassRoomWorkDetail = (param) => {
+    return GET(API.getClassRoomWorkDetail, param);
 }
 
 // 获取学生作业明细列表
-export const getStudentWorkDetailList = (param) =>{
-    return GET(API.getStudentWorkDetailList,param);
+export const getStudentWorkDetailList = (param) => {
+    return GET(API.getStudentWorkDetailList, param);
+}
+export const getClassroomWorkDetail = (param) => {
+    return GET(API.getClassroomWorkDetail, param)
 }
 // 添加学生作业明细
 export const postStudentWorkDetail = (param) =>{

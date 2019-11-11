@@ -78,7 +78,7 @@ function StudentWorkTableModuleJS() {
         field:'right',
         width: 140,
         render: (h, params) => {
-          if(params.row.isSubmit == 0) {
+          if(params.row.isSubmit === 0) {
             return h("div", [
               h(
                 "span",

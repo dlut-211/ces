@@ -156,7 +156,7 @@
                         };
                         this.updatePassword = false;
                     // if (res.statusCode == 1) {
-                        
+
                     // } else {
                     //     this.$Message.error(res.Message);
                     // }
@@ -228,31 +228,6 @@
             if(this.$store.getters.home != ''){
                 this.$router.push({name:this.$store.getters.home});
             }
-            // var result = await Http.getPermission();
-            // if (result.statusCode == 1) {
-            //     this.actionList = result.Data;
-            //     this.openNames = [];
-            //     for(let i = 0;i<this.actionList.length;i++){
-            //         this.openNames.push(this.actionList[i].MenuCode);
-            //     }
-            //     this.$store.commit("changeActionList", result.Data);
-            // } else {
-            //     this.$Message.error(result.Message);
-            // }
-            // for (let i in this.actionList) {
-            //     for (let j in this.actionList[i].Childs) {
-            //         if (this.actionList[i].Childs[j].Route == this.$route.name) {
-            //             this.$store.commit("changeOpenName", [this.actionList[i].Code]);
-            //             this.$store.commit("changeActiveName", this.$route.name);
-            //             break;
-            //         }
-            //     }
-            // }
-            // this.initLocalStorage()
-            // this.$nextTick(function() {
-            //     this.$refs.Menu.updateOpened();
-            //     this.$refs.Menu.updateActiveName();
-            // });
         },
         components: {
             customService: customService,
