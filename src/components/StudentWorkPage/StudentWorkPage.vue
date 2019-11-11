@@ -198,7 +198,7 @@ export default {
                                  }
                                }
                               },
-                              params.row.Description
+                              params.row.description
                             )
                           ])
                         }

@@ -11,7 +11,7 @@
     </Modal>
     <!-- 显示完全描述内容 -->
     <Modal v-model="hided" width="500px" :mask-closable="false" style="position:fixed;z-index:99999">
-      <p style="font-size:15px">{{Describe}}</p>
+      <p style="font-size:15px">{{delHtmlTag(Describe)}}</p>
       <div slot="footer"></div>
     </Modal>
     <!-- 上传作业 -->
@@ -161,12 +161,12 @@
                                             on: {
                                                 click: () => {
                                                     this.hided = true;
-                                                    this.Describe = params.row.Description
+                                                    this.Describe = params.row.description
                                                     console.log("turetruetrue")
                                                 }
                                             }
                                         },
-                                        params.row.Description
+                                        this.delHtmlTag(params.row.description)
                                     )
                                 ])
                             }
@@ -406,6 +406,9 @@
                 }
                 return fmt;
             },
+  delHtmlTag:function(str){
+  return str.replace(/<[^>]+>/g,"");//去掉所有的html标记
+},
             //提交作业
             SubmitWorkAction: function () {
                 this.SubmitWorkForm.SubmitTime = this.formatDate(new Date(), "yyyy/MM/dd hh:mm:ss");

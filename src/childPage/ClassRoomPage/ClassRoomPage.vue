@@ -854,7 +854,7 @@
             getClassRoomStudentTemplateUrl: function () {
                 this.url = API.getClassRoomStudentTemplate;
             },
-
+ 
             //添加分数
             editStudentWork: function () {
                 this.editStudentWorkForm.isScore = true;
@@ -870,10 +870,10 @@
                             WorkMessage: ""
                         };
                         this.StudentGrade = false;
-                        this.$Message.success(res.Message);
+                        this.$Message.success(res.message);
                         this.getStudentWorkList()
                     } else {
-                        this.$Message.error(res.Message);
+                        this.$Message.error(res.message);
                     }
                 })
             },
