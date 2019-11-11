@@ -95,9 +95,6 @@
 <!--</style>-->
 
 
-
-
-
 <template>
   <div class="bg">
     <div class="left">
@@ -161,6 +158,9 @@
           }
         }
       },
+      login1: function() {
+        this.$Message.error("验证码错误");
+      },
               login: function() {
                   var params = {
                       number: this.form.account,
@@ -168,6 +168,7 @@
                       inputImageCode:this.form.inputImageCode
                   };
                   Http.checkImageCode(params).then(res=>{
+
                     if(res.code==='200'){
                       Http.teacherLogin(params).then(res => {
                       if (res.data != null) {

@@ -3,7 +3,6 @@
        <Button type="primary" @click="AdminRoute()">管理员入口</Button>
        <Button type="primary" @click="TeacherRoute()">教师入口</Button>
        <Button type="primary" @click="StudentRoute()">学生入口</Button>
-
    </div>
 </template>
 <script>
@@ -54,10 +53,9 @@
                         localStorage.setItem('username', this.$store.getters.username);
                         localStorage.setItem('token', this.$store.getters.token);
                         localStorage.setItem('id', this.$store.state.id);
-                      
-                        this.$router.replace({
-                            name: 'TestPage'
-                        })
+                        // this.$router.replace({
+                        //     name: 'TestPage'
+                        // })
                     } else {
                         this.$Message.error(res.Message);
                     }
@@ -65,7 +63,6 @@
             }
         },
         mounted: function() {
-
         },
     };
 </script>

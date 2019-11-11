@@ -1326,11 +1326,11 @@
                         this.detailTabIndex = 0;
                         this.detailTPDTabIndex = 0;
 
-                        if (this.detailTestPaperForm.status === 2) {
-                            this.studentTestPaperColumn = [
-                                {title: "学号", key: "studentNumber", align: "center", width: 100, fixed: 'left'},
-                                {title: "姓名", key: "studentName", align: "center", width: 100, fixed: 'left'}
-                            ];
+            if (this.detailTestPaperForm.status === 2) {
+              this.studentTestPaperColumn = [
+                { title: "学号", key: "studentNumber", align: "center", width:100, fixed: 'left' },
+                { title: "姓名", key: "studentName", align: "center", width:100, fixed: 'left' }
+              ];
 
                             if (this.detailTestPaperForm.testPaperType === 2) {
                                 this.studentTestPaperColumn.push({
