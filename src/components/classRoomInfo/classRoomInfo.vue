@@ -36,7 +36,7 @@
             </Row>
             <Row>
               <Col span="2" style="text-align:right;">考试权重：</Col>
-              <Col span="22">{{ 1- classRoomData.testPerformanceWeight*100 }}%</Col>
+              <Col span="22">{{  classRoomData.testPerformanceWeight*100 }}%</Col>
             </Row>
             <Row v-if="classRoomData.CourseSyllabusPath">
               <Col span="2" style="text-align:right;">教学大纲：</Col>
