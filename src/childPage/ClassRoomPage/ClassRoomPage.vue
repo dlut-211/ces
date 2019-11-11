@@ -545,14 +545,14 @@
         <Button type="primary" size="large" @click="testPaperDetailHandleSubmit('testPaperDetailForm')">确定</Button>
       </div>
     </Modal>
-    <!-- <Modal v-model="showResultAnalysis" title="试卷结果分析" @on-ok="ok" @on-cancel="cancel" width="1000px">
+    <Modal v-model="showResultAnalysis" title="试卷结果分析" @on-ok="ok" @on-cancel="cancel" width="1000px">
       <div>
         <div id="myChart" :style="{width: '600px', height: '400px'}"></div>
       </div>
       <div>
         <div id="myChart2" :style="{width: '600px', height: '400px'}"></div>
       </div>
-    </Modal> -->
+    </Modal>
   </div>
 </template>
 <script>
@@ -821,7 +821,8 @@
                 nowFormName: '',
                 nowForm: null,
                 courseKnowledgeList: [],
-                knowledgeRule: {validator: validateKnowledgeList, trigger: 'change', type: 'array'}
+                knowledgeRule: {validator: validateKnowledgeList, trigger: 'change', type: 'array'},
+                showResultAnalysis:false
             };
         },
 
@@ -1797,6 +1798,7 @@
                                     {
                                         name: "得分大于等于80%",
                                         type: "bar",
+                                        barMaxWidth: '100',
                                         stack: "广告",
                                         label: {
                                             normal: {
@@ -1809,6 +1811,7 @@
                                     {
                                         name: "得分在40%到80%之间",
                                         type: "bar",
+                                        barMaxWidth: '100',
                                         stack: "广告",
                                         label: {
                                             normal: {
@@ -1821,6 +1824,7 @@
                                     {
                                         name: "得分小于40%",
                                         type: "bar",
+                                        barMaxWidth: '100',
                                         stack: "广告",
                                         label: {
                                             normal: {
@@ -1843,6 +1847,7 @@
                                 series: [{
                                     name: '分数',
                                     type: 'bar',
+                                    barMaxWidth: '100',
                                     label: {
                                         normal: {
                                             show: true,
