@@ -41,7 +41,7 @@ function ClassRoomTableModuleJS() {
                                             CourseDescribe: params.row.courseDescribe,
                                             CourseSyllabusPath: params.row.courseSyllabusPath,
                                             dailyPerformanceWeight:params.row.dailyPerformanceWeight,//权重
-                                            TestPerformaceWeight:params.row.testPerformaceWeight,//权重
+                                            testPerformanceWeight:params.row.testPerformanceWeight,//权重
                                         };
                                         this.$refs.classRoomDetail.infoInit(this.showForm);
                                         this.classRoomInfoVisible = true;
@@ -112,7 +112,7 @@ function ClassRoomTableModuleJS() {
                                             TermType: params.row.termType,
                                             Name: params.row.name,
                                             dailyPerformanceWeight:params.row.dailyPerformanceWeight,//权重
-                                            TestPerformaceWeight:params.row.testPerformaceWeight,//权重
+                                            testPerformanceWeight:params.row.testPerformanceWeight,//权重
                                         };
                                         console.log(params.row.dailyPerformanceWeight+params.row.Id);
                                         this.editClassRoom = true;

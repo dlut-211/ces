@@ -18,7 +18,7 @@ function TeacherHomeTableModuleJS() {
             { title: "课堂名称", key: "Name", align: "center" },
             { title: "课堂状态", key: "Status", align: "center" },
             { title: "平时成绩所占权重", key: "dailyPerformanceWeight", align: "center" },
-            { title: "考试成绩所占权重", key: "TestPerformaceWeight", align: "center" },
+            { title: "考试成绩所占权重", key: "TestPerformanceWeight", align: "center" },
             {
                 title: "操作",
                 key: "action",
@@ -44,7 +44,7 @@ function TeacherHomeTableModuleJS() {
                                             Name: params.row.Name,
                                             Status: params.row.Status,
                                             dailyPerformanceWeight: params.row.dailyPerformanceWeight,
-                                            TestPerformaceWeight: params.row.TestPerformaceWeight,
+                                            testPerformanceWeight: params.row.TestPerformanceWeight,
 											VersionNumber: this.stringToByte(params.row.VersionNumber)
                                         };
                                         this.editTeacherHome = true;
