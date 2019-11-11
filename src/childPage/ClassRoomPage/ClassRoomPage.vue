@@ -84,7 +84,7 @@
           </Col>
           <Col span="12">
             <FormItem label="课堂名称" class="forms" prop="name">
-              <Input v-model="editClassRoomForm.name"></Input>
+              <Input v-model="editClassRoomForm.Name"></Input>
             </FormItem>
           </Col>
           <Col span="12">
@@ -667,7 +667,7 @@
                     TermType: [
                         {required: true, message: "学期类型不能为空", trigger: "change", type: 'number'}
                     ],
-                    name: [
+                    Name: [
                         {required: true, message: "课堂名称不能为空", trigger: "blur"}
                     ],
                     //---验证
