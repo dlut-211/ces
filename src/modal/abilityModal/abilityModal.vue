@@ -7,8 +7,7 @@
             <div slot="footer">
                 <Button type="ghost" @click="cancel">取消</Button>
                 <Button type="primary" @click="submit" :disabled="choose==null">确定</Button>
-            </div>
-           <div>{{subjectData}}</div> 
+            </div> 
         </Modal>
       <!--添加能力点传学科-->
       <Modal
@@ -148,7 +147,7 @@ export default {
     // 查询方法
     find: function(a) {
       console.log(a);
-      this.findAbilityForm.Name = a.name ? //查询方法咋查不了
+      this.findAbilityForm.name = a.name ? //查询方法咋查不了
         a.name : "";
 	  this.getAbilityList();
     },
@@ -216,6 +215,7 @@ export default {
       Http.getAbilityList(params).then(res => {
         console.log(res)
         if(res.statusCode==1){
+            this.findAbilityForm.name = ""
             this.tableModule.tableContent = res.data.content;
             this.tableModule.count = res.data.totalElements;
         }
