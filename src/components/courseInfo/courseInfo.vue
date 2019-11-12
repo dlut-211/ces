@@ -410,7 +410,7 @@
             },
             // 作业==============
             selectChapter:function(now,old){
-                if(now){
+                if(now.parentId){
                     this.chooseChapter = true;
                     this.chooseChapterId = now.id;   
                     this.getWorkByChapter();     
