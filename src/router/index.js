@@ -35,17 +35,17 @@ export default new Router({
         component: LoginPage
     },
     {
-        path: 'AdminLoginPage',
+        path: '/AdminLoginPage',
         name: 'AdminLoginPage',
         component: AdminLoginPage
     },
     {
-        path: 'StudentLoginPage',
+        path: '/StudentLoginPage',
         name: 'StudentLoginPage',
         component: StudentLoginPage
     },
     {
-        path: 'TeacherLoginPage',
+        path: '/TeacherLoginPage',
         name: 'TeacherLoginPage',
         component: TeacherLoginPage
     },
@@ -55,7 +55,7 @@ export default new Router({
         component: DashboardPage,
         children: [
             {
-                path: 'AdminHomePage',
+                path: '/AdminHomePage',
                 name: 'AdminHomePage',
                 component: AdminHomePage,
                 meta: {
@@ -63,7 +63,7 @@ export default new Router({
                 }
             },
             {
-                path: 'TeacherHomePage',
+                path: '/TeacherHomePage',
                 name: 'TeacherHomePage',
                 component: TeacherHomePage,
                 meta: {
@@ -71,7 +71,7 @@ export default new Router({
                 }
             },
             {
-                path: 'StudentHomePage',
+                path: '/StudentHomePage',
                 name: 'StudentHomePage',
                 component: StudentHomePage,
                 meta: {
@@ -79,7 +79,7 @@ export default new Router({
                 }
             },
             {
-                path: 'TeacherPage',
+                path: '/TeacherPage',
                 name: 'TeacherPage',
                 component: TeacherPage,
                 meta: {

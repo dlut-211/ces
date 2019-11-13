@@ -11,7 +11,7 @@
     </Modal>
     <!-- 显示完全描述内容 -->
     <Modal v-model="hided" width="500px" :mask-closable="false" style="position:fixed;z-index:99999">
-      <p style="font-size:15px">{{Describe}}</p>
+      <p style="font-size:15px">{{delHtmlTag(Describe)}}</p>
       <div slot="footer"></div>
     </Modal>
     <!-- 上传作业 -->
@@ -161,12 +161,12 @@
                                             on: {
                                                 click: () => {
                                                     this.hided = true;
-                                                    this.Describe = params.row.Description
+                                                    this.Describe = params.row.description
                                                     console.log("turetruetrue")
                                                 }
                                             }
                                         },
-                                        params.row.Description
+                                        this.delHtmlTag(params.row.description)
                                     )
                                 ])
                             }
@@ -406,6 +406,9 @@
                 }
                 return fmt;
             },
+  delHtmlTag:function(str){
+  return str.replace(/<[^>]+>/g,"");//去掉所有的html标记
+},
             //提交作业
             SubmitWorkAction: function () {
                 this.SubmitWorkForm.SubmitTime = this.formatDate(new Date(), "yyyy/MM/dd hh:mm:ss");
@@ -441,9 +444,9 @@
                         this.SubmitWork = false;
                         this.$Message.success(res.message);
                         this.getWorkByChapter();
-                        this.getchapterWorkList(this.findWorkList.ClassRoomId);
-                        this.getClassRoomWork(this.findWorkList.ClassRoomId);
-                        this.getStudentWorkCount(this.findWorkList.ClassRoomId);
+                        this.getchapterWorkList(this.$store.state.classroomId);
+                        this.getClassRoomWork(this.$store.state.classroomId);
+                        this.getStudentWorkCount(this.$store.state.classroomId);
                     }
                 })
             },
@@ -680,8 +683,8 @@
             //获取学生完成的作业数量
             getStudentWorkCount: function (e) {
                 const params = {
-                    StudentId: this.$store.state.id,
-                    ClassRoomId: e
+                    studentId: this.$store.state.id,
+                    classroomId: e
                 };
                 Http.getStudentCompletedWork(params).then(res => {
                     if (res.statusCode == 1) {
@@ -692,7 +695,7 @@
             //获取课堂作业总数
             getClassRoomWork: function (e) {
                 const params = {
-                    ClassRoomId: e
+                    classroomId: e
                 };
                 Http.getClassRoomWork(params).then(res => {
                     if (res.statusCode == 1) {

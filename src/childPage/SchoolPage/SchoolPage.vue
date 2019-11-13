@@ -164,7 +164,7 @@ export default {
       this.getSchoolList();
       }
       else{
-           this.$Message.error("添加失败");
+           this.$Message.error(res.message);
           }
       });
     },

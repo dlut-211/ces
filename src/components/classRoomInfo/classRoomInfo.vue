@@ -36,7 +36,7 @@
             </Row>
             <Row>
               <Col span="2" style="text-align:right;">考试权重：</Col>
-              <Col span="22">{{ 1- classRoomData.testPerformanceWeight*100 }}%</Col>
+              <Col span="22">{{  classRoomData.testPerformanceWeight*100 }}%</Col>
             </Row>
             <Row v-if="classRoomData.CourseSyllabusPath">
               <Col span="2" style="text-align:right;">教学大纲：</Col>
@@ -93,6 +93,11 @@
         <Button type="primary" size="large" @click="layoutWorkAction(LocalClassRoomWorkId)">确定</Button>
       </div>
     </Modal>
+        <!-- 显示完全描述内容 -->
+    <Modal v-model="hided" width="500px" :mask-closable="false" style="position:fixed;z-index:99999">
+      <p style="font-size:15px">{{delHtmlTag(Describe)}}</p>
+      <div slot="footer"></div>
+    </Modal>
   </div>
 </template>
 <script>
@@ -115,6 +120,8 @@
     export default {
         data: function () {
             return {
+                hided:false,
+                Describe:"",
                 tabIndex: 0,
                 classRoomData: {
                     Id: null,
@@ -231,7 +238,28 @@
                             ]);
                         }
                     },
-                    {title: "描述", key: "description"},
+                    {
+                        title: "描述", key: "description",
+                        render: (h, params) => {
+                                return h('div', [
+                                    h(
+                                        "p",
+                                        {
+                                            class: 'summary',
+                                            on: {
+                                                click: () => {
+                                                    this.hided = true;
+                                                    this.Describe = params.row.description
+                                                    console.log("turetruetrue")
+                                                }
+                                            }
+                                        },
+                                        this.delHtmlTag(params.row.description)
+                                    )
+                                ])
+                            
+                        }
+                    },
                     {
                         title: "状态", key: "status", field: 'right', width: 80,
                         render: (h, params) => {
@@ -333,6 +361,10 @@
         mounted: function () {
         },
         methods: {
+            
+  delHtmlTag:function(str){
+  return str.replace(/<[^>]+>/g,"");//去掉所有的html标记
+},
             infoInit: function (form) {
                 this.tabIndex = 0;
                 this.classRoomData = form;
@@ -628,5 +660,25 @@
     background-color: gray;
     color: #fff;
     font-weight: bold;
+  }
+  .summary {
+    overflow: hidden; /* 隐藏溢出内容 */
+    text-overflow: clip; /* 修剪文本 */
+    display: -webkit-box; /* 弹性布局 */
+    -webkit-box-orient: vertical; /* 从上向下垂直排列子元素 */
+    -webkit-line-clamp: 1; /* 限制文本仅显示前三行 */
+    color: forestgreen;
+    cursor: pointer;
+  }
+
+  .showBtn {
+    width: 50%;
+    height: 3rem;
+    position: absolute; /*相对父元素定位*/
+    top: 3rem; /* 刚好遮挡在最后两行 */
+    left: 3rem;
+    z-index: 0; /* 正序堆叠，覆盖在p元素上方 */
+    text-align: center;
+    padding-top: 3rem;
   }
 </style>

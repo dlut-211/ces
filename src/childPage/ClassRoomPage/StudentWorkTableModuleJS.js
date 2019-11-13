@@ -112,7 +112,7 @@ function StudentWorkTableModuleJS() {
                   },
                   on: {
                     click: () => {
-
+ 
                       this.editStudentWorkForm={
                         id: params.row.id,
                         classroomWorkId: params.row.classroomWorkId,

@@ -338,11 +338,7 @@
                     ]
                 },
                 //课程学科类型
-                subjectTypeArr: [
-                    // { name:'软件工程',value : 1 },
-                    // { name:'夏季学期',value : 2 },
-                    // { name:'秋季学期',value : 3 }
-                ],
+                subjectTypeArr: [],
                 // 课程内容
                 courseInfo: false,
                 showForm: {
@@ -404,6 +400,7 @@
                         {required: true, message: "能力点不能为空", trigger: "blur"}
                     ]
                 },
+
                 /**
                  * 控制能力点模态框是否显示
                  */
@@ -493,14 +490,13 @@
             },
             //   添加表单验证方法
             addCourseHandleSubmit: function (name) {
-                const result = this.$refs[name].validate(valid => {
+                return this.$refs[name].validate(valid => {
                     if (valid) {
                         this.addCourseAction();
                     } else {
                         this.$Message.error("表单信息不正确!");
                     }
                 });
-                return result;
             },
             // 修改表单验证方法
             editCourseHandleSubmit: async function (name) {
@@ -619,6 +615,7 @@
                     if (res.statusCode === 1) {
                         this.$Message.success("删除成功");
                         this.getCourseList();
+                        this.$router.go(0);
                     } else {
                         this.$Message.error(res.message);
                     }
