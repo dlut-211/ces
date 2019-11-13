@@ -545,15 +545,17 @@
         <Button type="primary" size="large" @click="testPaperDetailHandleSubmit('testPaperDetailForm')">确定</Button>
       </div>
     </Modal>
-    <Modal v-model="showResultAnalysis" title="试卷结果分析" @on-ok="ok" @on-cancel="cancel" width="1000px">
-      <div>
-        <div id="myChart" :style="{width: '600px', height: '400px'}"></div>
-      </div>
-      <div>
-        <div id="myChart2" :style="{width: '600px', height: '400px'}"></div>
-      </div>
-      <div>
-        <Table height="400" :columns="paperAnalysisColumn" :data="paperAnalysisData" :style="{width: '600px', height: '400px'}"></Table>
+    <Modal v-model="showResultAnalysis" title="试卷结果分析" @on-ok="ok" @on-cancel="cancel" width="1400px">
+      <div :style="{height: '900px'}">
+        <div style="float: left">
+          <div id="myChart" :style="{width: '600px', height: '400px'}"></div>
+        </div>
+        <div style="float: left">
+          <div id="myChart2" :style="{width: '600px', height: '400px'}"></div>
+        </div>
+        <div style="float: left">
+          <Table height="400" :columns="paperAnalysisColumn" :data="paperAnalysisData" width="1200"></Table>
+        </div>
       </div>
     </Modal>
   </div>
