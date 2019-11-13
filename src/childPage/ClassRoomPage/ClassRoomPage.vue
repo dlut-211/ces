@@ -492,7 +492,7 @@
                 :prop="'testPaperDetailList.' + index + '.score'"
                 :rules="{required: true, message: '分数不能为空', trigger: 'change', type:'number'}">
                 <InputNumber :disabled="nowEditTestPaperType === 2" :min="1" :max="100" :precision="0"
-                             style="width: 100%" v-model="item.score"></InputNumber>
+                            style="width: 100%" v-model="item.score"></InputNumber>
               </FormItem>
             </Col>
           </Row>
@@ -516,7 +516,7 @@
                 :prop="'testPaperDetailList.' + index + '.knowledgeList.' + kindex + '.weight'"
                 :rules="{required: true, message: '权重不能为空', trigger: 'change', type: 'number'}">
                 <InputNumber :disabled="nowEditTestPaperType === 2" :min="0.1" :max="1" style="width: 100%"
-                             v-model="kitem.weight"></InputNumber>
+                            v-model="kitem.weight"></InputNumber>
               </FormItem>
             </Col>
             <Col span="4">
@@ -551,6 +551,9 @@
       </div>
       <div>
         <div id="myChart2" :style="{width: '600px', height: '400px'}"></div>
+      </div>
+      <div>
+        <Table height="400" :columns="paperAnalysisColumn" :data="paperAnalysisData" :style="{width: '600px', height: '400px'}"></Table>
       </div>
     </Modal>
   </div>
@@ -822,7 +825,18 @@
                 nowForm: null,
                 courseKnowledgeList: [],
                 knowledgeRule: {validator: validateKnowledgeList, trigger: 'change', type: 'array'},
-                showResultAnalysis:false
+                showResultAnalysis:false,
+                paperAnalysisColumn: [
+                    {
+                        title: '知识点',
+                        key: 'knowledgeName'
+                    },
+                    {
+                        title: '总分',
+                        key: 'sum'
+                    }
+                ],
+                paperAnalysisData:[]
             };
         },
 
@@ -1758,11 +1772,12 @@
                         }
                         res.data.forEach(element => {
                             resAnalysisKnowledge.push(element.knowledgeName),
-                                resAnalysisLv1.push(element.level_1);
+                            resAnalysisLv1.push(element.level_1);
                             resAnalysisLv2.push(element.level_2);
                             resAnalysisLv3.push(element.level_3);
                             resAnalysisScore.push(element.score_sum);
-
+                            this.paperAnalysisData.push({"knowledgeName":element.knowledgeName,"sum":element.score_sum})
+                        });
                             myChart.setOption({
                                 tooltip: {
                                     trigger: "axis",
@@ -1796,17 +1811,24 @@
                                 ],
                                 series: [
                                     {
-                                        name: "得分大于等于80%",
+                                        name: "得分小于40%",
                                         type: "bar",
                                         barMaxWidth: '100',
                                         stack: "广告",
                                         label: {
                                             normal: {
                                                 show: true,
-                                                position: 'inside'
+                                                position: 'inside',
+                                                formatter: function (params) {
+                                                    if (params.value > 0) {
+                                                        return params.value;
+                                                    } else {
+                                                        return '';
+                                                    }
+                                                }
                                             }
                                         },
-                                        data: resAnalysisLv1
+                                        data: resAnalysisLv3
                                     },
                                     {
                                         name: "得分在40%到80%之间",
@@ -1816,26 +1838,42 @@
                                         label: {
                                             normal: {
                                                 show: true,
-                                                position: 'inside'
+                                                position: 'inside',
+                                                formatter: function (params) {
+                                                    if (params.value > 0) {
+                                                        return params.value;
+                                                    } else {
+                                                        return '';
+                                                    }
+                                                }
                                             }
                                         },
                                         data: resAnalysisLv2
                                     },
                                     {
-                                        name: "得分小于40%",
+                                        name: "得分大于等于80%",
                                         type: "bar",
                                         barMaxWidth: '100',
                                         stack: "广告",
                                         label: {
                                             normal: {
                                                 show: true,
-                                                position: 'inside'
+                                                position: 'inside',
+                                                formatter: function (params) {
+                                                    if (params.value > 0) {
+                                                        return params.value;
+                                                    } else {
+                                                        return '';
+                                                    }
+                                                }
                                             }
                                         },
-                                        data: resAnalysisLv3
+                                        data: resAnalysisLv1
                                     }
                                 ]
                             });
+                            
+
                             myChart2.setOption({
                                 title: {text: ''},
                                 tooltip: {},
@@ -1851,13 +1889,20 @@
                                     label: {
                                         normal: {
                                             show: true,
-                                            position: 'outside'
+                                            position: 'outside',
+                                            formatter: function (params) {
+                                                    if (params.value > 0) {
+                                                        return params.value;
+                                                    } else {
+                                                        return '';
+                                                    }
+                                                }
                                         }
                                     },
                                     data: resAnalysisScore
                                 }]
                             });
-                        });
+
                     });
             },
             ok() {
