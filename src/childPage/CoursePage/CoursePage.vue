@@ -41,7 +41,7 @@
                 <Button type="ghost" icon="ios-cloud-upload-outline">点击上传文件</Button>
               </Upload>
               <div v-if="addCourseForm.syllabusPath">
-                <a :href="addCourseForm.syllabusPath" target="blank">{{addCourseForm.syllabus}}</a>
+                <a @click="downLoad()" target="blank">{{addCourseForm.syllabus}}</a>
               </div>
             </FormItem>
           </Col>
@@ -86,7 +86,7 @@
                 <Button type="ghost" icon="ios-cloud-upload-outline">点击上传文件</Button>
               </Upload>
               <div v-if="editCourseForm.syllabusPath">
-                <a :href="editCourseForm.syllabusPath" target="blank">{{editCourseForm.syllabus}}</a>
+                <a @click="editDownLoad()" target="blank">{{editCourseForm.syllabus}}</a>
               </div>
             </FormItem>
           </Col>
@@ -620,6 +620,57 @@
                     }
                 })
             },
+  //下载文件
+            downLoad:function(){
+                const params = {
+                    fileName: this.addCourseForm.syllabus
+                };
+              axios({
+               method: 'GET',
+                url: '/api/course/fileDownload',
+                params: params,
+                      responseType: 'blob'
+               }).then(res=>{
+              this.addDownloadFile(res.data);
+                  })
+            },
+             editDownLoad:function(){
+                const params = {
+                    fileName: this.editCourseForm.syllabus
+                };
+              axios({
+               method: 'GET',
+               url: '/api/course/fileDownload',
+               params: params,
+                      responseType: 'blob'
+               }).then(res=>{
+              this.downloadFile(res.data);
+                  })
+            },
+        addDownloadFile:function(data) {
+        if (!data) {
+          return
+        }
+        let url = window.URL.createObjectURL(new Blob([data],{type:'application/octet-stream'}));
+        let link = document.createElement('a');
+        link.style.display = 'none';
+        link.href = url;
+        link.setAttribute('download', this.addCourseForm.syllabus);
+        document.body.appendChild(link);
+        link.click()
+      },
+        downloadFile:function(data) {
+        if (!data) {
+          return
+        }
+        let url = window.URL.createObjectURL(new Blob([data],{type:'application/octet-stream'}));
+        let link = document.createElement('a');
+        link.style.display = 'none';
+        link.href = url;
+        link.setAttribute('download', this.editCourseForm.syllabus);
+      document.body.appendChild(link);
+        link.click()
+      },
 
             /**
              * 添加章节模态框
