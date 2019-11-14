@@ -282,7 +282,7 @@
     // 引入API
     import * as Http from "@/api/HttpService.js";
     import {API} from "@/api/HttpConfig";
-
+    import axios from 'axios';
     export default {
         computed: {
             uploadFile: function () {
