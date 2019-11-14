@@ -601,7 +601,7 @@
                         this.tableModule.tableContent = res.data.content;
                         this.tableModule.count = res.data.totalElements;
                     }
-                });
+                })
             },
 
             /**
@@ -615,7 +615,6 @@
                     if (res.statusCode === 1) {
                         this.$Message.success("删除成功");
                         this.getCourseList();
-                        this.$router.go(0);
                     } else {
                         this.$Message.error(res.message);
                     }

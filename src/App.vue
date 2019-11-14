@@ -14,17 +14,11 @@ export default {
   methods: {
     // 从LocalStorage中查看是否有用户名和token
     getLocalStorage: function() {
-      let username = localStorage.getItem("username");
-      let token = localStorage.getItem("token");
-      let id = localStorage.getItem("id");
-      let roles=localStorage.getItem("roles");
-      let classroomId=localStorage.getItem("classroomId");
-      this.$store.state.classroomId=classroomId;
-      this.$store.state.username = username;
-      this.$store.state.roles=roles;
-      this.$store.state.token = token;
-      this.$store.state.id = id;
-      this.$store.state.visitedViews=visitedViews;
+      this.$store.state.classroomId = localStorage.getItem("classroomId");
+      this.$store.state.username = localStorage.getItem("username");
+      this.$store.state.roles = localStorage.getItem("roles");
+      this.$store.state.token = localStorage.getItem("token");
+      this.$store.state.id = localStorage.getItem("id");
     }
   },
   mounted: function() {

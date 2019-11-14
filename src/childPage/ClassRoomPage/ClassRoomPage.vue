@@ -164,19 +164,19 @@
       <div>
         <Row>
           <Col span="19"><b>作业名称:</b> {{workName}}</Col>
-          <Col span="1" style="background-color:#E0E6F8;font-weight:bold;text-align:center;">{{scoreCount}}</Col>
-          <Col span="1" style="background-color:#E0E6F8;font-weight:bold;text-align:center;">{{submitCount}}</Col>
-          <Col span="1" style="background-color:#E0E6F8;font-weight:bold;text-align:center;">{{layoutCount}}</Col>
-          <Col span="1" style="background-color:#E0E6F8;font-weight:bold;text-align:center;">{{completionRate}}%</Col>
-          <Col span="1" style="background-color:#E0E6F8;font-weight:bold;text-align:center;">{{avgScore}}</Col>
+          <Col span="1" style="font-weight:bold;text-align:center;">{{scoreCount}}</Col>
+          <Col span="1" style="font-weight:bold;text-align:center;">{{submitCount}}</Col>
+          <Col span="1" style="font-weight:bold;text-align:center;">{{layoutCount}}</Col>
+          <Col span="1" style="font-weight:bold;text-align:center;">{{completionRate}}%</Col>
+          <Col span="1" style="font-weight:bold;text-align:center;">{{avgScore}}</Col>
         </Row>
         <Row>
           <Col span="19"><b>作业描述:</b> {{description}}</Col>
-          <Col span="1" style="background-color:#E0E6F8;font-weight:bold;text-align:center;">已评分</Col>
-          <Col span="1" style="background-color:#E0E6F8;font-weight:bold;text-align:center;">已提交</Col>
-          <Col span="1" style="background-color:#E0E6F8;font-weight:bold;text-align:center;">已布置</Col>
-          <Col span="1" style="background-color:#E0E6F8;font-weight:bold;text-align:center;">完成率</Col>
-          <Col span="1" style="background-color:#E0E6F8;font-weight:bold;text-align:center;">平均分</Col>
+          <Col span="1" style="font-weight:bold;text-align:center;">已评分</Col>
+          <Col span="1" style="font-weight:bold;text-align:center;">已提交</Col>
+          <Col span="1" style="font-weight:bold;text-align:center;">已布置</Col>
+          <Col span="1" style="font-weight:bold;text-align:center;">完成率</Col>
+          <Col span="1" style="font-weight:bold;text-align:center;">平均分</Col>
         </Row>
         <Row style="margin-bottom:10px;">
           <Col span="24"><b>布置作业时间:</b> {{layoutTime}}</Col>
@@ -191,8 +191,8 @@
       width="600px"
       :mask-closable="false">
 
-      <InputNumber :min="0" :max="100" :precision="0" style="width: 100%"
-                   v-model="editStudentWorkForm.score"></InputNumber>
+      <Input :min="0" :max="100" :precision="0" style="width: 100%"
+                   v-model="editStudentWorkForm.score"></Input>
 
       <div slot="footer">
         <Button type="ghost" size="large" @click="StudentGrade=false">取消</Button>
@@ -863,6 +863,10 @@
 
         methods: {
 
+            delHtmlTag: function(str){
+                return str.replace(/<[^>]+>/g,"");//去掉所有的html标记
+            },
+
             handleImportStudentTestPaperSuccess: function () {
                 // TODO
             },
@@ -870,7 +874,7 @@
             getClassRoomStudentTemplateUrl: function () {
                 this.url = API.getClassRoomStudentTemplate;
             },
- 
+
             //添加分数
             editStudentWork: function () {
                 this.editStudentWorkForm.isScore = true;
@@ -1140,11 +1144,9 @@
              * 打开作业详情
              */
             studentWorkDetailModal: function (row) {
-                console.log("打开作业详情");
-                console.log(row);
                 this.classroomWorkId = row.id;
                 this.workName = row.workName;
-                this.description = row.description;
+                this.description = this.delHtmlTag(row.description);
                 this.layoutTime = this.dateFormat(row.layoutTime);
                 this.getStudentWorkList();
                 this.studentWorkVisible = true
@@ -1874,7 +1876,7 @@
                                     }
                                 ]
                             });
-                            
+
 
                             myChart2.setOption({
                                 title: {text: ''},

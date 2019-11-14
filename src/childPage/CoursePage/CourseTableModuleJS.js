@@ -49,44 +49,7 @@ function CourseTableModuleJS() {
           ]);
         }
       },
-      {
-        title: "课程名称",
-        key: "name",
-        align: "center",
-        render: (h, params) => {
-          return h("div", [
-            h(
-              "span",
-              {
-                style: {
-                  color: "#2d8cf0",
-                  cursor: "pointer",
-                  margin: "0 5px"
-                },
-                on: {
-                  click: () => {
-                    this.showForm = {
-                      id: params.row.id,
-                      code: params.row.code,
-                      name: params.row.name,
-                      description: params.row.description,
-                      syllabus: params.row.syllabus,
-                      syllabusPath: params.row.syllabusPath,
-                      createdByName: params.row.createdByName,
-                      subjectName: params.row.subjectName,
-                      createdOn: this.dateFormatFirst(params.row.createdOn)
-                    };
-                    this.LocalSubjectId = params.row.subjectId;
-                    this.$refs.CourseDetail.infoInit(this.showForm);
-                    this.courseInfo = true;
-                  }
-                }
-              },
-              params.row.name
-            )
-          ]);
-        }
-      },
+      {title: "课程名称", key: "name", align: "center"},
       {title: "学科名称", key: "subjectName", align: "center"},
       {title: "建课老师", key: "createdByName", align: "center"},
       {

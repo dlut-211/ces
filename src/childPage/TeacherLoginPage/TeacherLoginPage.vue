@@ -101,7 +101,7 @@
       <img src="../../assets/iconleft1.png" alt="" class="img">
     </div>
     <div class="right"  @keyup="keydown($event)"  v-focus="true">
-      <Form :model="formLeft">
+      <Form>
         <FormItem>
           <p style="font-size:30px">软件工程综合能力培养体系平台</p><br/>
         </FormItem>
@@ -123,7 +123,7 @@
           </Col>
                 <Col span="8"><img id="img" src="/api/imagecode/createImageCode" width="90px"  height="40px" onclick="this.src='/api/imagecode/createImageCode?d='+new Date()*1"></Col>
         </ROW>
-        </br></br></br></br></br>
+        <br>
         <FormItem>
           <button   class="btn" @click="login()">登录</button>
         </FormItem>
@@ -197,7 +197,7 @@
                         this.$Message.error("验证码错误");
                     }
                   })
-                  
+
               }
     },
     mounted: function() {

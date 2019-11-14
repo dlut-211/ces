@@ -43,10 +43,10 @@
                         this.$store.state.role = 3;
                         if(res.data.UserRole === 1){
                             this.$store.state.home = 'AdminHomePage';
-                        } 
+                        }
                         if (res.data.UserRole == 2){
                             this.$store.state.home = 'TeacherHomePage';
-                        } 
+                        }
                         if (res.data.UserRole == 3){
                             this.$store.state.home = 'StudentHomePage';
                         }
