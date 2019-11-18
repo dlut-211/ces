@@ -963,7 +963,7 @@
             find: function (a) {
                 this.findClassRoomForm.TermType = a.TermType ? a.TermType : null;
                 this.findClassRoomForm.name = a.name ? a.name : "";
-                this.findClassRoomForm.Status = a.Status ? a.Status : null;
+                this.findClassRoomForm.status = a.status ? a.status : null;
                 if (a.BeginDate.length > 0) {
                     this.findClassRoomForm.BeginDateStart = a.BeginDate[0];
                     this.findClassRoomForm.BeginDateEnd = a.BeginDate[1];

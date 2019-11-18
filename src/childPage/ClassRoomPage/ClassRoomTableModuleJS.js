@@ -136,7 +136,7 @@ function ClassRoomTableModuleJS() {
                                             title: "<span style='color:red'><b>提示</b></span>",
                                             content: "确定要删除信息吗？",
                                             onOk: () => {
-                                                this.deleteClassRoomAction(params.row.Id)
+                                                this.deleteClassRoomAction(params.row.id)
                                             },
                                             onCancel: () => {
                                             }
