@@ -519,6 +519,7 @@
             },
             // 改变页码
             changePage: function (page) {
+              console.log('现在的页码是:'+page);
                 this.nowPage = page;
                 this.getCourseList();
             },
@@ -590,14 +591,18 @@
              * 获取课程列表
              */
             getCourseList: function () {
+              
                 const params = {
-                    nowPage: this.nowPage,
+                    page: this.nowPage,
                     pageSize: this.pageSize,
                     code: this.findCourseForm.code,
                     name: this.findCourseForm.name
                 };
+                console.log('页码参数:'+params.nowPage);
                 Http.getCourseList(params).then(res => {
                     if (res.statusCode === 1) {
+                     
+                       console.log('获得的数据'+res.data.content[0].code);
                         this.tableModule.tableContent = res.data.content;
                         this.tableModule.count = res.data.totalElements;
                     }
