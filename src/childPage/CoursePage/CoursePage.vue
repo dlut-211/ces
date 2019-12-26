@@ -563,7 +563,7 @@
             },
 
             /**
-             * 编辑课程Action
+             * 编辑课程Action 
              */
             editCourseAction: function () {
                 const params = this.editCourseForm;
