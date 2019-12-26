@@ -93,8 +93,52 @@
   <!--<style lang="scss" scoped>-->
   <!--    @import "./StudentLoginPage.scss";-->
   <!--</style>-->
+<template>
+ <div class="layout" >
+    <Layout> 
+      <Header :style="{position: 'fixed', width: '100%'}">
+          软件工程综合能力培养体系平台
+        </Header>
+        <Content>
+     <Layout class="formb">
+           <Layout class="formbsmall" @keyup="keydown($event)"  v-focus="true">
+               <Form label-position="left">
+                    <FormItem>
+                  <Input class="inp" size="large" type="text" v-model="form.account" placeholder="Username">
+                    <Icon type="ios-person-outline" slot="prepend" size="20"></Icon></Input>
+                </FormItem> 
+              <FormItem>
+                  <Input class="inp" size="large" type="password" v-model="form.password" placeholder="Password">
+                    <Icon type="ios-locked-outline" slot="prepend" size="20"></Icon>
+                  </Input>
+                </FormItem> 
+                <ROW>
+                  <Col span="16">
+                    <FormItem label="验证码">
+                      <Input  size="large" v-model="form.inputImageCode"  style="width: 50%" placeholder="Code">
+                      </Input>
+                    </FormItem>
+                  </Col>
+                  <Col span="8"><img id="img" src="/api/imagecode/createImageCode" width="90px"  height="40px" onclick="this.src='/api/imagecode/createImageCode?d='+new Date()*1"></Col>
+                </ROW>
+                </br></br>
+                     <FormItem>
+                         <Button type="primary" long @click="login()">登录</Button>
+                  </FormItem> 
+                 </Form>
+                 </Layout>
+      </Layout>
+      </Content>
+       <Footer>
+          <p style="text-align:center;padding-top:40px;font-size:16px">大连理工大学</p>
+         </Footer>
+      </Layout> 
+    </div>
+    
+     
+ </template>
 
-  <style scoped>
+ <style scoped>
     .layout{
       /* border: 1px solid #d7dde4;
       background: #f5f7f9; */
@@ -158,51 +202,7 @@
       background-color: rgb(49,176,213);
     }
   </style>
-
-  <template>
-    <div class="layout">
-      <Layout>
-        <Header :style="{position: 'fixed', width: '100%'}">
-          软件工程综合能力培养体系平台
-        </Header>
-        <Content>
-          <Layout class="formb">
-            <Layout class="formbsmall" @keyup="keydown($event)"  v-focus="true">
-              <Form :model="formLeft"  label-position="left">
-                <FormItem>
-                  <Input class="inp" size="large" type="text" v-model="form.account" placeholder="Username">
-                    <Icon type="ios-person-outline" slot="prepend" size="20"></Icon></Input>
-                </FormItem>
-                <FormItem>
-                  <Input class="inp" size="large" type="password" v-model="form.password" placeholder="Password">
-                    <Icon type="ios-locked-outline" slot="prepend" size="20"></Icon>
-                  </Input>
-                </FormItem>
-                <ROW>
-                  <Col span="16">
-                    <FormItem label="验证码">
-                      <Input  size="large" v-model="form.inputImageCode"  style="width: 50%" placeholder="Code">
-                      </Input>
-                    </FormItem>
-                  </Col>
-                  <Col span="8"><img id="img" src="/api/imagecode/createImageCode" width="90px"  height="40px" onclick="this.src='/api/imagecode/createImageCode?d='+new Date()*1"></Col>
-                </ROW>
-                </br></br>
-                <FormItem>
-                  <button class="btn" @click="login()">登录</button>
-                </FormItem>
-
-              </Form>
-            </Layout>
-          </Layout>
-        </Content>
-        <Footer>
-          <p style="text-align:center;padding-top:40px;font-size:16px">大连理工大学</p>
-        </Footer>
-      </Layout>
-    </div>
-  </template>
-  <script>
+<script>
       // 引入Api接口
       import * as Http from "@/api/HttpService.js";
       export default {
@@ -234,11 +234,15 @@
                       password: this.form.password,
                       inputImageCode:this.form.inputImageCode
                   };
-                  Http.checkImageCode(params).then(res=>{
-                    if(res.code==='200'){
+                 Http.checkImageCode(params).then(res=>{
+                    console.log('进啊啊')
+                   if(res.code==='200'){
+                           console.log('进第二次')
                       Http.studentLogin(params).then(res => {
+                         console.log('学生js第三个进来了-------')
                       if (res.data != null) {
                           this.$Message.success('登录成功');
+                           console.log('学生js第三个进来了')
                           this.$store.state.username = res.data.name;
                           this.$store.state.token = res.data.token;
                           this.$store.state.id = res.data.id;
@@ -269,14 +273,14 @@
                           this.$Message.error('账号或密码不存在');
                       }
                   })
-                    }
-                    else{
-                        document.getElementById("img").src="/api/imagecode/createImageCode?d='+new Date()*1"; //这里的图片是更换后的图片
-                        this.$Message.error("验证码错误");
-                    }
-                  })
+                  }
+                 else{
+                     document.getElementById("img").src="/api/imagecode/createImageCode?d='+new Date()*1"; //这里的图片是更换后的图片
+                      this.$Message.error("验证码错误");
+                  }
+                 })
                   
-              }
+             }
           },
           mounted: function() {
 

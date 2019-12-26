@@ -238,10 +238,13 @@
                       inputImageCode:this.form.inputImageCode
                   };
                   Http.checkImageCode(params).then(res=>{
+                    console.log('管理员js页面进来了')
                     if(res.code==='200'){
+                       console.log('管理员js二页面进来了')
                       Http.adminLogin(params).then(res => {
                       if (res.data != null) {
                           this.$Message.success('登录成功');
+                           console.log('管理员js三页面进来了')
                           this.$store.state.username = res.data.name;
                           this.$store.state.token = res.data.token;
                           this.$store.state.id = res.data.id;

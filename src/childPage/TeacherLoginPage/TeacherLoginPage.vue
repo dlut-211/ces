@@ -96,41 +96,44 @@
 
 
 <template>
-  <div class="bg">
-    <div class="left">
-      <img src="../../assets/iconleft1.png" alt="" class="img">
-    </div>
-    <div class="right"  @keyup="keydown($event)"  v-focus="true">
-      <Form>
-        <FormItem>
-          <p style="font-size:30px">软件工程综合能力培养体系平台</p><br/>
-        </FormItem>
-        <FormItem>
-          <Input class="inp" size="large" type="text" v-model="form.account" placeholder="Username">
-            <Icon type="ios-person-outline" slot="prepend" size="22"></Icon></Input>
-        </FormItem>
-        <FormItem>
-          <Input class="inp" size="large" type="password" v-model="form.password" placeholder="Password">
-            <Icon type="ios-locked-outline" slot="prepend" size="22"></Icon>
-          </Input>
-        </FormItem>
-        <ROW>
-          <Col span="16">
-            <FormItem label="验证码">
-              <Input  size="large" v-model="form.inputImageCode" style="width: 70%" placeholder="Code">
-              </Input>
-            </FormItem>
-          </Col>
-                <Col span="8"><img id="img" src="/api/imagecode/createImageCode" width="90px"  height="40px" onclick="this.src='/api/imagecode/createImageCode?d='+new Date()*1"></Col>
-        </ROW>
-        <br>
-        <FormItem>
-          <button   class="btn" @click="login()">登录</button>
-        </FormItem>
-      </Form>
-    </div>
-  </div>
+<div class="bg" @keyup="keydown($event)" tabindex="2" v-focus="true">
+   <div class="left">
+      <img src="../../assets/iconleft1.png" alt="" class="img">
+    </div>
+      <div class="right"  @keyup="keydown($event)"  v-focus="true">
+    <p style="font-size:30px">软件工程综合能力培养体系平台</p><br/>
+          <div class="loginContent">
+           <Form>
+              <FormItem>
+                 <Input class="inp" size="large" type="text" v-model="form.account" placeholder="Username">
+                     <Icon type="ios-person-outline" slot="prepend" size="22"></Icon></Input>
+             </FormItem>
+              <FormItem>
+          <Input class="inp" size="large" type="password" v-model="form.password" placeholder="Password">
+            <Icon type="ios-locked-outline" slot="prepend" size="22"></Icon>
+          </Input>
+        </FormItem>
+         <ROW>
+          <Col span="16">
+            <FormItem label="验证码">
+              <Input  size="large" v-model="form.inputImageCode" style="width: 70%" placeholder="Code">
+              </Input>
+            </FormItem>
+          </Col>
+                <Col span="8"><img id="img" src="/api/imagecode/createImageCode" width="90px"  height="40px" onclick="this.src='/api/imagecode/createImageCode?d='+new Date()*1"></Col>
+        </ROW>
+        </br></br></br></br></br>
+                   
+                   <FormItem>
+                        <Button type="primary" long @click="login()">登录</Button>
+                    </FormItem>
+                </Form>
+           </div>
+        </div>
+       
+    </div>
 </template>
+
 <script>
   // 引入Api接口
   import * as Http from "@/api/HttpService.js";
@@ -158,21 +161,23 @@
           }
         }
       },
-      login1: function() {
-        this.$Message.error("验证码错误");
-      },
+   
               login: function() {
+                  console.log(this.form.account+'--------'+this.form.password+'-----'+this.form.inputImageCode)
                   var params = {
                       number: this.form.account,
                       password: this.form.password,
                       inputImageCode:this.form.inputImageCode
                   };
-                  Http.checkImageCode(params).then(res=>{
-
-                    if(res.code==='200'){
+                 Http.checkImageCode(params).then(res=>{
+                    console.log('教师js第一个进来了')
+                 if(res.code==='200'){
+                     // console.log('教师js第二个进来了')
                       Http.teacherLogin(params).then(res => {
+                        console.log('教师js第三个进来了')
                       if (res.data != null) {
                           this.$Message.success('登录成功');
+                           console.log('教师js第三个进来了')
                           this.$store.state.username = res.data.name;
                           this.$store.state.token = res.data.token;
                           this.$store.state.id = res.data.id;
@@ -192,12 +197,12 @@
                       }
                   })
                     }
-                    else{
-                        document.getElementById("img").src="/api/imagecode/createImageCode?d='+new Date()*1"; //这里的图片是更换后的图片
-                        this.$Message.error("验证码错误");
-                    }
-                  })
-
+                   else{
+                       document.getElementById("img").src="/api/imagecode/createImageCode?d='+new Date()*1"; //这里的图片是更换后的图片
+                       this.$Message.error("验证码错误");
+                   }
+                 })
+                  
               }
     },
     mounted: function() {
@@ -214,6 +219,7 @@
     }
   };
 </script>
+
 <style >
   .bg{
     background-image:url('../../assets/background2.jpg');
