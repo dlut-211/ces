@@ -562,7 +562,7 @@
             },
 
             /**
-             * 编辑课程Action
+             * 编辑课程Action 
              */
             editCourseAction: function () {
                 const params = this.editCourseForm;
@@ -591,13 +591,15 @@
              */
             getCourseList: function () {
                 const params = {
-                    nowPage: this.nowPage,
+                    page: this.nowPage,
                     pageSize: this.pageSize,
                     code: this.findCourseForm.code,
                     name: this.findCourseForm.name
                 };
                 Http.getCourseList(params).then(res => {
                     if (res.statusCode === 1) {
+                     
+                       console.log('获得的数据'+res.data.content[0].code);
                         this.tableModule.tableContent = res.data.content;
                         this.tableModule.count = res.data.totalElements;
                     }
