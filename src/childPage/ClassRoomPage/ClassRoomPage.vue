@@ -1444,6 +1444,7 @@
              * 添加试卷模态框
              */
             addTestPaperModal: function (classRoomId, knowledgeList) {
+              console.log('添加试卷'+classRoomId)
                 this.addTestPaperForm.classroomId = classRoomId;
                 this.courseKnowledgeList = knowledgeList;
                 this.addTestPaper = true;
@@ -1496,6 +1497,7 @@
              */
             addTestPaperAction: function () {
                 const params = this.addTestPaperForm;
+                    console.log('添加试卷'+params.classRoomId)
                 axios.post('/api/test_paper/add', params, {
                     headers: {
                         'Content-Type': 'application/json;charset=UTF-8'
@@ -1527,6 +1529,8 @@
                         this.$Message.error(res.data.data.message)
                     }
                 })
+                this.addTestPaper = false;
+
             },
 
 
@@ -1588,8 +1592,11 @@
              */
             addPaperDetail: function (type, formName, form) {
                 this.nowEditTestPaperType = type;
+                console.log('试卷'+this.nowEditTestPaperType)
                 this.nowFormName = formName;
+                 console.log('试卷'+this.nowFormName)
                 this.nowForm = form;
+                console.log('试卷'+this.nowForm)
                 this.testPaperDetailForm = {
                     testPaperDetailList: JSON.parse(JSON.stringify(form.a))
                 };
