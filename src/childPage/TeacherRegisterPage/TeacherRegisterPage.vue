@@ -3,49 +3,63 @@
    <div class="left">
       <img src="../../assets/iconleft1.png" alt="" class="img">
     </div>
-      <div class="right"  @keyup="keydown($event)"  v-focus="true">
-    <p style="font-size:12px">教师注册</p><br/>
+      <div class="right" style="height:100%"  @keyup="keydown($event)"  v-focus="true">
+    <p style="font-size:20px;border-bottom:1px solid black">教师注册</p><br/>
           <div class="loginContent">
            <Form>
-              <FormItem label="账号">
-                 <Input type="text" v-model="form.account" placeholder="请输入职工号"></Input>
-             </FormItem>
-            <FormItem label="姓名">
-                 <Input class="inp" size="large" type="text" v-model="form.name" placeholder="请输入真实姓名"></Input>
-                    
-                     
-             </FormItem>
-              <FormItem label="密码">
-          <Input class="inp" size="large" type="password" v-model="form.password" placeholder="请输入密码"> </Input>
-        </FormItem>
-
-        <FormItem label="确认密码">
-                 <Input class="inp" size="large" type="password" v-model="form.password2" placeholder="请再次输入密码"> </Input>
-                    
-                     
-             </FormItem>
-            <FormItem label="学校">
-                 <Select class="inp" size="large" type="text" v-model="form.school" placeholder="请选择学校"> 
+               <ROW>
+                <Col span="11">
+                <FormItem>
+                   <Input type="text" v-model="form.account" placeholder="请输入职工号">
+                      <Icon type="ios-person-outline" slot="prepend" size="22"></Icon>
+                    </Input>
+               </FormItem>
+                </Col>
+                <Col span="11" offset="1" >
+                <FormItem >
+                     <Input class="inp" size="large" type="text" v-model="form.name" placeholder="请输入真实姓名">
+                        <Icon type="ios-person-outline" slot="prepend" size="22"></Icon>
+                      </Input>
+                 </FormItem>
+                </Col>
+                <Col span="11">
+                    <FormItem>
+                      <Input class="inp" size="large" type="password" v-model="form.password" placeholder="请输入密码">
+                        <Icon type="ios-locked-outline" slot="prepend" size="22"></Icon></Input>
+                   </FormItem>
+                </Col>
+                <Col span="11" offset="1">
+                  <FormItem>
+                       <Input class="inp" size="large" type="password" v-model="form.password2" placeholder="请再次输入密码">
+                        <Icon type="key" slot="prepend" size="22"></Icon>
+                      </Input>
+                  </FormItem>
+                </Col>
+            <Col span="11">
+            <FormItem>
+                  <Icon type="key" slot="prepend" size="22"></Icon>
+                 <Select filterable allow-create class="inp" size="large" type="text" v-model="form.school" placeholder="请选择学校" style="z-index:9999;position: relative;"> 
                     <Option v-for="item in schoolTypeArr" :value="item.id" :key="item.id">{{item.name}}</Option>
                 </Select>
-                    
-                     
              </FormItem>
-            <FormItem label="学科">
-                 <Select class="inp" size="large" type="text" v-model="form.subject" placeholder="请选择学科"> 
+            </Col>
+            <Col span="11" offset="1">
+            <FormItem>
+              <Icon type="key" slot="prepend" size="22"></Icon>
+                 <Select class="inp" size="large" type="text" v-model="form.subject" placeholder="请选择学科" style="z-index:9999;position: relative;"> 
                     <Option v-for="item in subjectTypeArr" :value="item.id" :key="item.id">{{item.optionValue}}</Option>
                     </Select>
-                    
-                     
              </FormItem>
-         <ROW>
+            </Col>
+         
           <Col span="16">
             <FormItem label="验证码">
-              <Input  size="large" v-model="form.inputImageCode" style="width: 70%" placeholder="Code">
+              <Input  size="large" v-model="form.inputImageCode" style="width: 60%;z-index:9998;position: relative;" placeholder="Code" >
               </Input>
             </FormItem>
           </Col>
-                <Col span="8"><img id="img" src="/api/imagecode/createImageCode" width="90px"  height="40px" onclick="this.src='/api/imagecode/createImageCode?d='+new Date()*1"></Col>
+          <Col span="8" ><img id="img" src="/api/imagecode/createImageCode" width="100px"  height="40px" onclick="this.src='/api/imagecode/createImageCode?d='+new Date()*1">
+          </Col>
         </ROW>
         </br></br></br></br></br>
                    
@@ -191,7 +205,7 @@
     }
   };
 </script>
-
+ 
 <style >
   .bg{
     background-image:url('../../assets/background2.jpg');
