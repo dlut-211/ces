@@ -419,7 +419,7 @@
                 const params = {
                     page: this.studentNowPage,
                     limit: this.studentPageSize,
-                    ClassRoomId: this.classRoomData.Id,
+                    ClassRoomId: this.classRoomData.Id, 
                     StudentNumber: this.findClassRoomStudentForm.StudentNumber,
                     StudentName: this.findClassRoomStudentForm.StudentName,
                     StudentSchool: this.findClassRoomStudentForm.StudentSchool,
@@ -427,7 +427,7 @@
                 };
                 Http.getClassRoomStudentList(params).then(res => {
                     if (res.statusCode == 1) {
-                        this.studentTableModule.tableContent = res.data;
+                        this.studentTableModule.tableContent = res.data.list;
                         this.studentTableModule.count = res.data.total;
                     }
                 });
