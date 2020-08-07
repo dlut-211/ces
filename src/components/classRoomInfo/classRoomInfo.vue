@@ -366,6 +366,10 @@
   return str.replace(/<[^>]+>/g,"");//去掉所有的html标记
 },
             infoInit: function (form) {
+                //进来要先清空试卷table中的数据，防止没开课的课程利用已开课的缓存
+                this.testPaperTableModule.tableContent = null;
+                this.testPaperTableModule.count = 0;
+                console.log("终于找到你")
                 this.tabIndex = 0;
                 this.classRoomData = form;
                 this.getCourseChapter();
@@ -426,8 +430,16 @@
                     StudentClassName: this.findClassRoomStudentForm.StudentClassName
                 };
                 Http.getClassRoomStudentList(params).then(res => {
+                    console.log("//假如没有学术，向父组件传递没有学生标识res");
+                    console.log(res)
                     if (res.statusCode == 1) {
-                        this.studentTableModule.tableContent = res.data;
+                        console.log("//假如没有学术，向父组件传递没有学生标识");
+                        console.log(res.data.total==0)
+                        //假如没有学术，向父组件传递没有学生标识
+                        if(res.data.total==0){
+                            this.$emit("hasNoStudent",true);
+                        }
+                        this.studentTableModule.tableContent = res.data.list;
                         this.studentTableModule.count = res.data.total;
                     }
                 });

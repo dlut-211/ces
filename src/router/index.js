@@ -26,6 +26,8 @@ import TeacherLoginPage from "@/childPage/TeacherLoginPage/TeacherLoginPage.vue"
 import courseInfo from "@/childPage/courseInfo/courseInfo.vue";
 
 import SchoolPage from "@/childPage/SchoolPage/SchoolPage.vue";
+import NewPage from "@/childPage/NewPage/NewPage.vue";
+
 Vue.use(Router);
 
 export default new Router({
@@ -33,6 +35,11 @@ export default new Router({
         name: 'LoginPage',
         path: '/LoginPage',
         component: LoginPage
+    },
+    {
+        name:'NewPage',
+        path:'/NewPage',
+        component:NewPage
     },
     {
         path: '/AdminLoginPage',

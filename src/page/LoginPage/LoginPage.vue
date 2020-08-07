@@ -14,6 +14,11 @@
             }
         },
         methods: {
+            NewPageRoute:function(){
+                this.$router.push({
+                    name:"NewPage"
+                })
+            },
             AdminRoute:function(){
                 this.$router.push({
                     name:"AdminLoginPage"

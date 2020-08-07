@@ -136,6 +136,7 @@
         @editTestPaper="editTestPaperModal"
         @detailTestPaper="detailTestPaperModal"
         @showResultAnalysisModal="showResultAnalysisModal"
+        @hasNoStudent="change($event)"
         ref="classRoomDetail">
       </classRoomInfo>
     </Modal>
@@ -424,11 +425,13 @@
               style="color:white;display:inline-block;width:100px;
               height:35px;background-color:rgb(45,140,240);line-height:35px;text-align:center">下载导入模板</a>
             </Col>
-            <Upload :action="uploadStudentTestPaperFileUrl" :headers="{Authorization:$store.state.token}"
+            <Upload v-if="!noStudent" :action="uploadStudentTestPaperFileUrl" :headers="{Authorization:$store.state.token}"
                     style="float: left; margin-right: 20px;" :show-upload-list="false"
-                    :on-success="handleImportStudentTestPaperSuccess" :on-format-error="handleFormatError">
-              <Button type="success">点击导入成绩</Button>
+                    :on-success="handleImportStudentTestPaperSuccess" :on-format-error="handleFormatError"
+                    :before-upload="handBeforeUpload">
+              <Button  type="success" >点击导入成绩</Button>
             </Upload>
+            <Button v-if="noStudent" type="success" @click="checkBeforeUpload">点击导入成绩</Button>
           </Row>
           <Row>
             <Col span="12" style="font-weight:bold;">导入说明：</Col>
@@ -635,6 +638,7 @@
                     score: null,
                     WorkMessage: ""
                 },
+                noStudent:false,
                 editClassRoom: false,
                 editClassRoomForm: {
                     id: null,
@@ -866,8 +870,19 @@
             delHtmlTag: function(str){
                 return str.replace(/<[^>]+>/g,"");//去掉所有的html标记
             },
-
+            //上传之前的操作
+            handBeforeUpload:function(){
+              console.log("上传之前")
+              return false;
+            },
+            //没有导入学生不能导入成绩
+            checkBeforeUpload:function(){
+              console.log("haha")
+              console.log(this.noStudent)
+              this.$Message.error("请先导入学生");
+            },
             handleImportStudentTestPaperSuccess: function () {
+              this.getStudentTestPaperList()
                 // TODO
             },
 
@@ -1034,7 +1049,9 @@
                     }
                 })
             },
-
+            change:function(data){
+              this.noStudent=data;
+            },
             // 查询课堂
             getClassRoomList: function () {
                 var params = {
@@ -1501,8 +1518,11 @@
                         'Content-Type': 'application/json;charset=UTF-8'
                     }
                 }).then(res => {
+                  console.log(res)
                     if (res.status === 200) {
-                        this.$Message.success(res.data.data.message);
+                      console.log(res.data);
+                      console.log(res.data.message)
+                        this.$Message.success(res.data.message);
                         this.addTestPaperForm = {
                             name: "",
                             classroomId: null,
@@ -1524,7 +1544,7 @@
                         this.$refs["addTestPaperForm"].resetFields();
                         this.$refs.classRoomDetail.getTestPaperList()
                     } else {
-                        this.$Message.error(res.data.data.message)
+                        this.$Message.error(res.data.message)
                     }
                 })
             },
@@ -1774,7 +1794,10 @@
                             alert("暂时未导入成绩")
                             return;
                         }
+                        this.paperAnalysisData=[];
                         res.data.forEach(element => {
+                          console.log(element);
+                          console.log(element.knowledgeName)
                             resAnalysisKnowledge.push(element.knowledgeName),
                             resAnalysisLv1.push(element.level_1);
                             resAnalysisLv2.push(element.level_2);
