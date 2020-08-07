@@ -1,0 +1,39 @@
+.LoginPage{
+    height: 100%;
+    background-image: url("../../assets/bgImg.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    .loginDiv{
+        width: 450px;
+        box-sizing: border-box;
+        transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        border-radius: 8px;
+        overflow: hidden;
+        margin-top: -100px;
+        .loginTitle{
+            padding: 65px 0;
+            text-align: center;
+            background-color: rgba(255,255,255,0.1);
+            >div{
+                font-size: 18px;
+                color: white;
+                margin-top: 5px;
+            }
+        }
+        .loginContent{
+            background-color: white;
+            padding: 38px;
+            box-sizing: border-box;
+            .forgetPassowrd{
+                cursor: pointer;
+                float: right;
+                text-decoration: underline;
+            }
+        }
+    }
+}

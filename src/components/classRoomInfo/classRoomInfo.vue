@@ -423,22 +423,19 @@
                 const params = {
                     page: this.studentNowPage,
                     limit: this.studentPageSize,
-                    ClassRoomId: this.classRoomData.Id,
+                    ClassRoomId: this.classRoomData.Id, 
                     StudentNumber: this.findClassRoomStudentForm.StudentNumber,
                     StudentName: this.findClassRoomStudentForm.StudentName,
                     StudentSchool: this.findClassRoomStudentForm.StudentSchool,
                     StudentClassName: this.findClassRoomStudentForm.StudentClassName
                 };
                 Http.getClassRoomStudentList(params).then(res => {
-                    console.log("//假如没有学术，向父组件传递没有学生标识res");
-                    console.log(res)
                     if (res.statusCode == 1) {
-                        console.log("//假如没有学术，向父组件传递没有学生标识");
-                        console.log(res.data.total==0)
                         //假如没有学术，向父组件传递没有学生标识
                         if(res.data.total==0){
                             this.$emit("hasNoStudent",true);
                         }
+
                         this.studentTableModule.tableContent = res.data.list;
                         this.studentTableModule.count = res.data.total;
                     }

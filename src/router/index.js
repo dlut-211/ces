@@ -23,6 +23,7 @@ import TestPage from "@/childPage/TestPage/TestPage.vue";
 import AdminLoginPage from "@/childPage/AdminLoginPage/AdminLoginPage.vue";
 import StudentLoginPage from "@/childPage/StudentLoginPage/StudentLoginPage.vue";
 import TeacherLoginPage from "@/childPage/TeacherLoginPage/TeacherLoginPage.vue";
+import TeacherRegisterPage from "@/childPage/TeacherRegisterPage/TeacherRegisterPage.vue";
 import courseInfo from "@/childPage/courseInfo/courseInfo.vue";
 
 import SchoolPage from "@/childPage/SchoolPage/SchoolPage.vue";
@@ -55,6 +56,11 @@ export default new Router({
         path: '/TeacherLoginPage',
         name: 'TeacherLoginPage',
         component: TeacherLoginPage
+    },
+    {
+        path: '/TeacherRegisterPage',
+        name: 'TeacherRegisterPage',
+        component: TeacherRegisterPage
     },
      {
         name: 'DashboardPage',

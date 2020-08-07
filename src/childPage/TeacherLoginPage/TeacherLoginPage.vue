@@ -126,6 +126,7 @@
                    
                    <FormItem>
                         <Button type="primary" long @click="login()">登录</Button>
+                        <Button type="primary" long @click="register()">注册</Button>
                     </FormItem>
                 </Form>
            </div>
@@ -149,6 +150,11 @@
       }
     },
     methods: {
+      register:function(){
+        this.$router.push({
+                    name:"TeacherRegisterPage"
+                })
+      },
       keydown: function(e) {
 
         if (e.keyCode === 13) {
@@ -171,11 +177,12 @@
                   };
                  Http.checkImageCode(params).then(res=>{
                     console.log('教师js第一个进来了')
+                    console.log(res)
                  if(res.code==='200'){
                      // console.log('教师js第二个进来了')
                       Http.teacherLogin(params).then(res => {
-                        console.log('教师js第三个进来了')
-                      if (res.data != null) {
+                        console.log(res)
+                      if (res.statusCode == 1) {
                           this.$Message.success('登录成功');
                            console.log('教师js第三个进来了')
                           this.$store.state.username = res.data.name;
