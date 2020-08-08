@@ -53,18 +53,23 @@ function StudentWorkTableModuleJS() {
         render: (h, params) => {
           return h("div", [
             h(
-              "span",
+              "A",
               {
+                attrs: {
+                  href: params.row.workPath,
+                  target:"blank",
+                  download:params.row.workPath
+              },
                 style: {
                   color: "#2d8cf0",
                   cursor: "pointer",
                   display: (params.row.isSubmit == 1) ?"inline":"none"
                 },
-                on: {
-                  click: () => {
-                    window.open(params.row.workPath);
-                  }
-                }
+                // on: {
+                //   click: () => {
+                //     window.open(params.row.workPath);
+                //   }
+                // }
               },
               "查看"
             ),

@@ -551,9 +551,11 @@
     <Modal v-model="showResultAnalysis" title="试卷结果分析" @on-ok="ok" @on-cancel="cancel" width="1400px">
       <div :style="{height: '900px'}">
         <div style="float: left">
+          <div><h6>学生知识点得分分布图</h6></div>
           <div id="myChart" :style="{width: '600px', height: '400px'}"></div>
         </div>
         <div style="float: left">
+          <div><h6>试卷知识点分数占比图</h6></div>
           <div id="myChart2" :style="{width: '600px', height: '400px'}"></div>
         </div>
         <div style="float: left">

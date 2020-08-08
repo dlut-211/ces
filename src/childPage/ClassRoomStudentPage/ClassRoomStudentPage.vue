@@ -274,7 +274,7 @@ this.$refs.ChildStudentWork.getchapterWorkList(this.LocalClassRoomId);
     // 查询课堂学员
     getClassRoomStudentList1: function() {
       var params = {
-        StudentId:parseInt(this.$store.state.id),
+        StudentId:parseInt(this.$store.state.number),
         nowPage: this.nowPage,
         pageSize: this.pageSize,
         startSize : 0

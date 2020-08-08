@@ -515,6 +515,9 @@ export const createImageCode=(param)=>{
     export const selectByStudentId=(param)=>{
         return GET(API.selectByStudentId,param);
     }
+    export const downloadHomeWord=(param)=>{
+        return GET(API.downloadHomeWord,param);
+    }
 
 //---------------------------------------------------------------------------------------------------
 // 定义4种请求

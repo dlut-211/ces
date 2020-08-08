@@ -163,7 +163,7 @@
   <div class="layout">
     <Layout>
       <Header :style="{position: 'fixed', width: '100%'}">
-        软件工程综合能力培养体系平台
+        大学生能力分析系统
       </Header>
       <Content>
         <Layout class="formb">

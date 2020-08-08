@@ -10,6 +10,7 @@ const state = {
     limit:"",   //权限
     role:"",     // 用户角色类型
     home:'',
+    number:"",
     roles:"",
     breadCrumb:[],
     activeName:"",  //左侧导航二级页面的选中状态  固定写法 如:1-1

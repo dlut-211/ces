@@ -97,7 +97,7 @@
  <div class="layout" >
     <Layout> 
       <Header :style="{position: 'fixed', width: '100%'}">
-          软件工程综合能力培养体系平台
+          大学生能力分析系统
         </Header>
         <Content>
      <Layout class="formb">
@@ -243,9 +243,11 @@
                       if (res.data != null) {
                           this.$Message.success('登录成功');
                            console.log('学生js第三个进来了')
+                           console.log(res.data)
                           this.$store.state.username = res.data.name;
                           this.$store.state.token = res.data.token;
                           this.$store.state.id = res.data.id;
+                          this.$store.state.number=res.data.number
                           this.$store.state.roles = 3;
                           this.$store.state.home = 'StudentHomePage';
                           localStorage.setItem('username', this.$store.getters.username);
@@ -253,7 +255,7 @@
                           localStorage.setItem('id', this.$store.state.id);
                           localStorage.setItem("roles",this.$store.state.roles);
                           var params=
-                          {studentId:res.data.id}
+                          {studentId:res.data.number}
                         Http.selectByStudentId(params).then(res=>{
                           if(res.statusCode==1){
                             this.$store.state.subjectId=res.data;

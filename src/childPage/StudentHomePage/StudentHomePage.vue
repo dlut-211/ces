@@ -330,7 +330,7 @@ export default {
     //获取学生能力点掌握情况
     getStudentAbilityInfo:function(){
       var params={
-        studentId:this.$store.state.id,
+        studentId:this.$store.state.number,
         nowPage:this.abilityPageLimit.page,
         pageSize:this.abilityPageLimit.limit
       };
@@ -420,7 +420,7 @@ export default {
     //获取课程列表
      getClassRoomStudentList1: function() {
       var params = {
-        StudentId:parseInt(this.$store.state.id),
+        StudentId:parseInt(this.$store.state.number),
         nowPage: this.nowPage,
         pageSize: this.pageSize,
         startSize : 0
@@ -508,7 +508,7 @@ export default {
     DrawStudentClassRoomAvgScoreEcharts:function(){
       var params=
       {
-        studentId:this.$store.state.id
+        studentId:this.$store.state.number
       }
       this.legendInfo.push(this.$store.state.username);
       this.legendInfo.push("平均值");

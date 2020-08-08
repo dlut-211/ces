@@ -276,7 +276,10 @@ var API = {
     createImageCode:apiHost+'/imagecode/createImageCode',
 
     //选择学生学科
-    selectByStudentId:apiHost+'/studentcontroller/selectByStudentId'
+    selectByStudentId:apiHost+'/studentcontroller/selectByStudentId',
+
+    //下载作业
+    downloadHomeWord:apiHost+'/course/fileDownload'
 }
 
 export {

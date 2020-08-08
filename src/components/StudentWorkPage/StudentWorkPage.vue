@@ -595,6 +595,7 @@ formatDate:function(date, fmt) {
     },
     // 查询学生作业s
     getchapterWorkList: function(e) {
+      console.log("是这里吗")
       if(e!=null){
         this.nowPage=1;
         this.classroomId=e;
@@ -603,7 +604,7 @@ formatDate:function(date, fmt) {
         nowPage: this.nowPage,
         pageSize: this.pageSize,
         classroomId: this.classroomId,
-        studentId:this.$store.state.id
+        studentId:this.$store.state.number
       };
       Http.getchapterWorkList(params).then(res => {
         console.log(res)

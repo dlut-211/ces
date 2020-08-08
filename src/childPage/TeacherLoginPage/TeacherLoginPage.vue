@@ -101,7 +101,7 @@
       <img src="../../assets/iconleft1.png" alt="" class="img">
     </div>
       <div class="right"  @keyup="keydown($event)"  v-focus="true">
-    <p style="font-size:30px">软件工程综合能力培养体系平台</p><br/>
+    <p style="font-size:30px">大学生能力分析系统</p><br/>
           <div class="loginContent">
            <Form>
               <FormItem>

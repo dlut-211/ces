@@ -7,7 +7,7 @@
                 <div class="info">课程学科： {{courseData.subjectName}}</div>
                 <div class="info">建课老师： {{courseData.createdByName}}</div>
                 <div class="info" v-if="courseData.syllabusPath">
-                    <a :href="courseData.syllabusPath" :download="courseData.syllabusPath" target="blank">查看教学大纲</a>
+                    <a :href="courseData.syllabusPath">查看教学大纲</a>
                 </div>
                 
                 <div style="font-size:14px;font-weight:bold;margin-top:10px;margin-left: 30px;">课程简介：</div>

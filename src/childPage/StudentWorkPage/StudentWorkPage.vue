@@ -340,7 +340,12 @@
                         field: 'right',
                         width: 140,
                         render: (h, params) => {
+
                             if (params.row.workPath == null) {
+                            var strs=params.row.workPath.split("/")
+                            var filename=strs[strs.length-1]
+                            console.log("xiazai")
+                            console.log(fileName)
                                 return h("div",
                                     {
                                         style: {
@@ -363,7 +368,7 @@
                                         },
                                         // on:{
                                         //   click:()=>{
-
+                                        //       this.downloadHomeWork(params.row.workPath)
                                         //   }
                                         // }
 
@@ -519,6 +524,18 @@
                 this.pageSize = size;
                 this.getchapterWorkList();
             },
+            //下载作业
+            downloadHomeWork:function(data){
+                var strs=data.split("/");
+                var fileName=strs[strs.length-1];
+                console.log("here",strs,fileName);
+                var params={
+                    fileName:fileName
+                }
+                Http.downloadHomeWord(params).then(res=>{
+                    console.log(res)
+                })
+            },
             // 添加学生作业
             addStudentWorkAction: function () {
                 const params = this.addStudentWorkForm;
@@ -538,11 +555,12 @@
             },
             // 查询学生作业s
             getchapterWorkList: function () {
+                console.log("这是盗版")
                 const params = {
                     nowPage: this.nowPage,
                     pageSize: this.pageSize,
                     classroomId: this.$store.state.classroomId,
-                    studentId: this.$store.state.id
+                    studentId: this.$store.state.number
                 };
                 Http.getchapterWorkList(params).then(res => {
                     if (res.statusCode == 1) {

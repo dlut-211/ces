@@ -1,9 +1,44 @@
+
 <template>
-   <div>
-       <Button type="primary" @click="AdminRoute()">管理员入口</Button>
-       <Button type="primary" @click="TeacherRoute()">教师入口</Button>
-       <Button type="primary" @click="StudentRoute()">学生入口</Button>
-   </div>
+<div>
+    <div class="layout2">
+            <div style="background-color:#bacde0;height:5%">
+            
+        </div>
+                    <div style="background-color:white;height:2%">
+            
+        </div>
+    <div style="padding-top:10%">
+        <span style="font-size:50px">大学生能力分析系统</span>
+    </div>
+    <Row>
+        <i-col span="7">
+        </br> 
+        </i-col>
+      
+        <i-col span="10">
+          <div class="buttonreign">
+            <Row>
+             <i-col span="8">
+             <i-button @click="AdminRoute()"  shape="circle" size="large" icon="settings">管理员入口</i-button> 
+            </i-col>
+             <i-col span="8">
+             <i-button @click="TeacherRoute()" shape="circle" size="large" icon="ios-book">教师入口</i-button> 
+            </i-col>
+             <i-col span="8">
+             <i-button @click="StudentRoute()" shape="circle" size="large" icon="ios-body">学生入口</i-button> 
+            </i-col>
+             </Row>
+          </div>
+        </i-col>
+       <i-col span="7">
+         </br>
+        </i-col>
+    </Row>
+    </div>
+    <div class="bottom1" style="height:10%;background-color:#bacde0;border-top:15px solid white;">
+    </div>
+</div>
 </template>
 <script>
     // 引入Api接口
@@ -72,5 +107,22 @@
     };
 </script>
 <style lang="scss" scoped>
-    @import "./LoginPage.scss";
+    
+    .layout{
+    background-color:#bacde0;
+    padding-top:35px;
+    border-bottom:15px solid white;
+}
+
+.layout2{
+    // padding:300px;
+    // border:200px;
+    height: 100vh;
+    background-image:url('../../assets/bckgr.png');
+    background-size: 100% 100%;
+    font-family:"Times New Roman", Times, serif;
+    font-size:100px;
+    text-align:center;
+    color:#0c1428;
+}
 </style>
