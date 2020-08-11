@@ -131,7 +131,7 @@ var API = {
     importClassRoomStudent: apiHost + '/classroomstudent/importstu',
     // 获取学生导入模板
     getClassRoomStudentTemplate: apiHost + '/classroomstudent/gettemplate',
-    getClassRoomStudentTemplate2: 'http://localhost:8443/api' + '/classroomstudent/gettemplate',
+    getClassRoomStudentTemplate2: 'http://47.99.65.198:8443/api' + '/classroomstudent/gettemplate',
     // 获取课堂章节作业
     getClassRoomWorkChapterList: apiHost + '/classroomwork/chapterlist',
     // 布置课堂作业
@@ -279,7 +279,9 @@ var API = {
     selectByStudentId:apiHost+'/studentcontroller/selectByStudentId',
 
     //下载作业
-    downloadHomeWord:apiHost+'/course/fileDownload'
+    downloadHomeWord:apiHost+'/course/fileDownload',
+    //shiro跳转
+    shiroLogin:apiHost+'/shiro/login'
 }
 
 export {

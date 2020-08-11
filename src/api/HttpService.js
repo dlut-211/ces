@@ -518,6 +518,9 @@ export const createImageCode=(param)=>{
     export const downloadHomeWord=(param)=>{
         return GET(API.downloadHomeWord,param);
     }
+    export const shiroLogin=(param)=>{
+        return GET(API.shiroLogin,param)
+    }
 
 //---------------------------------------------------------------------------------------------------
 // 定义4种请求

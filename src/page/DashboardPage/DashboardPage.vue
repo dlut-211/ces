@@ -118,10 +118,22 @@
     import TagsView from "@/components/TagsView/TagsView.vue";
     // 引入API
     import * as Http from "@/api/HttpService.js";
+import LoginPageVue from '../LoginPage/LoginPage.vue';
     export default {
         computed:{
             homePage: function() {
+                console.log("this.$store.state.id"+this.$store.state.id)
+                if(this.$store.state.id==null||this.$store.state.token=="")
+                {
+                this.$router.replace({
+                    name: "LoginPage"
+                });
+                }
+                else{
                 return this.$store.getters.home;
+                }
+                console.log("成败在此一举")
+                
             }
         },
         methods: {

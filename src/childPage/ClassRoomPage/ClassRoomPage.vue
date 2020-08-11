@@ -1789,7 +1789,7 @@
 
                 params.append("paperId", paperId);
 
-                axios.post("http://localhost:8443/resultanalysis/analysis", params)
+                axios.post("http://47.99.65.198:8443/resultanalysis/analysis", params)
                     .then(res => {
                         if (res.data === null || res.data === '') {
                             this.showResultAnalysis = false;
