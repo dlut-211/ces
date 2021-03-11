@@ -56,6 +56,11 @@
                 </Row>
             </div>
         </TabPane>
+        <TabPane label="课堂作业">
+            <div>
+                <div id="courseAKTree"></div>
+            </div>
+        </TabPane>
     </Tabs>
     </div>
 </template>
@@ -469,6 +474,150 @@
                         this.KnowledgeList = res.data;
                     }
                 });
+            },
+            courseAKTree:function(){
+                var params = {
+                    courseId: 36
+                }
+                Http.getClassRoomAvgScore(params).then(res=>{
+                    console.log(res);
+                })
+                let courseAKTree = this.$echarts.init(document.getElementById('courseAKTree'));
+                courseAKTree.setOption({
+                    // backgroundColor: '#051F50',
+                    tooltip: {
+                        trigger: 'item',
+                        triggerOn: 'mousemove'
+                    },
+                    series: [
+                        {
+                            type: 'tree',
+                            zoom:1, //当前视角的缩放比例
+                            roam: true, //是否开启平游或缩放
+                            scaleLimit: { //滚轮缩放的极限控制
+                                min: 1,
+                                max: 5
+                            },
+                            lineStyle: {
+                                color: "#000",
+                                width: 3,
+                                type: 'solid' //'dotted'虚线 'solid'实线
+                            },
+                            data: [{
+    "id": null,
+    "courseId": null,
+    "abilityId": null,
+    "name": "20200403数据结构",
+    "children": [
+      {
+        "id": 119,
+        "courseId": 36,
+        "abilityId": 86,
+        "name": "编码能力",
+        "children": [
+          {
+            "id": 59,
+            "courseId": 36,
+            "abilityId": 86,
+            "name": "栈",
+            "children": null
+          },
+          {
+            "id": 61,
+            "courseId": 36,
+            "abilityId": 86,
+            "name": "数据结构",
+            "children": null
+          },
+          {
+            "id": 119,
+            "courseId": 36,
+            "abilityId": 86,
+            "name": "链表",
+            "children": null
+          }
+        ]
+      },
+      {
+        "id": 58,
+        "courseId": 36,
+        "abilityId": 87,
+        "name": "分析能力",
+        "children": [
+          {
+            "id": 58,
+            "courseId": 36,
+            "abilityId": 87,
+            "name": "数组",
+            "children": null
+          }
+        ]
+      },
+      {
+        "id": 62,
+        "courseId": 36,
+        "abilityId": 88,
+        "name": "团队合作能力",
+        "children": [
+          {
+            "id": 60,
+            "courseId": 36,
+            "abilityId": 88,
+            "name": "队列",
+            "children": null
+          },
+          {
+            "id": 62,
+            "courseId": 36,
+            "abilityId": 88,
+            "name": "数资投资",
+            "children": null
+          }
+        ]
+      }
+    ]
+  }],
+                            itemStyle: {
+                                borderColor: "rgb(18, 191, 232)"
+                            },
+                            label: {
+                                normal: {
+                                    textStyle: {
+                                        color: 'rgba(0, 0, 0, 0.9)'
+                                    }
+                                }
+                            },
+                            lineStyle: {
+                                curveness: 0.5
+                            },
+                            leaves:{
+                                itemStyle: {
+                                    color: {
+                                        type: 'radial',
+                                        x: 0.5,
+                                        y: 0.5,
+                                        r: 0.5,
+                                        colorStops: [{
+                                            offset: 0,
+                                            color: 'red' // 0% 处的颜色
+                                        }, {
+                                            offset: 1,
+                                            color: 'blue' // 100% 处的颜色
+                                        }],
+                                        globalCoord: false // 缺省为 false
+                                    },
+                                }
+                            },
+                            top: '18%',
+                            bottom: '14%',
+                            layout: 'radial',
+                            symbol: 'emptyCircle',
+                            symbolSize: 7,
+                            initialTreeDepth: 2,
+                            animationDurationUpdate: 750
+                        }
+                    ]
+                })
             }
         },
     };

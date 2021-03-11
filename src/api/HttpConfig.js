@@ -281,7 +281,10 @@ var API = {
     //下载作业
     downloadHomeWord:apiHost+'/course/fileDownload',
     //shiro跳转
-    shiroLogin:apiHost+'/shiro/login'
+    shiroLogin:apiHost+'/shiro/login',
+
+    // 课程能力点对应的知识点树形图获取数据
+    courseAKTree:apiHost + '/knowledge/courseAKTree'
 }
 
 export {

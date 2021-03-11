@@ -56,6 +56,18 @@
                 </Row>
             </div>
         </TabPane>
+        <TabPane label="课堂作业">
+            <div>
+                <Row align="middle">
+                    <Col span="6">
+                        <Table height="500" highlight-row></Table>
+                    </Col>
+                    <Col span="18">
+                        <div id="courseAKTree" style="width:800px;height:500px;"></div> 
+                    </Col>
+                </Row>
+            </div>
+        </TabPane>
     </Tabs>
     </div>
 </template>
@@ -343,6 +355,7 @@
                 this.getKnowledgeList();
                 this.getMainChaperts();
                 this.getCourseKnowledgeList();
+                this.courseAKTree()
             },
             // 获取课程主章节（作业用）
             getMainChaperts:function(){
@@ -467,6 +480,88 @@
                         this.KnowledgeList = res.data;
                     }
                 });
+            },
+            courseAKTree:function(){
+                console.log("当前课程的id->"+this.courseId);
+                var params = {
+                    courseId: this.courseId,
+                }
+                Http.courseAKTree(params).then(res=>{
+                    if(res.statusCode == 1) {
+                        let courseAKTreeEchart = this.$echarts.init(document.getElementById('courseAKTree'));
+                        var resData = [{
+                            "name" : res.data.name,
+                            "children" : res.data.children
+                        }];
+                        console.log(resData);
+                        courseAKTreeEchart.clear();
+                        courseAKTreeEchart.setOption({
+                            // backgroundColor: '#051F50',
+                            tooltip: {
+                                trigger: 'item',
+                                triggerOn: 'mousemove'
+                            },
+                            series: [
+                                {
+                                    type: 'tree',
+                                    zoom:1, //当前视角的缩放比例
+                                    //roam: true, //是否开启平游或缩放
+                                    scaleLimit: { //滚轮缩放的极限控制
+                                        min: 1,
+                                        max: 5
+                                    },
+                                    lineStyle: {
+                                        color: "#000",
+                                        width: 3,
+                                        type: 'solid' //'dotted'虚线 'solid'实线
+                                    },
+                                    data: resData,
+                                    itemStyle: {
+                                        borderColor: "rgb(18, 191, 232)"
+                                    },
+                                    label: {
+                                        normal: {
+                                            textStyle: {
+                                                color: 'rgba(0, 0, 0, 0.9)'
+                                            }
+                                        }
+                                    },
+                                    lineStyle: {
+                                        curveness: 0.25
+                                    },
+                                    leaves:{
+                                        itemStyle: {
+                                            color: {
+                                                type: 'radial',
+                                                x: 0.5,
+                                                y: 0.5,
+                                                r: 0.5,
+                                                colorStops: [{
+                                                    offset: 0,
+                                                    color: 'red' // 0% 处的颜色
+                                                }, {
+                                                    offset: 1,
+                                                    color: 'blue' // 100% 处的颜色
+                                                }],
+                                                globalCoord: false // 缺省为 false
+                                            },
+                                        }
+                                    },
+                                    top: '18%',
+                                    bottom: '14%',
+                                    layout: 'radial',
+                                    symbol: 'emptyCircle',
+                                    symbolSize: 7,
+                                    initialTreeDepth: 2,
+                                    animationDurationUpdate: 750
+                                }
+                            ]
+                        })
+                    } else {
+                        this.$Message.error();
+                    }
+                })
+                
             }
         },
     };

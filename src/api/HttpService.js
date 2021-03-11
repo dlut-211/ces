@@ -522,6 +522,11 @@ export const createImageCode=(param)=>{
         return GET(API.shiroLogin,param)
     }
 
+    // 课程能力点对应的知识点树形图获取数据
+    export const courseAKTree=(param)=>{
+        return GET(API.courseAKTree,param)
+    }
+
 //---------------------------------------------------------------------------------------------------
 // 定义4种请求
 const GET = (url, param) => {
