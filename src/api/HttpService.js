@@ -526,6 +526,50 @@ export const createImageCode=(param)=>{
     export const courseAKTree=(param)=>{
         return GET(API.courseAKTree,param)
     }
+    // 点击树形图知识点获取题目信息
+    export const findByCourseIdAndKnowledgeId=(param)=>{
+        return GET(API.findByCourseIdAndKnowledgeId,param)
+    }
+
+    // 课程添加随堂作业
+    export const postKnowledgeTest = (param) =>{
+        return POST(API.postKnowledgeTest,param);
+    }
+    // 查看课程随堂作业
+    export const getKnowledgeTestList = (param)=>{
+        return GET(API.getKnowledgeTestList,param)
+    }
+    // 删除课程随堂作业
+    export const delectKnowledgeTest = (param) =>{
+        return DELETE(API.delectKnowledgeTest,param);
+    }
+    // 编辑课程随堂作业
+    export const editKnowledgeTest = (param) =>{
+        return PUT(API.editKnowledgeTest,param);
+    }
+
+    // 课堂获取随堂作业信息
+    export const findClassroomWorkInfo = (param)=>{
+        return GET(API.findClassroomWorkInfo,param)
+    }
+    // 发布课堂作业
+    export const layoutClassWork = (param) =>{
+        return PUT(API.layoutClassWork,param);
+    }
+    // 结束随堂作业
+    export const rollBack = (param) =>{
+        return PUT(API.rollBack,param);
+    }
+    // 撤销课堂作业
+    export const revokeClassTest = (param) =>{
+        return DELETE(API.revokeClassTest,param);
+    }
+    // 随堂作业饼图展示
+    export const getPieNums = (param)=>{
+        return GET(API.getPieNums,param)
+    }
+
+    
 
 //---------------------------------------------------------------------------------------------------
 // 定义4种请求

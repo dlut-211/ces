@@ -75,6 +75,21 @@
           </Row>
         </div>
       </TabPane>
+      
+      <TabPane label="随堂作业">
+        <div>
+          <Row>
+            <Col span="6">
+              <Table height="500" highlight-row :columns="mainChpterColumn" :data="mainChapters"
+                     @on-current-change=selectChapter1></Table>
+            </Col>
+            <Col span="18">
+              <Table height="500" :columns="classWorkColumn" :data="classWorkList"></Table>
+            </Col>
+          </Row>W
+        </div>
+      </TabPane>
+
       <TabPane label="试卷" v-if="classRoomData.status != 1">
         <div>
           <tableModule :object="testPaperTableModule" @changePage="testPaperChangePage"
@@ -97,6 +112,75 @@
     <Modal v-model="hided" width="500px" :mask-closable="false" style="position:fixed;z-index:99999">
       <p style="font-size:15px">{{delHtmlTag(Describe)}}</p>
       <div slot="footer"></div>
+    </Modal>
+
+    <Modal
+      v-model="viewStudentWorkInfo"
+      title="随堂测试题信息"
+      width="800px"
+      :transfer=false>
+      <Row>
+          <Col span="12">
+                <Row>
+                    <Row>
+                        <Col span="6">
+                            <label>题目：</label>
+                        </Col>
+                        <Col span="18">{{viewClassWorkForm.name}}</Col>
+                    </Row>
+                    <br>
+                    <Row>
+                        <Col span="6">
+                            <label>选项A：</label>
+                        </Col>
+                        <Col span="18">{{viewClassWorkForm.item1}}</Col>
+                    </Row>
+                    <br>
+                    <Row>
+                        <Col span="6">
+                            <label>选项B：</label>
+                        </Col>
+                        <Col span="18">{{viewClassWorkForm.item2}}</Col>
+                    </Row>
+                    <br>
+                    <Row>
+                        <Col span="6">
+                            <label>选项C：</label>
+                        </Col>
+                        <Col span="18">{{viewClassWorkForm.item3}}</Col>
+                    </Row>
+                    <br>
+                    <Row>
+                        <Col span="6">
+                            <label>选项D：</label>
+                        </Col>
+                        <Col span="18">{{viewClassWorkForm.item4}}</Col>
+                    </Row>
+                    <br>
+                    <Row>
+                        <Col span="6">
+                            <label>正确选项: </label>
+                        </Col>
+                        <Col span="18">{{viewClassWorkForm.ans}}</Col>
+                    </Row>
+                    <br>
+                    <Row>
+                        <Col span="6">
+                            <label>对应知识点: </label>
+                        </Col>
+                        <Col span="18">{{viewClassWorkForm.knowledgeName}}</Col>
+                    </Row>
+                </Row>
+          </Col>
+          <Col span="12">
+            <div id="testInfo" style="height:300px;width:350px"></div> 
+          </Col>
+      </Row>
+        
+      <div slot="footer">
+        <!-- <Button type="ghost" size="large" @click="viewClassWork=false">关闭</Button> -->
+        <Button type="primary" size="large" @click="viewStudentWorkInfo=false">关闭</Button>
+      </div>
     </Modal>
   </div>
 </template>
@@ -345,6 +429,173 @@
                         }
                     }
                 ],
+                //测试
+                classWorkColumn: [
+                    {
+                        title: "测试名称",
+                        key: "name",
+                        render: (h, params) => {
+                            return h("div", [
+                                h(
+                                    "span",
+                                    {
+                                        style: {
+                                            color: "#2d8cf0",
+                                            margin: "0 5px",
+                                        },
+                                        on: {
+                                            click: () => {
+                                                //显示Modal
+                                                this.showClassTestInfo(params.row)
+                                                // console.log("1111111")
+                                                // alert("1")
+                                            }
+                                        }
+                                    },
+                                    params.row.name
+                                )
+                            ]);
+                        }
+                    },
+                    // {
+                    //     title: "状态", key: "status", field: 'right', width: 80,
+                    //     render: (h, params) => {
+                    //         if (params.row.status == 0) {
+                    //             return h("div", [
+                    //                 h(
+                    //                     "span",
+                    //                     {
+                    //                         style: {
+                    //                             color: "#d50000"
+                    //                         }
+                    //                     },
+                    //                     "未布置"
+                    //                 )
+                    //             ]);
+                    //         } else if (params.row.status == 1) {
+                    //             return h("div", [
+                    //                 h(
+                    //                     "span",
+                    //                     {
+                    //                         style: {
+                    //                             color: "#04B404"
+                    //                         }
+                    //                     },
+                    //                     "已布置"
+                    //                 )
+                    //             ]);
+                    //         }
+                    //     }
+                    // },
+                    {
+                        title: "操作",
+                        key: "action",
+                        align: "center",
+                        field: 'right',
+                        
+                        render: (h, params) => {
+                            return h("div", [
+                                h(
+                                    "span",
+                                    {
+                                        style: {
+                                            color: "#04B404",
+                                            cursor: "pointer",
+                                            margin: "0 5px",
+                                            display: (params.row.status == 0) ? "inline" : "none"
+                                        },
+                                        on: {
+                                            click: () => {
+                                                this.$Modal.confirm({
+                                                    title: "<span style='color:red'><b>提示</b></span>",
+                                                    content: "<span style='color:green'><b>准备发布随堂测试</b></span><br/>确定要布置作业《" + params.row.name + "》吗？",
+                                                    onOk: () => {
+                                                        this.layoutClassWorkAction(params.row.id);
+                                                    },
+                                                    onCancel: () => {
+                                                    }
+                                                })
+                                            }
+                                        }
+                                    },
+                                    "布置作业"
+                                ),
+                                h(
+                                    "span",
+                                    {
+                                        style: {
+                                            color: "#FF8000",
+                                            cursor: "pointer",
+                                            margin: "0 5px",
+                                            display: (params.row.status == 1) ? "inline" : "none"
+                                        },
+                                        on: {
+                                            click: () => {
+                                                this.$Modal.confirm({
+                                                    title: "<span style='color:red'><b>提示</b></span>",
+                                                    content: "<span style='color:red'><b>撤销布置作业会清空所有学生作业情况</b></span><br/>确定要撤销布置测试《" + params.row.workName + "》吗？",
+                                                    onOk: () => {
+                                                        this.revokeLayoutClassWorkAction(params.row.id);
+                                                    },
+                                                    onCancel: () => {
+                                                    }
+                                                })
+                                            }
+                                        }
+                                    },
+                                    "撤销布置测试"
+                                ),
+                                h(
+                                    "span",
+                                    {
+                                        style: {
+                                            color: "#B22222",
+                                            cursor: "pointer",
+                                            margin: "0 5px",
+                                            display: (params.row.status == 1) ? "inline" : "none"
+                                        },
+                                        on: {
+                                            click: () => {
+                                                this.$Modal.confirm({
+                                                    title: "<span style='color:red'><b>提示</b></span>",
+                                                    content: "<span style='color:red'></span><br/>确定要结束测试吗？",
+                                                    onOk: () => {
+                                                        //结束测试，改变题目的状态
+                                                        this.rollBack(params.row.id);
+                                                    },
+                                                    onCancel: () => {
+                                                    }
+                                                })
+                                            }
+                                        }
+                                    },
+                                    "结束测试"
+                                )
+                            ]);
+                        }
+                    },
+                ],
+                classWorkList:[],
+                knowledgeTestId:null,
+                viewStudentWorkInfo:false,
+                viewClassWorkForm: {
+                    id:null,
+                    chapterId: null,
+                    name: "",
+                    item1:"",
+                    item2:"",
+                    item3:"",
+                    item4:"",
+                    ans:"",
+                    knowledgeId:"",
+                    knowledgeName:"",
+                    courseId:""
+                },
+                passCount:0,
+                noPassCount:0,
+
+
+
                 workList: [],
                 // 试卷
                 testPaperTableModule: (TestPaperTableModuleJS.bind(this))(),
@@ -480,6 +731,119 @@
                     this.getWorkByChapter();
                 }
             },
+            selectChapter1:function(now,old) {
+                if (now.parentId) {
+                    this.chooseChapter = true;
+                    this.chooseChapterId = now.id;
+                    this.getClassWorkByChapter();
+                }
+            },
+            getClassWorkByChapter:function(){
+                const params = {
+                    chapterId: this.chooseChapterId,
+                    classroomId: this.classRoomData.Id,
+                };
+                Http.findClassroomWorkInfo(params).then(res => {
+                    if (res.statusCode == 1) {
+                        this.classWorkList = res.data;
+                        console.log(res);
+                    }
+                });
+            },
+            layoutClassWorkAction:function(id){
+                const params = {
+                    knowledgeTestId : id,
+                    classroomId : this.classRoomData.Id,
+                }
+                Http.layoutClassWork(params).then(res =>{
+                    if(res.statusCode === 1) {
+                        this.$Message.success("成功");
+                        this.getClassWorkByChapter();
+                    } else {
+                        this.$Message.error(res.message);
+                    }
+                })
+            },
+            rollBack:function(id) {
+                const params = {
+                    knowledgeTestId : id,
+                    classroomId : this.classRoomData.Id,
+                }
+                Http.rollBack(params).then(res=>{
+                    if(res.statusCode === 1) {
+                        this.$Message.success("成功");
+                        this.getClassWorkByChapter();
+                    } else {
+                        this.$Message.error(res.message);
+                    }
+                })
+
+            },
+            revokeLayoutClassWorkAction:function(id){
+                const params = {
+                    knowledgeTestId : id,
+                    classroomId : this.classRoomData.Id,
+                }
+                Http.revokeClassTest(params).then(res =>{
+                    if(res.statusCode === 1) {
+                        this.$Message.success("成功");
+                        this.getClassWorkByChapter();
+                    } else {
+                        this.$Message.error(res.message);
+                    }
+                })
+
+            },
+            showClassTestInfo:function(now) {
+                this.viewStudentWorkInfo = true;
+                this.viewClassWorkForm = now;
+                var testInfo = this.$echarts.init(document.getElementById('testInfo'));
+                const params = {
+                    knowledgeTestId : now.id,
+                    classroomId : this.classRoomData.Id,
+                }
+                Http.getPieNums(params).then(res=>{
+                    if(res.statusCode === 1){
+                        if(res.data.total > 0) {
+                            this.passCount = res.data.passCount,
+                            this.noPassCount = res.data.noPassCount
+                        }
+                        //饼图
+                        testInfo.setOption({
+                            title: {
+                                text: '答题情况',
+                            },
+                            tooltip: {
+                                trigger: 'item'
+                            },
+                            legend: {
+                                orient: 'vertical',
+                                left: 'right',
+                            },
+                            color:['#3CB371','#CD5C5C'],
+                            series: [
+                                {                   
+                                    type: 'pie',
+                                    radius: '50%',
+                                    data: [
+                                        {value: this.passCount, name: '答对人数'},
+                                        {value: this.noPassCount, name: '答错人数'},
+                                    ],
+                                    emphasis: {
+                                        itemStyle: {
+                                            shadowBlur: 10,
+                                            shadowOffsetX: 0,
+                                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                        }
+                                    }
+                                }
+                            ]
+                        });
+                    }
+                })
+                
+                
+            },
             getWorkByChapter: function () {
                 const params = {
                     classroomId: this.classRoomData.Id,
@@ -491,6 +855,7 @@
                     }
                 });
             },
+            
             //日期格式化
             formatDate: function (date, fmt) {
                 const o = {
