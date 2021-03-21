@@ -56,6 +56,36 @@
                 </Row>
             </div>
         </TabPane>
+        <TabPane label = "sdsds">
+            <div>
+                <Row>
+                    <Col span="6">
+                        <Table height="500" highlight-row :columns="chapterColumn" :data="mainChapters" @on-current-change=selectChapter></Table>
+                    </Col>
+                    <Col span="18">
+                        <div v-if="chooseChapter" class="workdiv">
+                            <Card class="card" v-for="(value,key) in workList" :key="key" @mouseenter.native="showOption(key)" @mouseleave.native="hideOption(key)">
+                                <div class="content" style="position:absolute;">
+                                    <div class="title">
+                                        <Icon type="ios-book-outline" class="icon"></Icon>
+                                        <span class="span">{{value.name}}</span>
+                                    </div>
+                                    <div style="height:100%;position:absolute;bottom:-25px;left:130px;display:none;" :ref="`workRefList${key}`">
+                                        <Icon type="trash-b" size="15" style="float:right;cursor:pointer;" @click.native="deleteWork(value.id)"></Icon>
+                                        <Icon type="edit" size="15" style="float:right;margin-right:10px;cursor:pointer;" @click.native="editWork(value)"></Icon>
+                                    </div>
+                                </div>
+                            </Card>
+                            <Card class="card">
+                                <div style="text-align:center">
+                                    <Icon size="30" type="plus" style="cursor:pointer" @click.native="addWork()"></Icon>
+                                </div>
+                            </Card>
+                        </div>
+                    </Col>
+                </Row>
+            </div>
+        </TabPane>
     </Tabs>
     </div>
 </template>
@@ -164,6 +194,7 @@
         },
         mounted: function() {
             this.infoInit();
+            console.log("hahahahah")
         },
         methods: {
             renderContent (h, { root, node, data }) {

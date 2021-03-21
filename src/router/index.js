@@ -16,6 +16,7 @@ import InviGilateInfoPage from "@/childPage/InviGilateInfoPage/InviGilateInfoPag
 import InviGilateInfo1Page from "@/childPage/InviGilateInfo1Page/InviGilateInfo1Page.vue";
 import SubjectManagePage from "@/childPage/SubjectManagePage/SubjectManagePage.vue";
 
+
 import AdminHomePage from "@/childPage/AdminHomePage/AdminHomePage.vue";
 import TeacherHomePage from "@/childPage/TeacherHomePage/TeacherHomePage.vue";
 import StudentHomePage from "@/childPage/StudentHomePage/StudentHomePage.vue";
@@ -28,6 +29,9 @@ import courseInfo from "@/childPage/courseInfo/courseInfo.vue";
 
 import SchoolPage from "@/childPage/SchoolPage/SchoolPage.vue";
 import NewPage from "@/childPage/NewPage/NewPage.vue";
+import addKnowledgeTest from "@/childPage/addKnowledgeTest/addKnowledgeTest.vue";
+import StudentTestPage from "@/childPage/StudentTestPage/StudentTestPage.vue";
+import StudentTestScore from "@/childPage/StudentTestScore/StudentTestScore.vue";
 
 Vue.use(Router);
 
@@ -42,6 +46,7 @@ export default new Router({
         path:'/NewPage',
         component:NewPage
     },
+    
     {
         path: '/AdminLoginPage',
         name: 'AdminLoginPage',
@@ -116,6 +121,14 @@ export default new Router({
                 }
             },
             {
+                path: 'StudentTestScore',
+                name: 'StudentTestScore',
+                component: StudentTestScore,
+                meta:{
+                    title: "能力分析"
+                }
+            },
+            {
                 path: 'ClassRoomPage',
                 name: 'ClassRoomPage',
                 component: ClassRoomPage,
@@ -124,12 +137,21 @@ export default new Router({
                 }
                 
             },
+            
             {
                 path: 'StudentWorkPage',
                 name: 'StudentWorkPage',
                 component: StudentWorkPage,
                 meta:{
                     title:"章节作业"
+                }
+            },
+            {
+                path: 'StudentTestPage',
+                name: 'StudentTestPage',
+                component: StudentTestPage,
+                meta: {
+                    title: "课堂测试"
                 }
             },
             {
@@ -192,9 +214,18 @@ export default new Router({
                 name: 'SubjectManagePage',
                 component: SubjectManagePage,
                 meta:{
-                    title:"我的课堂"
+                    title:"学科管理"
                 }
             },
+            {
+                path: 'addKnowledgeTest',
+                name: 'addKnowledgeTest',
+                component: addKnowledgeTest,
+                meta:{
+                    title:"添加试题"
+                }
+            },
+            
             {
                 path: 'TestPage',
                 name: 'TestPage',

@@ -477,7 +477,7 @@ export default {
      getAbilityScore:function(){
      var params = {
       subjectId:this.SubjectId,
-      studentId:this.$store.state.id 
+      studentId:this.$store.state.number 
       };
   
       Http.StudentAbilityScoreEcharts(params).then(res => {

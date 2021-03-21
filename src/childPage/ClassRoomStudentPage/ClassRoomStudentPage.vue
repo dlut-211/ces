@@ -145,6 +145,68 @@ export default {
             }
         },
         {
+          title: '课堂测试',
+          key: 'test',
+          align: 'center',
+          render: (h, params) => {
+                         return h("div", [
+                    h(
+                        "span",
+                        {
+                            style: {
+                                color: "#2d8cf0",
+                                cursor: "pointer",
+                                margin: "0 5px"
+                            },
+                            on: {
+                                click: () => {
+                                  this.$store.state.classroomId=params.row.classroomId;
+                                  localStorage.setItem("classroomId",params.row.classroomId);
+                                this.$router.replace({
+                                name: 'StudentTestPage'
+                                });
+                                this.LocalClassRoomId=params.row.classroomId;
+                                //this.GetData()
+                                }
+                            }
+                        },
+                        '查看详情'
+                    ),
+                ]);
+          }
+        },
+        {
+          title: '能力分析',
+          key: 'analysis',
+          align: 'center',
+          render: (h, params) => {
+                         return h("div", [
+                    h(
+                        "span",
+                        {
+                            style: {
+                                color: "#2d8cf0",
+                                cursor: "pointer",
+                                margin: "0 5px"
+                            },
+                            on: {
+                                click: () => {
+                                  this.$store.state.classroomId=params.row.classroomId;
+                                  localStorage.setItem("classroomId",params.row.classroomId);
+                                this.$router.replace({
+                                name: 'StudentTestScore'
+                                });
+                                this.LocalClassRoomId=params.row.classroomId;
+                                //this.GetData()
+                                }
+                            }
+                        },
+                        '查看详情'
+                    ),
+                ]);
+          }
+        },
+        {
           title:'课程状态',
           key:'status',
           align:"center",

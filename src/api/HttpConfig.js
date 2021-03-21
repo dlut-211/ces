@@ -279,7 +279,23 @@ var API = {
     selectByStudentId:apiHost+'/studentcontroller/selectByStudentId',
 
     //下载作业
-    downloadHomeWord:apiHost+'/course/fileDownload'
+    downloadHomeWord:apiHost+'/course/fileDownload',
+    //shiro跳转
+    shiroLogin:apiHost+'/shiro/login',
+
+    //添加课堂测试
+    addKnowledgeTest: apiHost + '/course/addKnowledgeTest',
+
+    //根据课堂 Id 和学生 Id 获取课堂测试的结果
+    getTestResults: apiHost + '/studentTestRelation/getTestByClassroomAndStudent',
+
+    //根据测试 Id 来获取学生测试的详细信息
+
+    getTestDetail: apiHost + '/studentTestRelation/getTestDetail',
+
+    //获取学生的能力掌握图
+
+    studentAKTree: apiHost + '/knowledge/studentAKTree'
 }
 
 export {

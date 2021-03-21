@@ -192,7 +192,7 @@
               <Button type="info" @click="GetData()">点击选择</Button>
             </FormItem>
           </Col>
-        </Row>
+        </Row> 
       </Form>
       <div slot="footer">
         <Button type="ghost" size="large" @click="editKnowledge=false">取消</Button>

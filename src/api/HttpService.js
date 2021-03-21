@@ -518,6 +518,25 @@ export const createImageCode=(param)=>{
     export const downloadHomeWord=(param)=>{
         return GET(API.downloadHomeWord,param);
     }
+    export const shiroLogin=(param)=>{
+        return GET(API.shiroLogin,param);
+    }
+
+    export const addKnowledgeTest=(param)=>{
+        return GET(API.addKnowledgeTest,param);
+    }
+
+    export const getTestResults=(param)=>{
+        return GET(API.getTestResults, param);
+    }
+
+    export const getTestDetail=(param)=>{
+        return GET(API.getTestDetail, param);
+    }
+
+    export const studentAKTree=(param)=>{
+        return GET(API.studentAKTree, param);
+    }
 
 //---------------------------------------------------------------------------------------------------
 // 定义4种请求

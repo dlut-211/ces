@@ -46,6 +46,7 @@
                     <MenuItem name="CoursePage">课程管理</MenuItem>
                     <MenuItem name="ClassRoomPage">我的课堂</MenuItem>
                     <MenuItem name="SubjectManagePage">学科管理</MenuItem>
+                    <MenuItem name="addKnowledgeTest">添加试题</MenuItem>
                 </Submenu>
             </Menu>
                 <Menu v-if="userRole==3" :open-names="['1']" theme="dark" width="auto"
@@ -118,10 +119,22 @@
     import TagsView from "@/components/TagsView/TagsView.vue";
     // 引入API
     import * as Http from "@/api/HttpService.js";
+import LoginPageVue from '../LoginPage/LoginPage.vue';
     export default {
         computed:{
             homePage: function() {
+                console.log("this.$store.state.id"+this.$store.state.id)
+                if(this.$store.state.id==null||this.$store.state.token=="")
+                {
+                this.$router.replace({
+                    name: "LoginPage"
+                });
+                }
+                else{
                 return this.$store.getters.home;
+                }
+                console.log("成败在此一举")
+                
             }
         },
         methods: {
