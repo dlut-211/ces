@@ -56,8 +56,105 @@
                 </Row>
             </div>
         </TabPane>
-        <TabPane label = "sdsds"></TabPane>
+        <TabPane label="课堂作业">
+            <div>
+                <Row>
+                    <Col span="6">
+                        <Table height="500" highlight-row :columns="chapterColumn" :data="mainChapters" @on-current-change=selectChapter></Table>
+                    </Col>
+                    <Col span="18">
+                        <div v-if="chooseChapter" class="workdiv">
+                            <Card class="card" v-for="(value,key) in knowledgeTestList" :key="key" @mouseenter.native="showOption1(key)" @mouseleave.native="hideOption1(key)">
+                                <div class="content" style="position:absolute;">
+                                    <div class="title">
+                                        <Icon type="ios-book-outline" class="icon"></Icon>
+                                        <span class="span">{{value.name}}</span>
+                                    </div>
+                                    <div style="height:100%;position:absolute;bottom:-25px;left:130px;display:none;" :ref="`classWorkRefList${key}`">
+                                        <Icon type="trash-b" size="15" style="float:right;cursor:pointer;" @click.native="deleteClassWork(value.id)"></Icon>
+                                        <Icon type="edit" size="15" style="float:right;margin-right:10px;cursor:pointer;" @click.native="editClassWork(value)"></Icon>
+                                    </div>
+                                </div>
+                            </Card>
+                            <Card class="card">
+                                <div style="text-align:center">
+                                    <Icon size="30" type="plus" style="cursor:pointer" @click.native="addClassWork()"></Icon>
+                                </div>
+                            </Card>
+                        </div>
+                    </Col>
+                </Row>
+            </div>
+        </TabPane>
+        <TabPane label="课堂作业展示">
+            <div>
+                <Row align="middle">
+                    <Col span="6">
+                        <Table height="500" highlight-row :columns="classTestColumn" :data="classTestList" @on-current-change=selectClassTest></Table>
+                    </Col>
+                    <Col span="18">
+                        <div id="courseAKTree" style="width:800px;height:500px;"></div> 
+                    </Col>
+                </Row>
+            </div>
+        </TabPane>
     </Tabs>
+    <Modal
+      v-model="viewClassWork"
+      title="作业详情信息"
+      width="800px"
+      :transfer=false>
+      <Form :model="viewClassWorkForm" label-position="left" :label-width="100" ref="viewClassWorkForm">
+        <Row>
+          <Col span="24">
+            <FormItem label="题目名称" class="forms" prop="name">
+              <Input v-model="viewClassWorkForm.name" readonly></Input>
+            </FormItem>
+          </Col>
+          <Col span="24">
+            <FormItem label="选项A" class="forms" prop="item1">
+              <Input v-model="viewClassWorkForm.item1" readonly></Input>
+            </FormItem>
+          </Col>
+          <Col span="24">
+            <FormItem label="选项B" class="forms" prop="item2">
+              <Input v-model="viewClassWorkForm.item2" readonly></Input>
+            </FormItem>
+          </Col>
+          <Col span="24">
+            <FormItem label="选项C" class="forms" prop="item3">
+              <Input v-model="viewClassWorkForm.item3" readonly></Input>
+            </FormItem>
+          </Col>
+          <Col span="24">
+            <FormItem label="选项D" class="forms" prop="item4">
+              <Input v-model="viewClassWorkForm.item4" readonly></Input>
+            </FormItem>
+          </Col>
+          <Col span="24">
+            <FormItem label="正确选项" class="forms" prop="ans">
+              <RadioGroup v-model="viewClassWorkForm.ans">
+                <Radio label="A" border disabled></Radio>
+                <Radio label="B" border disabled></Radio>
+                <Radio label="C" border disabled></Radio>
+                <Radio label="D" border disabled></Radio>
+              </RadioGroup>
+            </FormItem>
+          </Col>
+          <!-- <Col span="24">
+            <FormItem label="知识点" class="forms" prop="knowledgeId">
+              <Select filterable v-model="viewClassWorkForm.knowledgeId" :placeholder="'请选择知识点'" transfer>
+                <Option v-for="item in knowledgeList" :value="item.id" :key="item.id">{{ item.name }}</Option>
+              </Select>
+            </FormItem>
+          </Col> -->
+        </Row>
+      </Form>
+      <div slot="footer">
+        <!-- <Button type="ghost" size="large" @click="viewClassWork=false">关闭</Button> -->
+        <Button type="primary" size="large" @click="viewClassWork=false">关闭</Button>
+      </div>
+    </Modal>
     </div>
 </template>
 <script>
@@ -158,6 +255,51 @@
                     name:"",
                 },
                 KnowledgeList:[],
+                
+                treeResData:[],
+                addClassWorkForm:{
+                    chapterId: null,
+                    name: "",
+                    item1:"",
+                    item2:"",
+                    item3:"",
+                    item4:"",
+                    ans:"",
+                    courseId:""
+                },
+                editClassWorkForm:{
+                    id:null,
+                    chapterId: null,
+                    name: "",
+                    item1:"",
+                    item2:"",
+                    item3:"",
+                    item4:"",
+                    ans:"",
+                    courseId:""
+                },
+                knowledgeTestList:[],
+                classWorkRefList:[],
+                classTestList:[],
+                classTestColumn:[
+                    {
+                        title: '题目名称',
+                        key: 'name'
+                    },
+                ],
+                viewClassWork:false,
+                viewClassWorkForm: {
+                    id:null,
+                    chapterId: null,
+                    name: "",
+                    item1:"",
+                    item2:"",
+                    item3:"",
+                    item4:"",
+                    ans:"",
+                    knowledgeId:"",
+                    courseId:""
+                },
             };
         },
         components: {
@@ -344,6 +486,7 @@
                 this.getKnowledgeList();
                 this.getMainChaperts();
                 this.getCourseKnowledgeList();
+                this.courseAKTree()
             },
             // 获取课程主章节（作业用）
             getMainChaperts:function(){
@@ -415,8 +558,13 @@
                     this.chooseChapter = true;
                     this.chooseChapterId = now.id;   
                     this.getWorkByChapter();     
+                    this.getKnowledgeTestListByChapter();
                 }
                         
+            },
+            selectClassTest:function(now,old){
+                this.viewClassWorkForm = now,
+                this.viewClassWork = true;
             },
             getWorkByChapter:function(){
                 var params = {
@@ -429,6 +577,23 @@
                         this.workRefList = res.data.workIdList;
                     }
                 });
+            },
+            getKnowledgeTestListByChapter:function(){
+                var params = {
+                    chapterId: this.chooseChapterId,
+                    courseId: this.courseId
+                }
+                Http.getKnowledgeTestList(params).then(res => {
+                    if(res.statusCode === 1) {
+                        this.knowledgeTestList = res.data;
+                        for (var i = 0; i < res.data.length; i++) {
+                            this.classWorkRefList.push(res.data[i].id)
+                        }
+                    } else {
+                        this.$Message.error(res.message);
+                    }
+                })
+
             },
             addWork:function(){
                 this.addWorkForm = {
@@ -452,11 +617,44 @@
             deleteWork:function(id){
                 this.$emit("deleteWork", id)
             },
+            addClassWork:function(){
+                this.addClassWorkForm = {
+                    name:"",
+                    chapterId:this.chooseChapterId,
+                    knowledgeIdList:"",
+                    courseId:this.courseId,
+                };
+                this.$emit("addClassWork", this.addClassWorkForm,this.KnowledgeList);
+            },
+            editClassWork:function(data){
+                this.editClassWorkForm = {
+                    id: data.id,
+                    knowledgeId:data.knowledgeId,
+                    chapterId: data.chapterId,
+                    name: data.name,
+                    item1: data.item1,
+                    item2: data.item2,
+                    item3: data.item3,
+                    item4: data.item4,
+                    ans: data.ans,
+                    courseId: data.courseId
+                };
+                this.$emit("editClassWork", this.editClassWorkForm,this.KnowledgeList);
+            },
+            deleteClassWork:function(id){
+                this.$emit("deleteClassWork", id)
+            },
             showOption:function(i){
                 this.$refs[`workRefList${i}`][0].style.display= 'inline';
             },
             hideOption:function(i){
                 this.$refs[`workRefList${i}`][0].style.display= 'none';
+            },
+            showOption1:function(i){
+                this.$refs[`classWorkRefList${i}`][0].style.display= 'inline';
+            },
+            hideOption1:function(i){
+                this.$refs[`classWorkRefList${i}`][0].style.display= 'none';
             },
             getCourseKnowledgeList:function(){
                 this.KnowledgeList = [];
@@ -468,7 +666,102 @@
                         this.KnowledgeList = res.data;
                     }
                 });
-            }
+            },
+            courseAKTree:function(){
+                var params = {
+                    courseId: this.courseId,
+                }
+                Http.courseAKTree(params).then(res=>{
+                    if(res.statusCode == 1) {
+                        var courseAKTreeEchart = this.$echarts.init(document.getElementById('courseAKTree'));
+                        var resData = [{
+                            "name" : res.data.name,
+                            "children" : res.data.children
+                        }];
+                        courseAKTreeEchart.hideLoading();
+                        courseAKTreeEchart.setOption({
+                            // backgroundColor: '#051F50',
+                            tooltip: {
+                                trigger: 'item',
+                                triggerOn: 'mousemove'
+                            },
+                            series: [
+                                {
+                                    type: 'tree',
+                                    zoom:1, //当前视角的缩放比例
+                                    //roam: true, //是否开启平游或缩放
+                                    scaleLimit: { //滚轮缩放的极限控制
+                                        min: 1,
+                                        max: 5
+                                    },
+                                    lineStyle: {
+                                        color: "#000",
+                                        width: 3,
+                                        type: 'solid' //'dotted'虚线 'solid'实线
+                                    },
+                                    data: resData,
+                                    itemStyle: {
+                                        borderColor: "rgb(18, 191, 232)"
+                                    },
+                                    label: {
+                                        normal: {
+                                            textStyle: {
+                                                color: 'rgba(0, 0, 0, 0.9)'
+                                            }
+                                        }
+                                    },
+                                    lineStyle: {
+                                        curveness: 0.5
+                                    },
+                                    leaves:{
+                                        itemStyle: {
+                                            color: {
+                                                type: 'radial',
+                                                x: 0.5,
+                                                y: 0.5,
+                                                r: 0.5,
+                                                colorStops: [{
+                                                    offset: 0,
+                                                    color: 'red' // 0% 处的颜色
+                                                }, {
+                                                    offset: 1,
+                                                    color: 'blue' // 100% 处的颜色
+                                                }],
+                                                globalCoord: false // 缺省为 false
+                                            },
+                                        }
+                                    },
+                                    top: '18%',
+                                    bottom: '14%',
+                                    // layout: 'radial',
+                                    symbol: 'emptyCircle',
+                                    symbolSize: 7,
+                                    initialTreeDepth: 2,
+                                    animationDurationUpdate: 750
+                                }
+                            ]
+                        });
+                        
+                        courseAKTreeEchart.off('click')
+                        courseAKTreeEchart.on('click',(clickParam)=>{
+                            if(clickParam.data.courseId == null) {
+                                this.$Message.warning('请点击知识点进行查看题目信息！');
+                            }
+                            var params2 = {
+                                courseId: this.courseId,
+                                knowledgeId: clickParam.data.id
+                            }
+                            Http.findByCourseIdAndKnowledgeId(params2).then(res=>{
+                                this.classTestList = res.data
+                            })
+                        })
+                    } else {
+                        this.$Message.error();
+                    }
+                })
+                
+            },
+            
         },
     };
 </script>

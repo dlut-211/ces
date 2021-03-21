@@ -9,7 +9,7 @@ import 'iview/dist/styles/iview.css';
 import store from './store/index.js'
 import tools from './util/tools.js'
 import AMap from 'vue-amap';
-import echarts from 'echarts';
+import * as echarts from 'echarts';
 import VueMuuri from 'vue-muuri';
 import 'vue-muuri/dist/vue-muuri.css';
 

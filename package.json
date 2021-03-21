@@ -12,7 +12,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
-    "echarts": "^4.2.1",
+    "echarts": "^4.9.0",
     "errors": "^0.3.0",
     "function-bind": "^1.1.1",
     "has": "^1.0.3",

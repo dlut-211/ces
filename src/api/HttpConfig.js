@@ -131,7 +131,7 @@ var API = {
     importClassRoomStudent: apiHost + '/classroomstudent/importstu',
     // 获取学生导入模板
     getClassRoomStudentTemplate: apiHost + '/classroomstudent/gettemplate',
-    getClassRoomStudentTemplate2: 'http://localhost:8443/api' + '/classroomstudent/gettemplate',
+    getClassRoomStudentTemplate2: 'http://47.99.65.198:8443/api' + '/classroomstudent/gettemplate',
     // 获取课堂章节作业
     getClassRoomWorkChapterList: apiHost + '/classroomwork/chapterlist',
     // 布置课堂作业
@@ -295,7 +295,32 @@ var API = {
 
     //获取学生的能力掌握图
 
-    studentAKTree: apiHost + '/knowledge/studentAKTree'
+    studentAKTree: apiHost + '/knowledge/studentAKTree',
+    // 课程能力点对应的知识点树形图获取数据
+    courseAKTree:apiHost + '/knowledge/courseAKTree',
+    // 点击树形图知识点获取题目信息
+    findByCourseIdAndKnowledgeId:apiHost + '/knowledgetest/findByCourseIdAndKnowledgeId',
+
+    // 课程添加随堂作业
+    postKnowledgeTest: apiHost + '/knowledgetest/add',
+    // 查看课程随堂作业
+    getKnowledgeTestList: apiHost + '/knowledgetest/list',
+    // 删除课程随堂作业
+    delectKnowledgeTest: apiHost + '/knowledgetest/delect',
+    // 编辑课程随堂作业
+    editKnowledgeTest: apiHost + '/knowledgetest/edit',
+
+    // 课堂获取随堂作业信息
+    findClassroomWorkInfo:apiHost + '/knowledgetest/findClassInfo',
+    // 发布随堂作业
+    layoutClassWork: apiHost + '/classroomTestRelation/updateToOne',
+    // 结束随堂作业
+    rollBack: apiHost + '/classroomTestRelation/rollback',
+    // 撤销随堂测试
+    revokeClassTest : apiHost + '/studentTestRelation/revokeClassTest',
+    // 随堂作业饼图展示
+    getPieNums : apiHost + '/studentTestRelation/getPieNums',
+
 }
 
 export {

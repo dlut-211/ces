@@ -109,6 +109,9 @@
         @addWork="addWorkModal"
         @editWork="editWorkModal"
         @deleteWork="deleteWorkAction"
+        @addClassWork="addClassWorkModal"
+        @editClassWork="editClassWorkModal"
+        @deleteClassWork="deleteClassWorkAction"
         ref="CourseDetail">
       </courseInfo>
     </Modal>
@@ -262,6 +265,122 @@
         <Button type="primary" size="large" @click="editWorkHandleSubmit('editWorkForm')">确定</Button>
       </div>
     </Modal>
+
+    <!-- 随堂作业-->
+    <Modal
+      v-model="addClassWork"
+      title="添加课堂作业"
+      width="800px"
+      :mask-closable="false">
+      <Form :model="addClassWorkForm" label-position="left" :label-width="100" :rules="classWorkRule" ref="addClassWorkForm">
+        <Row>
+          <Col span="24">
+            <FormItem label="题目名称" class="forms" prop="name">
+              <Input v-model="addClassWorkForm.name"></Input>
+            </FormItem>
+          </Col>
+          <Col span="24">
+            <FormItem label="选项A" class="forms" prop="item1">
+              <Input v-model="addClassWorkForm.item1"></Input>
+            </FormItem>
+          </Col>
+          <Col span="24">
+            <FormItem label="选项B" class="forms" prop="item2">
+              <Input v-model="addClassWorkForm.item2"></Input>
+            </FormItem>
+          </Col>
+          <Col span="24">
+            <FormItem label="选项C" class="forms" prop="item3">
+              <Input v-model="addClassWorkForm.item3"></Input>
+            </FormItem>
+          </Col>
+          <Col span="24">
+            <FormItem label="选项D" class="forms" prop="item4">
+              <Input v-model="addClassWorkForm.item4"></Input>
+            </FormItem>
+          </Col>
+          <Col span="24">
+            <FormItem label="正确选项" class="forms" prop="ans">
+              <RadioGroup v-model="addClassWorkForm.ans">
+                <Radio label="A" border></Radio>
+                <Radio label="B" border></Radio>
+                <Radio label="C" border></Radio>
+                <Radio label="D" border></Radio>
+              </RadioGroup>
+            </FormItem>
+          </Col>
+          <Col span="24">
+            <FormItem label="知识点" class="forms" prop="knowledgeId">
+              <Select filterable v-model="addClassWorkForm.knowledgeId" :placeholder="'请选择知识点'" transfer>
+                <Option v-for="item in knowledgeList" :value="item.id" :key="item.id">{{ item.name }}</Option>
+              </Select>
+            </FormItem>
+          </Col>
+        </Row>
+      </Form>
+      <div slot="footer">
+        <Button type="ghost" size="large" @click="addClassWork=false">取消</Button>
+        <Button type="primary" size="large" @click="addClassWorkHandleSubmit('addClassWorkForm')">确定</Button>
+      </div>
+    </Modal>
+
+    <Modal
+      v-model="editClassWork"
+      title="编辑课堂作业"
+      width="800px"
+      :mask-closable="false">
+      <Form :model="editClassWorkForm" label-position="left" :label-width="100" :rules="classWorkRule" ref="editClassWorkForm">
+        <Row>
+          <Col span="24">
+            <FormItem label="题目名称" class="forms" prop="name">
+              <Input v-model="editClassWorkForm.name"></Input>
+            </FormItem>
+          </Col>
+          <Col span="24">
+            <FormItem label="选项A" class="forms" prop="item1">
+              <Input v-model="editClassWorkForm.item1"></Input>
+            </FormItem>
+          </Col>
+          <Col span="24">
+            <FormItem label="选项B" class="forms" prop="item2">
+              <Input v-model="editClassWorkForm.item2"></Input>
+            </FormItem>
+          </Col>
+          <Col span="24">
+            <FormItem label="选项C" class="forms" prop="item3">
+              <Input v-model="editClassWorkForm.item3"></Input>
+            </FormItem>
+          </Col>
+          <Col span="24">
+            <FormItem label="选项D" class="forms" prop="item4">
+              <Input v-model="editClassWorkForm.item4"></Input>
+            </FormItem>
+          </Col>
+          <Col span="24">
+            <FormItem label="正确选项" class="forms" prop="ans">
+              <RadioGroup v-model="editClassWorkForm.ans">
+                <Radio label="A" border></Radio>
+                <Radio label="B" border></Radio>
+                <Radio label="C" border></Radio>
+                <Radio label="D" border></Radio>
+              </RadioGroup>
+            </FormItem>
+          </Col>
+          <Col span="24">
+            <FormItem label="知识点" class="forms" prop="knowledgeId">
+              <Select filterable v-model="editClassWorkForm.knowledgeId" :placeholder="'请选择知识点'" transfer>
+                <Option v-for="item in knowledgeList" :value="item.id" :key="item.id">{{ item.name }}</Option>
+              </Select>
+            </FormItem>
+          </Col>
+        </Row>
+      </Form>
+      <div slot="footer">
+        <Button type="ghost" size="large" @click="editClassWork=false">取消</Button>
+        <Button type="primary" size="large" @click="editClassWorkHandleSubmit('editClassWorkForm')">确定</Button>
+      </div>
+    </Modal>
+    
   </div>
 </template>
 <script>
@@ -436,6 +555,57 @@
                         {required: true, message: "作业名称不能为空", trigger: "blur"}
                     ]
                 },
+                // 随堂作业============================================
+                addClassWork: false,
+                addClassWorkForm: {
+                    chapterId: null,
+                    name: "",
+                    item1:"",
+                    item2:"",
+                    item3:"",
+                    item4:"",
+                    ans:"",
+                    knowledgeId:"",
+                    courseId:""
+                },
+                editClassWork:false,
+                editClassWorkForm: {
+                    id:null,
+                    chapterId: null,
+                    name: "",
+                    item1:"",
+                    item2:"",
+                    item3:"",
+                    item4:"",
+                    ans:"",
+                    knowledgeId:"",
+                    courseId:""
+                },
+
+                classWorkRule: {
+                    name: [
+                        {required: true, message: "作业名称不能为空", trigger: "blur"}
+                    ],
+                    item1:[
+                      {required: true, message: "选项A不能为空", trigger: "blur"}
+                    ],
+                    item2:[
+                      {required: true, message: "选项B不能为空", trigger: "blur"}
+                    ],
+                    item3:[
+                      {required: true, message: "选项C不能为空", trigger: "blur"}
+                    ],
+                    item4:[
+                      {required: true, message: "选项D不能为空", trigger: "blur"}
+                    ],
+                    ans:[
+                      {required: true, message: "请设置一个正确答案", trigger: "blur"}
+                    ],
+                    knowledgeId: [
+                        {type: 'number', required: true, message: "知识点不能为空", trigger: "change"},
+                    ],
+                },
+
                 /**
                  * 章节作业下的知识点列表
                  */
@@ -1053,6 +1223,132 @@
                     if (res.statusCode === 1) {
                         this.$Message.success("删除成功");
                         this.$refs.CourseDetail.getWorkByChapter();
+                    } else {
+                        this.$Message.error(res.message);
+                    }
+                })
+            },
+
+            // 添加随堂作业模态框
+            addClassWorkModal: function (addClassWorkForm, knowledgeList) {
+                this.addClassWorkForm = addClassWorkForm;
+                this.knowledgeList = knowledgeList;
+                this.$refs['addClassWorkForm'].resetFields();
+                this.addClassWork = true;
+            },
+            // 校验添加随堂作业
+            addClassWorkHandleSubmit: function (name) {
+                const result = this.$refs[name].validate(valid => {
+                    if (valid) {
+                        this.addClassWorkAction();
+                    } else {
+                        this.$Message.error("表单信息不正确!");
+                    }
+                });
+                return result;
+            },
+
+            /**
+             * 添加作业Action
+             */
+            addWorkAction: function () {
+                const params = this.addWorkForm;
+                Http.postWork(params).then(res => {
+                    if (res.statusCode === 1) {
+                        this.$Message.success(res.message);
+                        this.addWorkForm = {
+                            description: "",
+                            chapterId: "",
+                            name: ""
+                        };
+                        this.addWork = false;
+                        this.$refs["addWorkForm"].resetFields();
+                        this.$refs.CourseDetail.getWorkByChapter();
+                    } else {
+                        this.$Message.error(res.message);
+                    }
+                });
+            },
+            // 添加随堂作业Action
+            addClassWorkAction: function () {
+                const params = this.addClassWorkForm;
+                console.log(params);
+                Http.postKnowledgeTest(params).then(res=>{
+                  if(res.statusCode === 1){
+                    this.$Message.success(res.message);
+                    this.addClassWorkForm = {
+                            chapterId: null,
+                            name: "",
+                            item1:"",
+                            item2:"",
+                            item3:"",
+                            item4:"",
+                            ans:"",
+                            knowledgeId:"",
+                            courseId:""
+                    };
+                    this.addClassWork = false;
+                    this.$refs["addClassWorkForm"].resetFields();
+                    this.$refs.CourseDetail.getKnowledgeTestListByChapter();
+                  } else {
+                    this.$Message.error(res.message);
+                  }
+                })
+            },
+            // 随堂作业模态框
+            editClassWorkModal: function (editClassWorkForm, knowledgeList) {
+                this.editClassWorkForm = editClassWorkForm;
+                this.knowledgeList = knowledgeList;
+                this.$refs['editClassWorkForm'].resetFields();
+                this.editClassWork = true;
+            },
+            // 校验修改随堂作业
+            editClassWorkHandleSubmit: function (name) {
+                const result = this.$refs[name].validate(valid => {
+                    if (valid) {
+                        this.editClassWorkAction();
+                    } else {
+                        this.$Message.error("表单信息不正确!");
+                    }
+                });
+                return result;
+            },
+            // 修改随堂作业Action
+            editClassWorkAction: function () {
+                const params = this.editClassWorkForm;
+                Http.editKnowledgeTest(params).then(res => {
+                    if (res.statusCode === 1) {
+                        this.$Message.success(res.message);
+                        this.editClassWorkForm = {
+                            id:null,
+                            chapterId: null,
+                            name: "",
+                            item1:"",
+                            item2:"",
+                            item3:"",
+                            item4:"",
+                            ans:"",
+                            knowledgeId:"",
+                            courseId:""
+                        };
+                        this.editClassWork = false;
+                        this.$refs["editClassWorkForm"].resetFields();
+                        this.$refs.CourseDetail.getKnowledgeTestListByChapter();
+                    } else {
+                        this.$Message.error(res.message);
+                    }
+                })
+            },
+
+            // 删除随堂作业
+            deleteClassWorkAction: function (id) {
+                const params = {
+                    id: id
+                };
+                Http.delectKnowledgeTest(params).then(res => {
+                    if (res.statusCode === 1) {
+                        this.$Message.success("删除成功");
+                        this.$refs.CourseDetail.getKnowledgeTestListByChapter();
                     } else {
                         this.$Message.error(res.message);
                     }

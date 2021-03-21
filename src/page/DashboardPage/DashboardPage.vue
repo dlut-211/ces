@@ -46,7 +46,6 @@
                     <MenuItem name="CoursePage">课程管理</MenuItem>
                     <MenuItem name="ClassRoomPage">我的课堂</MenuItem>
                     <MenuItem name="SubjectManagePage">学科管理</MenuItem>
-                    <MenuItem name="addKnowledgeTest">添加试题</MenuItem>
                 </Submenu>
             </Menu>
                 <Menu v-if="userRole==3" :open-names="['1']" theme="dark" width="auto"
