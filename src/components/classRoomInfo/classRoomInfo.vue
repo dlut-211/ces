@@ -533,7 +533,7 @@
                                             click: () => {
                                                 this.$Modal.confirm({
                                                     title: "<span style='color:red'><b>提示</b></span>",
-                                                    content: "<span style='color:red'><b>撤销布置作业会清空所有学生作业情况</b></span><br/>确定要撤销布置测试《" + params.row.workName + "》吗？",
+                                                    content: "<span style='color:red'><b>撤销布置作业会清空所有学生作业情况</b></span><br/>确定要撤销布置测试《" + params.row.name + "》吗？",
                                                     onOk: () => {
                                                         this.revokeLayoutClassWorkAction(params.row.id);
                                                     },
@@ -795,6 +795,8 @@
 
             },
             showClassTestInfo:function(now) {
+                this.passCount = 0;
+                this.noPassCount = 0;
                 this.viewStudentWorkInfo = true;
                 this.viewClassWorkForm = now;
                 var testInfo = this.$echarts.init(document.getElementById('testInfo'));
