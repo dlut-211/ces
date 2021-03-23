@@ -199,7 +199,7 @@
                   <Icon type="ios-pulse-strong" size="20"></Icon>
                   能力点雷达图
                 </p >
-            <div id="EchartsSubjectAbility" style="width:300px;height:300px;"> </div>
+            <div id="EchartsSubjectAbility" style="width:400px;height:300px;"> </div>
             </Card>
             </Col>  
             <Col span="1">
@@ -582,8 +582,8 @@ let barSubjectAbility = this.$echarts.init(document.getElementById('EchartsSubje
         // shape: 'circle',
         name: {
             textStyle: {
-                color: '#fff',
-                backgroundColor: '#999',
+                color: '#000000',
+                backgroundColor: '#ffffff',
                 borderRadius: 3,
                 padding: [3, 5]
            }

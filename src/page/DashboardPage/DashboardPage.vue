@@ -14,13 +14,14 @@
                 </Menu> -->
                 <Menu v-if="userRole==1" :theme="theme2" :open-names="['1','2','3']" theme="dark" width="auto"
                     :style="{paddingTop:'10px'}" @on-select="changeRouter">
-                <Submenu name="1">
+                <Submenu name="3">
                     <template slot="title">
                         <Icon type="ios-paper"></Icon>
-                        用户管理
+                        学校管理
                     </template>
-                    <MenuItem name="TeacherPage">教师</MenuItem>
+                    <MenuItem name="SchoolPage">学校</MenuItem>
                 </Submenu>
+
                 <Submenu name="2">
                     <template slot="title">
                         <Icon type="ios-paper"></Icon>
@@ -28,12 +29,13 @@
                     </template>
                     <MenuItem name="SubjectPage">学科</MenuItem>
                 </Submenu>
-                <Submenu name="3">
+                
+                <Submenu name="1">
                     <template slot="title">
                         <Icon type="ios-paper"></Icon>
-                        学校管理
+                        用户管理
                     </template>
-                    <MenuItem name="SchoolPage">学校</MenuItem>
+                    <MenuItem name="TeacherPage">教师</MenuItem>
                 </Submenu>
             </Menu>
             <Menu v-if="userRole==2" :open-names="['1']" theme="dark" width="auto"
@@ -89,18 +91,18 @@
             <Form :model="updatePasswordForm" label-position="left" :label-width="120" :rules="rules" ref="updatePasswordForm">
                 <Row>
                     <Col span="24">
-                    <FormItem label="原始密码" class="forms" prop="OldPassword">
-                        <Input type="password" v-model="updatePasswordForm.OldPassword"></Input>
+                    <FormItem label="原始密码" class="forms" prop="oldPassword">
+                        <Input type="password" v-model="updatePasswordForm.oldPassword"></Input>
                     </FormItem>
                     </Col>
                     <Col span="24">
-                    <FormItem label="新密码" class="forms" prop="NewPassword">
-                        <Input type="password" v-model="updatePasswordForm.NewPassword"></Input>
+                    <FormItem label="新密码" class="forms" prop="newPassword">
+                        <Input type="password" v-model="updatePasswordForm.newPassword"></Input>
                     </FormItem>
                     </Col>
                     <Col span="24">
-                    <FormItem label="确认密码" class="forms" prop="ConfirmPassword">
-                        <Input type="password" v-model="updatePasswordForm.ConfirmPassword"></Input>
+                    <FormItem label="确认密码" class="forms" prop="confirmPassword">
+                        <Input type="password" v-model="updatePasswordForm.confirmPassword"></Input>
                     </FormItem>
                     </Col>
                 </Row>
@@ -157,21 +159,21 @@ import LoginPageVue from '../LoginPage/LoginPage.vue';
                 });
             },
             updatePasswordAction: function() {
+                this.updatePasswordForm.roles = this.$store.state.roles;
                 var params = this.updatePasswordForm;
                 Http.updatePassword(params).then(res => {
-                    this.$Message.success(res.Message);
+                    if (res.statusCode === 1) {
+                        this.$Message.success(res.message);
                         this.updatePasswordForm = {
-                            Id: "",
-                            OldPassword: "",
-                            NewPassword: "",
-                            ConfirmPassword: ""
+                            id: "",
+                            oldPassword: "",
+                            newPassword: "",
+                            confirmPassword: ""
                         };
                         this.updatePassword = false;
-                    // if (res.statusCode == 1) {
-
-                    // } else {
-                    //     this.$Message.error(res.Message);
-                    // }
+                    } else {
+                        this.$Message.error(res.message);
+                    }
                 });
             },
             updatePasswordHandleSubmit: function(name) {
@@ -187,10 +189,11 @@ import LoginPageVue from '../LoginPage/LoginPage.vue';
             openUpdatePasswordForm: function() {
                 this.updatePassword = true;
                 this.updatePasswordForm = {
-                    Id: this.$store.getters.id,
-                    OldPassword: "",
-                    NewPassword: "",
-                    ConfirmPassword: ""
+                    id: this.$store.getters.id,
+                    oldPassword: "",
+                    newPassword: "",
+                    confirmPassword: ""
+
                 };
             }
         },
@@ -198,7 +201,7 @@ import LoginPageVue from '../LoginPage/LoginPage.vue';
             var validateConfirmPassowrd = (rule, value, callback) => {
                 if (value === "") {
                     callback(new Error("请再次输入密码"));
-                } else if (value !== this.updatePasswordForm.NewPassword) {
+                } else if (value !== this.updatePasswordForm.newPassword) {
                     callback(new Error("两次输入密码不一致!"));
                 } else {
                     callback();
@@ -212,24 +215,26 @@ import LoginPageVue from '../LoginPage/LoginPage.vue';
                 aaa: true,
                 updatePassword: false,
                 updatePasswordForm: {
-                    Id: "",
-                    OldPassword: "",
-                    NewPassword: "",
-                    ConfirmPassword: ""
+                    id: "",
+                    oldPassword: "",
+                    newPassword: "",
+                    confirmPassword: "",
+                    roles:"",
                 },
 
                 rules: {
-                    OldPassword: [{
+                    oldPassword: [{
                         required: true,
                         message: "原始密码不能为空",
                         trigger: "blur"
                     }],
-                    NewPassword: [{
+                    newPassword: [{
                         required: true,
                         message: "新密码不能为空",
                         trigger: "blur"
                     }],
-                    ConfirmPassword: [{
+                    confirmPassword: [{
+                        required: true,
                         validator: validateConfirmPassowrd,
                         trigger: "blur"
                     }]

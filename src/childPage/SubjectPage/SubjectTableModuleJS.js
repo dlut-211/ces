@@ -70,7 +70,7 @@ function SubjectTableModuleJS() {
                             "span",
                             {
                                 style: {
-                                    color: "#8CF02D",
+                                    color: "#2DB7F5",
                                     cursor: "pointer",
                                     margin: "0 5px"
                                 },

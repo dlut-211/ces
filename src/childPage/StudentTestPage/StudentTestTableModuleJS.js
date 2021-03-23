@@ -30,7 +30,7 @@ function StudentTestTableModuleJS() {
             { title: "知识点", key: "knowledgeName", align: "center"},
             { title: "完成状态", key: "status", align: "center",
             render: (h, params) => {
-                if(params.row.status=='失败'){
+                if(params.row.status=='错误'){
                 return h("div", [
                     h(
                         "span",

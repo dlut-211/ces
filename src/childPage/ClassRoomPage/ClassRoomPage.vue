@@ -428,8 +428,8 @@
             </Col>
             <Upload v-if="!noStudent" :action="uploadStudentTestPaperFileUrl" :headers="{Authorization:$store.state.token}"
                     style="float: left; margin-right: 20px;" :show-upload-list="false"
-                    :on-success="handleImportStudentTestPaperSuccess" :on-format-error="handleFormatError"
-                    :before-upload="handBeforeUpload">
+                    :on-success="handleImportStudentTestPaperSuccess" 
+                   >
               <Button  type="success" >点击导入成绩</Button>
             </Upload>
             <Button v-if="noStudent" type="success" @click="checkBeforeUpload">点击导入成绩</Button>
@@ -1800,7 +1800,8 @@
                     .then(res => {
                         if (res.data === null || res.data === '') {
                             this.showResultAnalysis = false;
-                            alert("暂时未导入成绩")
+                            // alert("暂时未导入成绩")
+                            this.$Message.error("暂时未导入成绩");
                             return;
                         }
                         this.paperAnalysisData=[];
@@ -1808,9 +1809,10 @@
                           console.log(element);
                           console.log(element.knowledgeName)
                             resAnalysisKnowledge.push(element.knowledgeName),
-                            resAnalysisLv1.push(element.level_1);
-                            resAnalysisLv2.push(element.level_2);
-                            resAnalysisLv3.push(element.level_3);
+                            
+                            resAnalysisLv1.push(Math.round(element.level_1*100)/100);
+                            resAnalysisLv2.push(Math.round(element.level_2*100)/100);
+                            resAnalysisLv3.push(Math.round(element.level_3*100)/100);
                             resAnalysisScore.push(element.score_sum);
                             this.paperAnalysisData.push({"knowledgeName":element.knowledgeName,"sum":element.score_sum})
                         });
@@ -1915,7 +1917,11 @@
                                 tooltip: {},
                                 xAxis: {
                                     name: "知识点",
-                                    data: resAnalysisKnowledge
+                                    data: resAnalysisKnowledge,
+                                    axisLabel:{
+                                      interval:0,
+                                      rotate: -30
+                                    }
                                 },
                                 yAxis: {name: "分数",},
                                 series: [{

@@ -90,7 +90,7 @@
             <div>
                 <Row align="middle">
                     <Col span="6">
-                        <Table height="500" highlight-row :columns="classTestColumn" :data="classTestList" @on-current-change=selectClassTest></Table>
+                        <Table height="500" highlight-row :columns="classTestColumn"  :data="classTestList" @on-current-change=selectClassTest></Table>
                     </Col>
                     <Col span="18">
                         <div id="courseAKTree" style="width:800px;height:500px;"></div> 

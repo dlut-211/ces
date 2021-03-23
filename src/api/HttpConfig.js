@@ -13,7 +13,7 @@ var API = {
     // 后台用户登陆
     login: apiHost + '/testmd/selectByAccountAndPassword',
     // 修改密码
-    updatePassword: apiHost + '/user/editpassword',
+    updatePassword: apiHost + '/usercontroller/editpassword',
     // 返回用户拥有的权限的接口selectByAccountAndPassword
     // getPermission: apiHost + '/user/getpermission',
     // 校验Token是否失效
