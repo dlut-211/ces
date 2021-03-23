@@ -795,6 +795,8 @@
 
             },
             showClassTestInfo:function(now) {
+                this.passCount = 0;
+                this.noPassCount = 0;
                 this.viewStudentWorkInfo = true;
                 this.viewClassWorkForm = now;
                 var testInfo = this.$echarts.init(document.getElementById('testInfo'));

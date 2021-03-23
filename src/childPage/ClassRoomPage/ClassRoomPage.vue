@@ -630,7 +630,8 @@
                     CourseCode: "",
                     CourseName: "",
                     dailyPerformanceWeight: null,//添加权重
-                    testPerformanceWeight: null
+                    testPerformanceWeight: null,
+                    createdBy:null
                 },
                 StudentGrade: false,
                 editStudentWorkForm: {
@@ -653,7 +654,8 @@
                     CourseCode: "",
                     CourseName: "",
                     dailyPerformanceWeight: null,//添加权重
-                    testPerformanceWeight: null
+                    testPerformanceWeight: null,
+                    createdBy:null
                 },
                 nowPage: 1,
                 pageSize: 10,
@@ -1006,7 +1008,9 @@
 
             // 添加课堂
             addClassRoomAction: function () {
+              this.addClassRoomForm.createdBy = this.$store.state.id;
                 var params = this.addClassRoomForm;
+                console.log(params);
                 Http.postClassRoom(params).then(res => {
                     if (res.statusCode === 1) {
                         this.$Message.success(res.message);
@@ -1030,6 +1034,7 @@
             },
             // 编辑课堂
             editClassRoomAction: function () {
+              this.editClassRoomForm.createdBy = this.$store.state.id;
                 var params = this.editClassRoomForm;
                 Http.putClassRoom(params).then(res => {
                     if (res.statusCode === 1) {
@@ -1042,7 +1047,8 @@
                             TermType: "",
                             name: "",
                             dailyPerformanceWeight: null,
-                            testPerformanceWeight: null
+                            testPerformanceWeight: null,
+                            createdBy:null
                         };
                         this.editClassRoom = false;
                         this.$refs["editClassRoomForm"].resetFields();
