@@ -63,7 +63,7 @@
             <Layout :style="{marginLeft: '200px',paddingTop:'50px'}">
                 <div class="title">
                     <div class="titleLeft">
-                        大学生学习能力模型系统
+                        软件工程学习能力分析评价系统
                     </div>
                     <div class="titleRight">欢迎您! {{$store.getters.username}}
                         <Button type="info" size="small" class="logout" @click="openUpdatePasswordForm">

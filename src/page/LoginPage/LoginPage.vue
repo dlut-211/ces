@@ -9,7 +9,7 @@
             
         </div>
     <div style="padding-top:10%">
-        <span style="font-size:50px">大学生能力分析系统</span>
+        <span style="font-size:50px">软件工程学习能力分析评价系统</span>
     </div>
     <Row>
         <i-col span="7">

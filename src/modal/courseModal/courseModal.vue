@@ -26,7 +26,7 @@ export default {
       selectModule: (CourseSelectModuleJS.bind(this))(),
       tableModule: (CourseTableModuleJS.bind(this))(),
 	  nowPage: 1,
-      pageSize: 5,
+      pageSize: 10,
       choose: null,
 	  findCourseForm:{
         Code:"",
@@ -90,7 +90,7 @@ export default {
       Http.getCourseList(params).then(res => {
         if(res.statusCode==1){
             this.tableModule.tableContent = res.data.content;
-            this.tableModule.count = res.data.total;
+            this.tableModule.count = res.data.totalElements;
         }
       });
     },

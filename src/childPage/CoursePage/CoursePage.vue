@@ -765,7 +765,7 @@
                 const params = {
                     page: this.nowPage,
                     pageSize: this.pageSize,
-                    code: this.findCourseForm.code,
+                    Code: this.findCourseForm.code,
                     name: this.findCourseForm.name
                 };
                 console.log('页码参数:'+params.nowPage);

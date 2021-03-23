@@ -214,6 +214,7 @@
             <FormItem label="作业" class="forms" prop="workPath">
               <Upload :action="uploadWorkFile" :headers="{Authorization:$store.state.token}"
                       style="float: left; margin-right: 20px;" :show-upload-list="false"
+                      :format="['war','rar','zip']"
                       :on-success="handleWorkSuccess"
                       :on-format-error="handleFormatError">
                 <div>

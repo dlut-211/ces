@@ -37,13 +37,13 @@
             <Col span="18">{{knowledgeTestDetail.item4}}</Col>
         </Row>
         <br>
-        <Row>
+        <!-- <Row>
             <Col span="6">
                 <label>正确答案：</label>
             </Col>
             <Col span="18">{{knowledgeTestDetail.ans}}</Col>
-        </Row>
-        <br>
+        </Row> -->
+        <!-- <br> -->
         <Row>
             <Col span="6">
                 <label>我的答案：</label>

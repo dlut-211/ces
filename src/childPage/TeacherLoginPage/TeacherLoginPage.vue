@@ -101,7 +101,7 @@
       <img src="../../assets/iconleft1.png" alt="" class="img">
     </div>
       <div class="right"  @keyup="keydown($event)"  v-focus="true">
-    <p style="font-size:30px">大学生能力分析系统</p><br/>
+    <p style="font-size:30px">软件工程学习能力分析评价系统</p><br/>
           <div class="loginContent">
            <Form>
               <FormItem>
@@ -169,28 +169,22 @@
       },
    
               login: function() {
-                  console.log(this.form.account+'--------'+this.form.password+'-----'+this.form.inputImageCode)
                   var params = {
                       number: this.form.account,
                       password: this.form.password,
                       inputImageCode:this.form.inputImageCode
                   };
                  Http.checkImageCode(params).then(res=>{
-                    console.log('教师js第一个进来了')
-                    console.log(res)
                  if(res.code==='200'){
-                     // console.log('教师js第二个进来了')
                       Http.teacherLogin(params).then(res => {
-                        console.log(res)
                       if (res.statusCode == 1) {
                           this.$Message.success('登录成功');
-                           console.log('教师js第三个进来了')
                           this.$store.state.username = res.data.name;
                           this.$store.state.token = res.data.token;
                           this.$store.state.id = res.data.id;
                           this.$store.state.roles = 2;
                           this.$store.state.subjectId = res.data.subjectId;
-                          this.$store.state.home = 'TeacherHomePage';
+                          this.$store.state.home = 'CoursePage';
                           localStorage.setItem('username', this.$store.getters.username);
                           localStorage.setItem('token', this.$store.getters.token);
                           localStorage.setItem('id', this.$store.state.id);

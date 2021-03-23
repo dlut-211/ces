@@ -23,6 +23,7 @@
             <FormItem label="作业" class="forms" prop="WorkPath">
               <Upload :action="uploadFile" :headers="{Authorization:$store.state.token}"
                       style="float: left; margin-right: 20px;" :show-upload-list="false"
+                      :format="['war','zip','rar']"
                       :on-success="handleAddSyllabusSuccess" :on-format-error="handleFormatError">
                 <Button type="ghost" icon="ios-cloud-upload-outline">点击上传文件</Button>
               </Upload>
