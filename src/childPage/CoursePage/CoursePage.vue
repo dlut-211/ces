@@ -421,7 +421,8 @@
                     syllabus: "",
                     syllabusPath: "",
                     subjectName: "",
-                    subjectId: null
+                    subjectId: null,
+                    createdBy: null
                 },
                 LocalSubjectId: null,
                 editCourse: false,
@@ -433,7 +434,8 @@
                     name: "",
                     syllabus: "",
                     syllabusPath: "",
-                    subjectId: null
+                    subjectId: null,
+                    createdBy: null
                 },
                 nowPage: 1,
                 pageSize: 10,
@@ -711,6 +713,7 @@
              * 添加课程Action
              */
             addCourseAction: function () {
+              this.addCourseForm.createdBy = this.$store.state.id;
                 const params = this.addCourseForm;
                 Http.postCourse(params).then(res => {
                     if (res.statusCode === 1) {
@@ -721,7 +724,8 @@
                             name: "",
                             syllabus: "",
                             syllabusPath: "",
-                            subjectId: null
+                            subjectId: null,
+                            createdBy: null
                         };
                         this.addCourse = false;
                         this.$refs["addCourseForm"].resetFields();
@@ -736,6 +740,7 @@
              * 编辑课程Action 
              */
             editCourseAction: function () {
+                this.editCourseForm.createdBy = this.$store.state.id;
                 const params = this.editCourseForm;
                 Http.putCourse(params).then(res => {
                     if (res.statusCode === 1) {
@@ -746,7 +751,8 @@
                             description: "",
                             name: "",
                             syllabus: "",
-                            syllabusPath: ""
+                            syllabusPath: "",
+                            createdBy: null
                         };
                         this.editCourse = false;
                         this.$refs["editCourseForm"].resetFields();
