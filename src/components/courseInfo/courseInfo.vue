@@ -685,58 +685,49 @@
                                 trigger: 'item',
                                 triggerOn: 'mousemove'
                             },
-                            series: [
+                            series:[
                                 {
                                     type: 'tree',
-                                    zoom:1, //当前视角的缩放比例
-                                    //roam: true, //是否开启平游或缩放
-                                    scaleLimit: { //滚轮缩放的极限控制
-                                        min: 1,
-                                        max: 5
-                                    },
-                                    lineStyle: {
-                                        color: "#000",
-                                        width: 3,
-                                        type: 'solid' //'dotted'虚线 'solid'实线
-                                    },
+                                    id: 0,
+                                    name: 'tree1',
                                     data: resData,
-                                    itemStyle: {
-                                        borderColor: "rgb(18, 191, 232)"
-                                    },
-                                    label: {
-                                        normal: {
-                                            textStyle: {
-                                                color: 'rgba(0, 0, 0, 0.9)'
-                                            }
-                                        }
-                                    },
-                                    lineStyle: {
-                                        curveness: 0.5
-                                    },
-                                    leaves:{
-                                        itemStyle: {
-                                            color: {
-                                                type: 'radial',
-                                                x: 0.5,
-                                                y: 0.5,
-                                                r: 0.5,
-                                                colorStops: [{
-                                                    offset: 0,
-                                                    color: 'red' // 0% 处的颜色
-                                                }, {
-                                                    offset: 1,
-                                                    color: 'blue' // 100% 处的颜色
-                                                }],
-                                                globalCoord: false // 缺省为 false
-                                            },
-                                        }
-                                    },
-                                    top: '18%',
-                                    bottom: '14%',
-                                    // layout: 'radial',
-                                    symbol: 'emptyCircle',
+
+                                    top: '10%',
+                                    left: '20%',
+                                    bottom: '22%',
+                                    right: '20%',
+
                                     symbolSize: 7,
-                                    initialTreeDepth: 2,
+
+                                    edgeShape: 'polyline',
+                                    edgeForkPosition: '63%',
+                                    initialTreeDepth: 3,
+
+                                    lineStyle: {
+                                        width: 2
+                                    },
+
+                                    label: {
+                                        backgroundColor: '#fff',
+                                        position: 'left',
+                                        verticalAlign: 'middle',
+                                        align: 'right'
+                                    },
+
+                                    leaves: {
+                                        label: {
+                                            position: 'right',
+                                            verticalAlign: 'middle',
+                                            align: 'left'
+                                        }
+                                    },
+
+                                    emphasis: {
+                                        focus: 'descendant'
+                                    },
+
+                                    expandAndCollapse: true,
+                                    animationDuration: 550,
                                     animationDurationUpdate: 750
                                 }
                             ]

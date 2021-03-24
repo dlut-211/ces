@@ -19,7 +19,7 @@ function StudentWorkTableModuleJS() {
       { title: "分数", key: "score", align: "center" },
 
       {
-        title: "提交次数",
+        title: "提交状态",
         key: "workName",
         align: "center",
         render: (h, params) => {
@@ -28,20 +28,21 @@ function StudentWorkTableModuleJS() {
               "span",
               {
                 style: {
-                  color: (params.row.submitCount == 0) ? "#495060" :"#2d8cf0",
+                  // color: (params.row.submitCount == 0) ? "#495060" :"#2d8cf0",
+                  color: "#000000",
                   cursor: (params.row.submitCount == 0) ?  'auto' : "pointer",
                 },
-                on: {
-                  click: () => {
-                    if(params.row.submitCount > 0){
-                      this.studentWorkId = params.row.id;
-                      this.getStudentWorkDetailList();
-                      this.studentWorkDetailVisible = true;
-                    }
-                  }
-                }
+                // on: {
+                //   click: () => {
+                //     if(params.row.submitCount > 0){
+                //       this.studentWorkId = params.row.id;
+                //       this.getStudentWorkDetailList();
+                //       this.studentWorkDetailVisible = true;
+                //     }
+                //   }
+                // }
               },
-              params.row.submitCount + "次"
+              params.row.submitCount == 0 ? "未提交" : "已提交"
             )
           ]);
         }
